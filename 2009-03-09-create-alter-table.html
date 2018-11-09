@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Create Table and Alter Table</title>
+    <meta name="description" content="Examples of Create Table and Alter Table in Sql Server." />
+    <link rel="canonical" href="https://moleseyhill.com/2009-03-09-create-alter-table.html" />
+    <link href="styles/prism.css" rel="stylesheet" />
+    <!-- img should use alt tag to describe image -->
+</head>
+<body>
+<div class="header">
+    <h1><a href="index.html">Struggling for Competence</a></h1>
+    <p>Mat Roberts</p>
+</div>
+   
+
+<div class="content">
+<h2>Create Table and Alter Table</h2>
+<time datetime="2009-03-09 19:48:32">2009-03-09 19:48:32</time>
+
+<p>Create Table and Alter Table are the mainstays of building a database, but I can never quite remember the syntax.  Sql Server, Create Table <a href="http://msdn.microsoft.com/en-us/library/ms174979.aspx">[1]</a><a href="http://msdn.microsoft.com/en-us/library/ms182776.aspx">[2]</a>, Alter Table <a href="http://msdn.microsoft.com/en-us/library/ms190273.aspx">[3]</a>. </p>
+
+<pre>
+<code class="language-sql">
+CREATE TABLE Newspapers
+(
+    NewspaperID     INT NOT NULL,		
+    NewspaperName   VARCHAR(40) NOT NULL,
+    Format          VARCHAR(10) NOT NULL
+)
+
+-- Adding a primary key adds a *clustered* index too.
+ALTER TABLE Newspapers
+ADD CONSTRAINT PK_Newspapers PRIMARY KEY (NewspaperID)
+
+ALTER TABLE Newspapers
+ADD CONSTRAINT CK_Newspapers_Format CHECK (Format IN ('Tabloid', 'Broadsheet'))
+
+ALTER TABLE Newspapers
+ADD CONSTRAINT DF_Newspapers_Format DEFAULT ('Tabloid') FOR Format
+
+CREATE TABLE Articals
+(
+    ArticalID   INT CONSTRAINT PK_Articals PRIMARY KEY IDENTITY(1,1),
+    NewspaperID INT NOT NULL,
+    Title       VARCHAR(40) NOT NULL,
+    WordCount   INT NOT NULL CONSTRAINT DF_Articals_WordCount DEFAULT (0),
+    TS          ROWVERSION
+)
+
+ALTER TABLE Articals
+ADD CONSTRAINT FK_Articals_Newspapers FOREIGN KEY (NewspaperID)
+    REFERENCES Newspapers(NewspaperID)
+    
+-- Adding a foregin key does not automatically create an index
+-- An index is nonclustered by default
+CREATE INDEX IX_Articals_NewspaperID ON Articals(NewspaperID)
+
+-- Adding a Unique constraint adds a unique non-clustered index automatically
+ALTER TABLE Articals
+ADD CONSTRAINT UC_Articles_Title UNIQUE (Title)
+
+DROP TABLE Articals	
+DROP TABLE Newspapers
+</code>
+</pre>
+
+</div>
+
+<div class="footer">
+    <!-- Previous -->
+    <!-- Home -->
+    <!-- Next -->
+</div>
+<script src="scripts/prism.js"></script>
+</body>
+</html>
