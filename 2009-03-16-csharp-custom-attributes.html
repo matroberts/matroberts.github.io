@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>C# Custom Attributes</title>
+    <meta name="description" content="Example of C# custom attributes, using reflection to retrive the attributes." />
+    <link rel="canonical" href="https://moleseyhill.com/2009-03-16-csharp-custom-attributes.html" />
+    <link href="styles/prism.css" rel="stylesheet" />
+    <!-- img should use alt tag to describe image -->
+</head>
+<body>
+<div class="header">
+    <h1><a href="index.html">Struggling for Competence</a></h1>
+    <p>Mat Roberts</p>
+</div>
+   
+
+<div class="content">
+<h2>C# Custom Attributes</h2>
+<time datetime="2009-03-16 18:23:28">2009-03-16 18:23:28</time>
+
+<p>We had a problem where a class was supplying data to the UI through a list.  The UI had to know which properties in the class were the supplying data.  I decided to use custom attributes to identify the properties.  With some help of some code from my colleague Barry, I knocked up this sample to define and get the attributes.  The Ordinal property is used to order the data series.  C#, Custom Attribute <a href="http://msdn.microsoft.com/en-us/library/sw480ze8.aspx ">[1]</a>, Reflection <a href="http://msdn.microsoft.com/en-us/library/z919e8tw.aspx ">[2]</a>.</p>
+
+<pre>
+<code class="language-csharp">
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using MbUnit.Framework;
+using System.Reflection;
+
+namespace AttributeDemo
+{
+    [TestFixture]
+    public class AttributeDemoTest
+    {
+        [AttributeUsage(AttributeTargets.Property)]
+        public class Series : Attribute
+        {
+            public string PropertyName { get; set; }
+            public int Ordinal { get; set; }
+
+            public Series(int ordinal)
+            {
+                this.Ordinal = ordinal;
+            }
+
+            public static List&lt;Series&gt; GetSeries(Type type)
+            {
+                List&lt;Series&gt; allSeries = new List&lt;Series&gt;();
+                foreach (PropertyInfo property in type.GetProperties())
+                {
+                    foreach (Attribute attribute in property.GetCustomAttributes(false))
+                    {
+                        if (attribute is Series)
+                        {
+                            Series series = (Series)attribute;
+                            series.PropertyName = property.Name;
+                            allSeries.Add(series);
+                        }
+                    }
+                }
+                return allSeries;
+            }
+        }
+
+        class AttributeExample
+        {
+            [Series(1)]
+            public string WarnCount { get; set; }
+            [Series(2)]
+            public string ErrorCount { get; set; }
+        }
+
+        [Test]
+        public void GetSeries_ShouldReturnTheSeriesAttributesFromTheType()
+        {
+            List&lt;Series&gt; allSeries = Series.GetSeries(typeof(AttributeExample));
+            Assert.AreEqual(2, allSeries.Count);
+
+            Series actual = allSeries.Find(s =&gt; s.Ordinal == 2);
+            Assert.AreEqual(2, actual.Ordinal);
+            Assert.AreEqual("ErrorCount", actual.PropertyName);
+        }
+    }
+}
+</code>
+</pre>
+
+</div>
+
+<div class="footer">
+    <!-- Previous -->
+    <!-- Home -->
+    <!-- Next -->
+</div>
+<script src="scripts/prism.js"></script>
+</body>
+</html>

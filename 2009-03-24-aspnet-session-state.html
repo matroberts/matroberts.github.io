@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Asp.net Session State</title>
+    <meta name="description" content="Example of setting up Asp.net session state in SQLServer mode.  Asp.net, Session State, web.config, Sql Server." />
+    <link rel="canonical" href="https://moleseyhill.com/2009-03-24-aspnet-session-state.html" />
+    <link href="styles/prism.css" rel="stylesheet" />
+    <!-- img should use alt tag to describe image -->
+</head>
+<body>
+<div class="header">
+    <h1><a href="index.html">Struggling for Competence</a></h1>
+    <p>Mat Roberts</p>
+</div>
+   
+
+<div class="content">
+<h2>Asp.net Session State</h2>
+<time datetime="2009-03-24 19:17:22">2009-03-24 19:17:22</time>
+
+<p>Session state is used to maintain data for an individual user for the duration of their interaction with a web site.  Our application used an "InProc" session, which maintained state in memory.  This made development painful because a recompile forced a new login to the web site.  We changed to an "SQLServer" session which solved the login problem; you can just carry on where you are after a recompile.  Asp.net, Session State, web.config, Sql Server.</p>
+
+<p>Session State is defined in the web.config file:</p>
+
+<pre>
+<code class="language-markup">
+&lt;configuration&gt;
+  &lt;system.web&gt;
+    &lt;sessionState mode="InProc"/&gt;
+</code>
+</pre>
+
+<p>
+<a href="http://msdn.microsoft.com/en-us/library/ms178586.aspx">Possible modes are:</a>
+<ul>
+<li>InProc: stores session state in memory on the Web server.  (Default).</li>
+<li>StateServer: stores session state in a separate process called the ASP.NET state service. This preserves state  if the Web application is restarted and also works in a server farm model.</li>
+<li>SQLServer:  State is preserved in Sql Server.</li>
+<li>Custom</li>
+<li>Off</li>
+</ul>
+</p>
+
+<p>To configure SQLServer mode:</p>
+
+<ul>
+<li>In web.config:<br/>
+<pre>
+<code class="language-markup">
+&lt;sessionState mode="SQLServer" sqlConnectionString="Data Source=(local);Integrated Security=SSPI;"/&gt;
+</code>
+</pre>
+</li>
+<li>From a VS Cmd Line, create a database 'ASPState' for storing the data:<br/>
+<pre>
+<code class="language-markup">
+aspnet_regsql.exe -S (local) -E -ssadd -sstype p
+</code>
+</pre>
+</li>
+<li>In Sql Server:
+  <ul>
+    <li>Add login NT AUTHORITY\NETWORK SERVICE</li>
+    <li>Give this user mapping to the ASPState database</li>
+    <li>And add roles db_owner, public</li>
+  </ul>
+</li>
+</ul>
+
+<p>I'm using the IIS 6 web server.  The asp.net process, w3wp.exe, by default runs as NETWORK SERVICE.  On IIS 5, the ASP.NET worker process, Aspnet_wp.exe, runs as the ASPNET account by default.  So in the steps above, if you're using IIS 5, you will have to tweak the database login.</p>
+
+</div>
+
+<div class="footer">
+    <!-- Previous -->
+    <!-- Home -->
+    <!-- Next -->
+</div>
+<script src="scripts/prism.js"></script>
+</body>
+</html>
