@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Code Kata - Atari</title>
+    <meta name="description" content="This Code Kata is to calculate whether a Go stone is Atari.  It was set by Keith Braithwaite at Software Craftsmanship 2009 in his session TDD As If You Meant It." />
+    <link rel="canonical" href="https://moleseyhill.com/2009-04-06-code-kata-atari.html" />
+    <link href="styles/prism.css" rel="stylesheet" />
+    <link rel="shortcut icon" type="image/x-icon" href='favicon.ico' />
+</head>
+<body>
+<div class="header">
+    <h1><a href="index.html">Struggling for Competence</a></h1>
+    <p>Mat Roberts</p>
+</div>
+   
+
+<div class="content">
+<h2>Code Kata - Atari</h2>
+<time datetime="2009-04-06 18:57:17">2009-04-06 18:57:17</time>
+
+    
+<p>This <a href="http://codekata.pragprog.com/">Code Kata</a> was set by <a href="https://cumulative-hypotheses.org/">Keith Braithwaite</a>, at his session TDD As If You Meant It, during Software Craftsmanship 2009.</p>
+
+<p>The challenge is taken from the game of <a href="http://en.wikipedia.org/wiki/Go_(game)">Go</a>.  Go is played by two players who alternately place black and white stones on the vacant intersections of a grid of 19×19 lines.  A stone is <a href="http://en.wikipedia.org/wiki/Go_terms">atari</a> if a stone or chain of stones has only one liberty.  The <a href="http://www.telgo.com/">liberty</a> is the number of vacant points that are adjacent to a stone or connected group of same coloured stones (diagonals do not count).  Some example configurations, with their liberty, are shown in the following pictures:</p>
+
+<p>
+<img title="single stone with a liberty of 4" alt="single stone with a liberty of 4" src="images/Liberty1.png" />
+<img title="single stone with a liberty of 2" alt="single stone with a liberty of 2" src="images/Liberty2.png" />
+<img title="two adjacent stones with a liberty of 4" alt="two adjacent stones with a liberty of 4" src="images/Liberty3.png" />
+<img title="two adjacent stones with a liberty of 3" alt="two adjacent stones with a liberty of 3" src="images/Liberty4.png" />
+<p>
+
+<p>The Kata is to calculate whether a stone is atari, for an arbitrary collection of stones.</p>
+
+<p>Keith had some rules about how you should proceed with coding, which define an extreme limit of TDD:</p>
+<ol>
+	<li>Write exactly ONE failing test.</li>
+	<li>Make the test from (1) pass by first writing implementation code IN THE TEST.</li>
+	<li>Create a new implementation method/function by:
+<ul>
+	<li>doing extract method on implementation code created as per (2), or</li>
+	<li>moving implementation code as per (2) into an existing implementation method.</li>
+</ul>
+</li>
+	<li>Only ever create new methods IN THE TEST CLASS.</li>
+	<li>Only ever create implementation classes to provide a destination for extracting a method created as per (4).</li>
+	<li>Populate implementation classes by doing move method from a test class into them.</li>
+	<li>Refactor as required.</li>
+	<li>Go to (1).</li>
+</ol>
+
+<p>Some reactions from other attendees of the session are <a href="https://blogs.igalia.com/dpino/2009/03/05/back-from-software-craftsmanship-2009/">here</a> and <a href="http://gojko.net/2009/02/27/thought-provoking-tdd-exercise-at-the-software-craftsmanship-conference/">here</a>.</p>
+
+</div>
+
+<div class="footer">
+    <!-- Previous -->
+    <!-- Home -->
+    <!-- Next -->
+</div>
+<script src="scripts/prism.js"></script>
+</body>
+</html>

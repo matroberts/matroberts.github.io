@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>C# Events</title>
+    <meta name="description" content="An event lets a publisher notify subscribers when something happens.  The article examines event rules and convention, and presents a c# example." />
+    <link rel="canonical" href="https://moleseyhill.com/2009-04-20-csharp-events.html" />
+    <link href="styles/prism.css" rel="stylesheet" />
+    <link rel="shortcut icon" type="image/x-icon" href='favicon.ico' />
+</head>
+<body>
+<div class="header">
+    <h1><a href="index.html">Struggling for Competence</a></h1>
+    <p>Mat Roberts</p>
+</div>
+   
+
+<div class="content">
+<h2>C# Events</h2>
+<time datetime="2009-04-20 18:30:20">2009-04-20 18:30:20</time>
+
+<p>An event provides an  extensibility point to a class.  An <a href="http://msdn.microsoft.com/en-us/library/awbftdfh.aspx">event</a> lets a publisher notify subscribers when something happens.  Typically the publisher is a vendor supplied UI widget, and the subscriber is the code you are writing.  </p>
+
+<p>
+There are two stages to using an event:
+<ol>
+<li>Attach your method to the event.</li>
+<li>When the event fires your method gets called.</li>
+</ol>
+</p>
+
+<p>
+There are some rules about events which are useful to understand:
+<ul>
+<li>An event may only be invoked from the class which declares it.</li>
+<li>Outside that class the only things you can do to the event is add and remove methods (+= and -=).</li>
+<li>The event can have multiple methods attached to it, which will all be called when the event fires.</li>
+<li>The event may have zero methods attached.  So if you raise an event yourself, you must check for null before calling it.</li>
+</ul>
+</p>
+
+<p>The following code is a contrived example which illustrates using an event.  Say you have a UI button which raises the "ButtonClick" event.  You want to display some text when the button is clicked:</p>
+
+<pre>
+<code class="language-csharp">
+using System;
+using MbUnit.Framework;
+
+namespace EventDemo
+{
+    [TestFixture]
+    public class EventTest
+    {
+        public class UiButton
+        {
+            public event EventHandler ButtonClick;
+
+            public virtual void OnButtonClick()
+            {
+                if (ButtonClick != null)
+                {
+                    ButtonClick(this, new EventArgs());
+                }
+            }
+        }
+
+        public class CodeBehind
+        {
+            public UiButton widget = new UiButton();
+
+            public string TextBoxText { get; set; }
+
+            public void PageLoad()
+            {
+                widget.ButtonClick += HandleOnClick;
+            }
+
+            private void HandleOnClick(Object sender, EventArgs e)
+            {
+                TextBoxText = "ButtonClicked";
+            }
+        }
+
+        [Test]
+        public void Framework()
+        {
+            CodeBehind behind = new CodeBehind();
+            behind.PageLoad();
+            Assert.AreEqual(null, behind.TextBoxText);
+
+            behind.widget.OnButtonClick();
+            Assert.AreEqual("ButtonClicked", behind.TextBoxText);
+        }
+    }
+}
+</code>
+</pre>
+
+<p>If this were real code you would only be writing the CodeBehind class.  The UiWidget and Framework code would be hidden away in the vendor library.  This is one of the aspects which I think makes understanding events tricky; you typically only see a small part of what's going on.</p>
+
+<p>
+In the "PageLoad" method the HandleOnClick method is attached to the ButtonClick event.  There are a number of approaches for attaching a method to the event:
+<ul>
+<li>Attach a named method programmatically:<br/>
+<pre>
+<code class="language-csharp">
+widget.ButtonClick += HandleOnClick;
+</code>
+</pre>
+</li>
+<li>Attach an anonymous method programmatically:<br/>
+<pre>
+<code class="language-csharp">
+widget.ButtonClick += (Object sender, EventArgs e) => { TextBoxText = "ButtonClicked"; };
+</code>
+</pre>
+</li>
+<li>Attach a named method declaritivly, on an asp.net page in-front:<br/>
+<pre>
+<code class="language-markup">
+&lt;asp:UiButton id="widget" runat="server" OnButtonClick="HandleOnClick" /&gt;
+</code>
+</pre>
+</li>
+</ul>
+</p>
+
+<p>The signature of the event-handling method must match the signature of the event-handler delegate.  So in the example, the HandleOnClick method must match the method signature of the EventHandler delegate:</p>
+<p>
+<a href="http://msdn.microsoft.com/en-us/library/system.eventhandler.aspx">public delegate void EventHandler(Object sender, EventArgs e);</a> 
+</p>
+
+<p>
+The event handler delegate will always look similar to this.  The only variation is in the type of the EventArgs parameter.  This is because the delegate <a href="http://msdn.microsoft.com/en-us/library/ms229011.aspx">follows the following conventions</a>:
+<ul>
+<li>The return type is void.</li>
+<li>The method takes two parameters.</li>
+<li>The first parameter is the object which raised the event.   Its type is object and is not null.</li>  
+<li>The second parameter is the event arguments.  Its either the EventArgs class or a derivative of it, and is not null.</li>
+</ul>
+</p>
+
+<p>These conventions don't have to be followed.  Take the first one - the return type should be void.  Before I read up about events, I defined my own event with a custom delegate which returned an int.  It would have gone badly wrong though, if another developer added a second method to the event.  In that case I shouldn't have used an event at all - just a straight delegate would have been fine.</p>
+
+
+</div>
+
+<div class="footer">
+    <!-- Previous -->
+    <!-- Home -->
+    <!-- Next -->
+</div>
+<script src="scripts/prism.js"></script>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>C# IEnumerable and Yield</title>
+    <meta name="description" content="Example of IEnumerable and yield in C#.  How to make a collection class enumerable so that it can be iterated over." />
+    <link rel="canonical" href="https://moleseyhill.com/2009-04-13-csharp-ienumerable-yield.html" />
+    <link href="styles/prism.css" rel="stylesheet" />
+    <link rel="shortcut icon" type="image/x-icon" href='favicon.ico' />
+</head>
+<body>
+<div class="header">
+    <h1><a href="index.html">Struggling for Competence</a></h1>
+    <p>Mat Roberts</p>
+</div>
+   
+
+<div class="content">
+<h2>C# IEnumerable and Yield</h2>
+<time datetime="2009-04-13 19:54:47">2009-04-13 19:54:47</time>
+
+<p>I have a class which contains two lists of strings.  I want to iterate over both lists at the same time getting pairs of values.  The neat way to do this is to make the class enumerable, which means it can be used in a foreach loop.</p>
+
+<p>There are three things to do:
+<ol>
+<li>The class needs to inherit from the <a href="http://msdn.microsoft.com/en-us/library/9eekhta0.aspx">IEnumerable&lt;T&gt;</a> interface.</li>
+<li>The class needs to implement the method IEnumerator&lt;T&gt; GetEnumerator().  This method  returns an <a href="http://msdn.microsoft.com/en-us/library/t0cwf691.aspx">IEnumerator&lt;T&gt;</a>, so we need one of those.  C# has the <a href="http://msdn.microsoft.com/en-us/library/9k7k7cf0.aspx">yield</a> keyword which lets you do this easily.</li>
+<li>Because I want to return two values from my class, I can't return a simple type like string.  Instead I need a class or <a href="http://msdn.microsoft.com/en-us/library/saxz13w4.aspx">struct</a> to put the pairs of values in.</li>
+</ol>
+</p>
+
+<p>The collection class implements IEnumerable, which indicates it can be foreach'd over.  The IEnumerator is the thing which does the iteration.  You, the programmer, never actually see the IEnumerator; it's hidden behind the the foreach construct.</p>
+
+<pre>
+<code class="language-csharp">
+using System.Collections;
+using System.Collections.Generic;
+using MbUnit.Framework;
+
+namespace EnumeratorDemo
+{
+    [TestFixture]
+    public class EnumeratorTest
+    {
+        public struct Element
+        {
+            private string propertyName;
+            private string legendString;
+
+            public string PropertyName { get { return propertyName; } }
+            public string LegendString { get { return legendString; } }
+
+            public Element(string propertyName, string legendString)
+            {
+                this.propertyName = propertyName;
+                this.legendString = legendString;
+            }
+        }
+
+        public class Series : IEnumerable&lt;Element&gt;
+        {
+            private List&lt;string&gt; propertyNames;
+            private List&lt;string&gt; legendStrings;
+            
+            public Series(List&lt;string&gt; propertyNames, List&lt;string&gt; legendStrings)
+            {
+                this.propertyNames = propertyNames;
+                this.legendStrings = legendStrings;
+            }
+
+            public IEnumerator&lt;Element&gt; GetEnumerator()
+            {
+                int i = 0;
+                foreach (string propertyName in propertyNames)
+                {
+                    yield return new Element(propertyName, i &lt; legendStrings.Count ? legendStrings[i] : string.Empty);
+                    ++i;
+                }
+            }
+
+            IEnumerator IEnumerable.GetEnumerator()
+            {
+                return this.GetEnumerator();
+            }
+        }
+
+        [Test]
+        public void Test()
+        {
+            List&lt;Element&gt; series = new List&lt;Element&gt;();
+            foreach (Element element in new Series(new List&lt;string&gt;(){"prop1", "prop2"}, 
+                                                   new List&lt;string&gt;(){"leg1"}))
+            {
+                series.Add(element);
+            }
+
+            Assert.AreEqual(2, series.Count);
+            Assert.Contains(series, new Element("prop1", "leg1"));
+            Assert.Contains(series, new Element("prop2", string.Empty));
+        }
+    }
+}
+</code>
+</pre>
+
+<p>I spent a while with the following rather annoying compile error:</p>
+
+<pre>
+<code class="language-csharp">
+'EnumeratorDemo.EnumeratorTest.Series' does not implement interface member 'System.Collections.IEnumerable.GetEnumerator()'. 'EnumeratorDemo.EnumeratorTest.Series.GetEnumerator()' cannot implement 'System.Collections.IEnumerable.GetEnumerator()' because it does not have the matching return type of 'System.Collections.IEnumerator'.
+</code>
+</pre>
+
+<p>After a bit of <a href="http://social.msdn.microsoft.com/Forums/en-US/csharplanguage/thread/112405fb-d7ec-4b48-8d83-5669912202cc/">googling</a> I found out this is because I was not implementing the non-generic IEnumerator interface, which the generic IEnumerator&lt;T&gt; inherits from.  Hence the extra code in the class implementing the non-generic IEnumerator IEnumerable.GetEnumerator() method.</p>
+
+<p>In the real application the Series class is not so trivial.  It's constructor takes two strings as arguments, which contain comma separated values.  The Series class parses the comma separated values to make the two lists.</p>
+
+
+
+</div>
+
+<div class="footer">
+    <!-- Previous -->
+    <!-- Home -->
+    <!-- Next -->
+</div>
+<script src="scripts/prism.js"></script>
+</body>
+</html>
