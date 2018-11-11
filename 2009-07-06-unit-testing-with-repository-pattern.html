@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Unit Testing with the Repository Pattern</title>
+    <meta name="description" content="Example showing how the repository pattern lets you to unit test without hitting the database.  Example implemented in C# and Linq to SQL." />
+    <link rel="canonical" href="https://moleseyhill.com/2009-07-06-unit-testing-with-repository-pattern.html" />
+    <link href="styles/prism.css" rel="stylesheet" />
+    <link rel="shortcut icon" type="image/x-icon" href='favicon.ico' />
+</head>
+<body>
+<div class="header">
+    <h1><a href="index.html">Struggling for Competence</a></h1>
+    <p>Mat Roberts</p>
+</div>
+   
+
+<div class="content">
+<h2>Unit Testing with the Repository Pattern</h2>
+<time datetime="2009-07-06 21:34:01">2009-07-06 21:34:01</time>
+
+<p>One of the features of the repository pattern is it allows unit testing, without hitting the database.  The fabled ability to substitute the data layer during testing.  This posts follows on from last weeks <a href="2009-06-29-simple-repository-pattern.html">simple repository pattern</a>, and shows how to modify it to make unit testing possible.  The code here is again shamelessly inspired by the <a href="http://weblogs.asp.net/scottgu/archive/2009/03/10/free-asp-net-mvc-ebook-tutorial.aspx">nerd dinner tutorial</a> by Scott Gu.</p>
+
+<p>The first thing is to define an interface to the repository:</p>
+<pre>
+<code class="language-csharp">
+    public interface IAuthorRepository
+    {
+        void Delete(Author author);
+        Author Get(int id);
+        IQueryable<Author> GetAll();
+        void Insert(Author author);
+        void Save();
+    }
+</code>
+</pre>
+
+<p>Next make the real repository implement the interface.  It already does all of the methods, so it's just a matter of changing the declaration:</p>
+
+<pre>
+<code class="language-csharp">
+    public class AuthorRepository : IAuthorRepository
+</code>
+</pre>
+
+<p>In the class where the repository is used, in my case the controller, provide a constructor which takes the repository interface as a parameter.  And change the code to use the passed in repository interface:</p>
+
+<pre>
+<code class="language-csharp">
+    public class HomeController : Controller
+    {
+        IAuthorRepository db;
+
+        public HomeController() : this(new AuthorRepository())
+        {
+        }
+
+        public HomeController(IAuthorRepository db)
+        {
+            this.db = db;
+        }
+
+        public ActionResult Index()
+        {
+            List<Author> authors = db.GetAll().ToList();
+
+            return View(authors);
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult Save(string authorName, string textToAnalyse)
+        {
+            TextAnalysis analysis = new TextAnalysis(authorName, textToAnalyse);
+            Author author = new Author(authorName, analysis.Count);
+            try
+            {
+                db.Insert(author);
+                db.Save();
+                return RedirectToAction("Index");
+            }
+            catch(ArgumentException)
+            {
+                foreach (var error in author.GetRuleViolations())
+                {
+                    ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+                }
+                return View("Analysis", analysis);
+            }
+        }
+
+        // more methods....
+    }
+</code>
+</pre>
+
+<p>In the code above the first constructor, with no parameter, is used by the MVC framework.  It actually new's a real repository for use in the real application.  The second constructor, which takes an IAuthorRepository as an argument, provides a point where I can inject a fake repository for use in testing.  Now create a fake repository:</p>
+
+<pre>
+<code class="language-csharp">
+    public class AuthorRepositoryFake : IAuthorRepository
+    {
+        public List<Author> GetList { get; set; }
+        public List<Author> SaveList { get; set; }
+
+        public AuthorRepositoryFake()
+        {
+            this.SaveList = new List<Author>();
+        }
+        public void Delete(Author author)
+        {
+            throw new NotImplementedException();
+        }
+        public Author Get(int id)
+        {
+            throw new NotImplementedException();
+        }
+        public IQueryable<Author> GetAll()
+        {
+            return GetList.AsQueryable();
+        }
+        public void Insert(Author author)
+        {
+            SaveList.Add(author);
+        }
+        public void Save()
+        {
+            foreach (Author author in SaveList)
+            {
+                if (!author.IsValid)
+                    throw new ArgumentException("Invalid");
+            }
+        }
+    }
+</code>
+</pre>
+
+<p>This fake repository clearly does not hit the database; all its work is memory.  So if I use the fake repository in the unit tests, the database access has been replaced by in memory objects.  In this fake repository, I've only implemented the methods I'm using.  I'll add the rest when I need them.  Finally some unit tests for the controller:</p>
+
+<pre>
+<code class="language-csharp">
+        [TestMethod]
+        public void Index()
+        {
+            AuthorRepositoryFake db = new AuthorRepositoryFake();
+            db.GetList = new List<Author>(){new Author("Mat", 250)};
+            HomeController controller = new HomeController(db);
+
+            ViewResult result = controller.Index() as ViewResult;
+
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void Save_ShouldReturnIndexIfSaveSuccessful()
+        {
+            AuthorRepositoryFake db = new AuthorRepositoryFake();
+            HomeController controller = new HomeController(db);
+
+            RedirectToRouteResult result = controller.Save("Mat", "Hullo Hullo") as RedirectToRouteResult;
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(1, result.RouteValues.Count);
+            Assert.AreEqual("Index", result.RouteValues["action"]);
+        }
+
+        [TestMethod]
+        public void Save_ShouldReturnAnalysisPage_IfSaveFails()
+        {
+            AuthorRepositoryFake db = new AuthorRepositoryFake();
+            HomeController controller = new HomeController(db);
+
+            ViewResult result = controller.Save("", "Hullo Hullo") as ViewResult;
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(1, result.ViewData.ModelState.Count);
+        }
+</code>
+</pre>
+
+<p>To explain the final test:  The Author class has an IsValid property, which returns false if the author name is null or empty.  That causes the fake repository to throw an exception, simulating Linq to SQL, and causes the catch block in the controllers Save method to execute.</p>
+
+<p>So that's it.  The example shows the mythical ability to substitute the data layer during unit testing, and when you see it it's not that hard.  I've been trying for 9 years to do this.</p>
+
+
+
+
+</div>
+
+<div class="footer">
+    <!-- Previous -->
+    <!-- Home -->
+    <!-- Next -->
+</div>
+<script src="scripts/prism.js"></script>
+</body>
+</html>

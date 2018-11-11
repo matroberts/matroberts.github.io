@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>The Evolving Definition of Unit Testing</title>
+    <meta name="description" content="To get testability - easy to write, easy to understand, fast automated tests - your architecture must allow you to replace external dependencies during test." />
+    <link rel="canonical" href="https://moleseyhill.com/2009-07-27-the-evolving-definition-of-unit-testing.html" />
+    <link href="styles/prism.css" rel="stylesheet" />
+    <link rel="shortcut icon" type="image/x-icon" href='favicon.ico' />
+</head>
+<body>
+<div class="header">
+    <h1><a href="index.html">Struggling for Competence</a></h1>
+    <p>Mat Roberts</p>
+</div>
+   
+
+<div class="content">
+<h2>The Evolving Definition of Unit Testing</h2>
+<time datetime="2009-07-27 18:00:47">2009-07-27 18:00:47</time>
+
+<p>Back in the day a unit test was <a href="http://beust.com/weblog/archives/000319.html">defined as something like</a>:</p>
+<blockquote> 
+"[a] test that exercises a single class in isolation of all others"
+</blockquote>
+
+<p>The really big shake up in unit testing came with the development of JUnit and it's clones.  This made it a requirement that unit tests should be <em>automated</em> and <em>repeatable</em>.  Along with the introduction of JUnit some developers actually started writing unit tests, rather than just reading about them in books.  The operational <a href="http://www.codethinked.com/post/2009/06/30/What-is-Unit-Testing.aspx">definition of unit testing shifted to</a>:</p>
+<blockquote>
+“tests that are run against a project using a unit testing framework”
+</blockquote>
+
+<p>After all, if your using a unit test framework, what your writing must be a unit test - surely?.  The requirement for a test of a single class was relaxed.  What mattered was that the test was automated and repeatable.</p>
+
+<p>Now lots of people have attempted unit testing, and some have succeeded.  But many, or I suspect most, have failed.  It's just a hard skill to acquire.  It's rock hard for a novice unit tester to apply unit testing to an existing code base - the code's just not testable.  Even on a virgin code base it's difficult.  You can easily have large chunks of the system which you don't know how to test.</p>
+
+<p>
+The thing which makes unit testing difficult is <em>external dependencies</em>.  The points where your code starts to talk to something else - the <a href="http://www.williamcaputo.com/archives/000019.html">boundaries of the system</a>.  Examples of external dependencies are: 
+<ul> 
+ <li>Database</li>
+ <li>Smtp client</li>
+ <li>Network</li>
+ <li>Active directory</li>
+ <li>Creating a process</li>
+ <li>Web services</li>
+ <li>File system</li>
+ <li>HttpContext</li>
+ <li>Message queues</li>
+ <li>Windows registry</li>
+ <li>Calling outside the CLR</li>
+ <li>Calling outside the current AppDomain</li>
+</ul>
+</p>
+
+<p>The problem with external dependencies is, you have to configure them prior to the test, and verify them after the test.  This set-up and verification is difficult - it makes the tests hard to write and harder still to understand.  It also makes the tests slow.  This lead <a href="http://www.artima.com/weblogs/viewpost.jsp?thread=126923">Michael Feathers adopted the hard line position</a>: </p>
+<blockquote>
+A test is not a unit test if:
+<ul>
+<li>It talks to the database</li>
+<li>It communicates across the network</li>
+<li>It touches the file system</li>
+<li>It can't run at the same time as any of your other unit tests</li>
+<li>You have to do special things to your environment (such as editing config files) to run it.</li>
+</ul>
+</blockquote>
+
+<p>So just having automated tests isn't good enough.  To make unit testing work well, during the test you must replace the external dependency somehow.  What you need to do is replace the dependency with an in-memory object which is easy to set-up and verify - a stub (or mock or fake or dummy).  But how?  You must talk to your dependency via an interface, then during testing you can replace the real implementation, with the stub/mock/fake/dummy version.  </p>
+
+<p>Just think about that for a moment.  To make unit testing work you have to change the design of the system, so that all external dependencies are accessed via an interface.  You have to  <em>change the architecture</em> of the system, to make testing possible.  That's really quite shocking.</p>
+
+<p>All this leads to my current definition of unit testing:</p>
+<blockquote>
+Unit test - an automated test, without external dependencies.
+Integration test - an automated test, with external dependencies.
+</blockquote>
+
+<p>The aim is to test all of the business logic within unit tests.  The integration tests are necessary and important, but their scope is limited to testing the interfaces to the external dependency.  Integration tests need not test business logic too.  The unit and integration tests are separated, say into different projects.  This means you can run the fast unit test frequently.  The slower integration test are run less often - say when you know you've changed the interface or prior to check-in.  It is not a strict requirement that the unit test covers only a single class, though in practice if your test covers too much it will be hard to understand.  </p>
+
+<p>You can see with the definitions of unit testing described here, the cultural relativism implicit in the definition we use.  What you think unit testing is depends on whether you actually write any, the tools you use, and how good you are at it.</p>
+
+    
+</div>
+
+<div class="footer">
+    <!-- Previous -->
+    <!-- Home -->
+    <!-- Next -->
+</div>
+<script src="scripts/prism.js"></script>
+</body>
+</html>

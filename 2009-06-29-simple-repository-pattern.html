@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Simple Repository Pattern</title>
+    <meta name="description" content="Simple example of Repository Pattern using C# and Linq to Sql.  Repository  encapsulates persistence logic in a separate class, outside the model object." />
+    <link rel="canonical" href="https://moleseyhill.com/2009-06-29-simple-repository-pattern.html" />
+    <link href="styles/prism.css" rel="stylesheet" />
+    <link rel="shortcut icon" type="image/x-icon" href='favicon.ico' />
+</head>
+<body>
+<div class="header">
+    <h1><a href="index.html">Struggling for Competence</a></h1>
+    <p>Mat Roberts</p>
+</div>
+   
+
+<div class="content">
+<h2>Simple Repository Pattern</h2>
+<time datetime="2009-06-29 22:12:19">2009-06-29 22:12:19</time>
+
+    
+<p>I've finally read an explanation of the repository pattern simple enough for me to understand.  It's in the <a href="http://weblogs.asp.net/scottgu/archive/2009/03/10/free-asp-net-mvc-ebook-tutorial.aspx">nerd dinner tutorial</a> by Scott Gu, and also available in <a href="http://www.amazon.co.uk/gp/product/0470384611?ie=UTF8&tag=struggforcomp-21&linkCode=as2&camp=1634&creative=6738&creativeASIN=0470384611">Professional ASP.NET MVC 1.0</a>.</p>
+
+<p>The repository pattern is about getting data in and out of the database.  It encapsulates the persistence logic in a separate class, outside the model object.  The repository pattern makes it possible to unit test the application without hitting the database.</p>
+
+<p>Here's a simple example of a repository, using C# and Linq to Sql:</p>
+<pre>
+<code class="language-csharp">
+    public class AuthorRepository
+    {
+        private ZipfsLawDataContext db = new ZipfsLawDataContext(ConfigurationManager.ConnectionStrings["ZipfsLawConnectionString"].ConnectionString);
+
+        public void Insert(Author author)
+        {
+            db.Authors.InsertOnSubmit(author);
+        }
+        public void Delete(Author author)
+        {
+            db.Authors.DeleteOnSubmit(author);
+        }
+        public void Save()
+        {
+            db.SubmitChanges();
+        }
+        public Author Get(int id)
+        {
+            return db.Authors.SingleOrDefault(a =&gt; a.AuthorId == id);
+        }
+        public IQueryable&lt;Author&gt; GetAll()
+        {
+            return db.Authors;
+        }
+    }
+
+    public partial class Author
+    {
+        public Author(string authorName, int wordcount)
+        {
+            AuthorName = authorName;
+            WordCount = wordcount;
+        }
+    }
+</code>
+</pre>
+<p>The model object, Author, is a partial class.  Linq to Sql is generating the other half of the class, providing properties for getting and setting the data values.  Here are some integration tests, which actually hit the database.  They show how to use the repository, and check things are working right:</p>
+<pre>
+<code class="language-csharp">
+    [TestClass]
+    public class AuthorRepositoryTest
+    {
+        TransactionScope scope;
+
+        [TestInitialize]
+        public void PerTestSetUp()
+        {
+            scope = new TransactionScope();
+        }
+        [TestCleanup]
+        public void PerTestTearDown()
+        {
+            scope.Dispose();
+        }
+
+        [TestMethod]
+        public void Insert_WritesToDatabaseAndFillsInTheId()
+        {
+            AuthorRepository db = new AuthorRepository();
+            Author author = new Author("Alice", 40000);
+            db.Insert(author);
+            Assert.AreEqual(0, author.AuthorId);
+
+            db.Save();
+            Assert.AreNotEqual(0, author.AuthorId);
+        }
+
+        [TestMethod]
+        public void Get_ReturnsTheSameObjectByRef()
+        {
+            AuthorRepository db = new AuthorRepository();
+            Author author = new Author("Alice", 40000);
+            db.Insert(author);
+            db.Save();
+
+            Author sameAuthor = db.Get(author.AuthorId);
+            Assert.AreSame(author, sameAuthor);
+        }
+        
+        [TestMethod]
+        public void Delete_RemovesTheObjectFromTheDb()
+        {
+            AuthorRepository db = new AuthorRepository();
+            Author author = new Author("Alice", 40000);
+            db.Insert(author);
+            db.Save();
+
+            db.Delete(author);
+            db.Save();
+            Assert.AreEqual(0, db.GetAll().Count());
+        }
+    }
+</code>
+</pre>
+
+<p>
+There are some important features of the repository pattern to point out:
+<ul>
+	<li>All database interaction is happening via the Repository object.</li>
+	<li>You have to <em>new</em> a repository before using it.
+<ul>
+	<li>It does <em>not</em> have a static constructor.</li>
+	<li>It is <em>not</em> a singleton.</li>
+  	<li>The methods on the repository are <em>not</em> static.</li>
+</ul>
+</li>
+	<li>The model object has no database methods on it.  It's a pure business object.</li>
+</ul>
+</p>
+
+
+
+
+</div>
+
+<div class="footer">
+    <!-- Previous -->
+    <!-- Home -->
+    <!-- Next -->
+</div>
+<script src="scripts/prism.js"></script>
+</body>
+</html>

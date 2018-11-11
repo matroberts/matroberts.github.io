@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>CSS Selectors</title>
+    <meta name="description" content="The key to CSS is understanding how selectors work.  A summary of CSS 2.1 selectors, with examples, is presented." />
+    <link rel="canonical" href="https://moleseyhill.com/2009-05-06-css-selectors.html" />
+    <link href="styles/prism.css" rel="stylesheet" />
+    <link rel="shortcut icon" type="image/x-icon" href='favicon.ico' />
+</head>
+<body>
+<div class="header">
+    <h1><a href="index.html">Struggling for Competence</a></h1>
+    <p>Mat Roberts</p>
+</div>
+   
+
+<div class="content">
+<h2>CSS Selectors</h2>
+<time datetime="2009-05-06 18:42:32">2009-05-06 18:42:32</time>
+
+<p>Cascading Style Sheets (CSS) are used to style html documents.  A CSS statement has two parts: a <em>selector</em>, which specifies the part of the document, and declarations, which describes the formatting to apply.  A typical piece of CSS looks like this:</p>
+<p><img alt="typical piece of css, showing selector and declarations" title="typical piece of css, showing selector and declarations" src="images/typical-css.png"/></p>
+<p>The key to CSS is understanding how selectors work.  The table summarises the main <a href="http://www.w3.org/TR/CSS2/selector.html">selectors in CSS 2.1</a>.</p>
+
+<div>
+<table>
+<caption>CSS 2.1 Selectors</caption>
+<tr>
+  <th>Selector</th>
+  <th>Example</th>
+  <th>Explanation</th>
+</tr>
+
+<tr>
+  <td>Type</td>
+  <td>li
+{ color:blue; }</td>
+  <td>Matches all the "li" elements.</td>
+</tr>
+
+<tr>
+  <td>Class</td>
+  <td>.intro
+{ color:red; }</td>
+  <td>Matches all elements with the "intro" class attribute.</td>
+</tr>
+
+<tr>
+  <td>ID</td>
+  <td>#nav
+{ color:blue; }</td>
+  <td>Matches the single element with the id "nav".</td>
+</tr>
+
+<tr>
+  <td>Decendent</td>
+  <td>div p
+{ colour:green; }</td>
+  <td>Matches all elements "p" which are contained within a "div".  The "p" does not have a direct descendent.</td>
+</tr>
+
+<tr>
+  <td>Universal</td>
+  <td>*
+{
+margin: 0;
+padding: 0;
+}</td>
+  <td>Matches all elements.</td>
+</tr>
+
+<tr>
+  <td>Child</td>
+  <td>div &gt; em 
+{ color: blue; }</td>
+  <td>Matches all "em" which are a direct descendent of a "div". (Not IE6)</td>
+</tr>
+
+<tr>
+  <td>Adjacent</td>
+  <td>h1 + h3
+{ margin: -20px; }</td>
+  <td>Matches "h3" which immediately follow an "h1". (Not IE6)</td>
+</tr>
+
+<tr>
+  <td>Attribute</td>
+  <td>img[src]
+{ margin: 0; }</td>
+  <td>Matches all "img" elements whose "src" attribute is set. (Not IE6)</td>
+</tr>
+
+<tr>
+  <td>Attribute</td>
+  <td>img[src="small.gif"]
+{ margin: 0; }</td>
+  <td>Matches all "img" elements which contain an attribute src="small.gif". (Not IE6)</td>
+</tr>
+
+<tr>
+  <td>Pseudo</td>
+  <td>p:first-letter
+{
+font-weight: bold;
+}</td>
+  <td>Style information not available in the document tree.
+:first-letter
+:first-line
+:first-child
+:link
+:visited
+:hover
+:active
+:focus
+Not IE6:
+:before
+:after</td>
+</tr>
+</table>
+</div>
+
+<p>An ID can only be used once within a document, whereas a class can be used multiple times.  In the style sheet the ID selector has greater weight than class selector.  ID's are generally used to identify the top level containers on the page, classes are then used to identify the lower level containers.  Asp.net has a problem with ID's, it tends to mangle the id attribute for elements with runat="server".  For these elements you have to stick with the class attribute, which asp.net leaves alone.  </p>
+
+<p>Selectors can be grouped as a comma-separated list, if they share the same declaration block. For example:</p>
+<p><img alt="a grouped css selector" title="a grouped css selector" src="images/grouped-selector-css.png" /></p>
+
+<p>With grouped decent selectors, you need to be careful that you repeat the whole decent.  For example #sidebar h2, h3 will select the h2 elements in the sidebar, plus the h3 elements in the whole document.</p>
+
+<p>I'm embarrassed to admit that I learnt my basic CSS from <a href="http://www.amazon.co.uk/gp/product/0672327457?ie=UTF8&tag=struggforcomp-21&linkCode=as2&camp=1634&creative=6738&creativeASIN=0672327457">Sams Teach Yourself CSS in 10 Minutes</a> by Russ Weakly.  But hey, honesty is the best course, and its actually an OK book.</p>
+
+
+
+</div>
+
+<div class="footer">
+    <!-- Previous -->
+    <!-- Home -->
+    <!-- Next -->
+</div>
+<script src="scripts/prism.js"></script>
+</body>
+</html>

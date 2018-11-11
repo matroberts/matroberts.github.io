@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>CSS Enlightenment</title>
+    <meta name="description" content="Descendent selectors are the key to good CSS design.  They let you select the element you want, without explicitly adding a class to it." />
+    <link rel="canonical" href="https://moleseyhill.com/2009-05-11-css-enlightenment.html" />
+    <link href="styles/prism.css" rel="stylesheet" />
+    <link rel="shortcut icon" type="image/x-icon" href='favicon.ico' />
+</head>
+<body>
+<div class="header">
+    <h1><a href="index.html">Struggling for Competence</a></h1>
+    <p>Mat Roberts</p>
+</div>
+   
+
+<div class="content">
+<h2>CSS Enlightenment</h2>
+<time datetime="2009-05-11 22:58:14">2009-05-11 22:58:14</time>
+
+<p>Descent selectors are the key to good CSS design.  Descendent selectors let you select the element you want, without having to explicitly add a class to it.  Using descent selectors avoids polluting the html with style specific class attributes.  The Galloway body class technique is used to make page specific tweaks to the style, in a controlled manor.</p>
+
+<p>To appreciate the full power of CSS check out <a href="http://www.csszengarden.com/">CSS Zen Garden</a>.  The site contains a single page of html, which is rendered in radically different ways by selecting the style sheet.  A  few cool designs are:</p>
+<table>
+<tr>
+  <td>
+<img alt="retro theater" title="retro theater" src="images/retro-theater.jpg"  />
+  </td>
+  <td>
+<img alt="css zen army" title="css zen army" src="images/css-zen-army.jpg"  />
+  </td>
+  <td>
+<img alt="the hall" title="the hall" src="images/the-hall.jpg"   />
+  </td>
+  <td>
+<img alt="zen pool" title="zen pool" src="images/zen-pool.jpg" />
+  </td>
+</tr>
+<tr>
+  <td>
+<a href="http://www.csszengarden.com/202">Retro Theater</a>
+  </td>
+  <td>
+<a href="http://www.csszengarden.com/199">CSS Zen Army</a>
+  </td>
+  <td>
+<a href="http://www.csszengarden.com/140">The Hall</a>
+  </td>
+  <td>
+<a href="http://www.csszengarden.com/080">Zen Pool</a>
+  </td>
+</tr>
+</table>
+
+<p>Looking at the html for Zen Garden is a Zen experience in itself.  The html is clean, simple, and focussed on content.  Where are all those crazy style elements that I have in my html?  The <a href="http://weblogs.asp.net/jgalloway/archive/2007/09/12/taking-css-beyond-a-simple-style-library.aspx">mistake I'm making is to treat css as a style library</a>:</p>
+<blockquote>
+Need a bold blue heading? Yep, I think I've got one of them...there it is:
+
+.BigBlueText
+{ color: #99f; font-size: 16px; }
+
+No... that's not big enough. Time for BiggerBlueText!
+
+.BiggerBlueText
+{ color: #99f; font-size: 22px; }
+</blockquote>
+
+<p>When you take the style library approach, each element which needs a style gets a class attribute which describes the style.  Over time the style sheet becomes a huge blob of styles.  Refactoring is scary...it's hard to tell what the impact of any clean up will be, and you potentially have to check the whole site.</p>
+
+<p>How do the CSS Zen Masters avoid the style library pitfall?  If you look carefully at the Zen Garden html it does contain id and class attributes, but they are limited to the container elements on the page, and they don't indicate any particular style.  The CSS then uses <em>decent selectors</em> to match the required element. </p>
+
+<p>As an example, consider the following web page structure:</p>
+
+<img alt="typical web page layout" title="typical web page layout" src="images/css-id.png"   />
+
+<p>Div's are used to define the four regions, and are given an id's so that they can be identified:</p>
+<pre>
+<code class="language-markup">
+&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"&gt;
+&lt;html&gt;
+	&lt;head&gt;
+		&lt;title&gt;Css Demo&lt;/title&gt;
+		&lt;link type="text/css" rel="stylesheet" href="CssDemo.css" /&gt;
+	&lt;/head&gt;
+	&lt;body class="css-demo"&gt;
+	    &lt;div id="header"&gt;
+	        &lt;p&gt;header&lt;/p&gt;
+	    &lt;/div&gt;
+   	    &lt;div id="content"&gt;
+	        &lt;p&gt;content&lt;/p&gt;
+	    &lt;/div&gt;
+   	    &lt;div id="sidebar"&gt;
+  	        &lt;p&gt;sidebar&lt;/p&gt;
+	    &lt;/div&gt;
+   	    &lt;div id="footer"&gt;
+   	        &lt;p&gt;footer&lt;/p&gt;
+	    &lt;/div&gt;
+	&lt;/body&gt;
+&lt;/html&gt;
+</code>
+</pre>
+
+<p>Now, to style the &lt;p&gt; elements in the content and sidebar, use descent selectors:</p>
+<pre>
+<code class="language-css">
+body {
+	width: 604px;
+}
+div {
+	border: 1px solid black;	
+}
+#content {
+	float: left;
+	width: 400px;
+}
+#sidebar {
+	float: right;
+	width: 200px;	
+}
+#footer {
+	clear: both;	
+}
+#content p {
+	color: red;	
+}
+#sidebar p {
+	color: blue;	
+}
+</code>
+</pre>
+
+<p>
+Page specific tweaks are the other difficulty with css.  In the past the approach I have taken is to define a new class, and apply it directly to the element which needs to be changed.   A better approach is the <a href="http://weblogs.asp.net/jgalloway/archive/2008/06/18/using-lt-body-gt-classes-to-fight-css-class-explosion.aspx">Galloway body class technique</a>:
+<ul>
+<li>Give the body element a class which is unique to the page.</li>
+<li>Use descendent selectors to match the element which needs tweaking.</li>
+</ul>
+</p>
+
+<p>The nice thing with this approach is the CSS is very clear about what is the "main" style, and what is page specific.  In his article Jon provides some master page code to automatically add a unique body class to the page.  (It would be more natural to use an id to identify the body element, however in Asp.net this is not possible because the engine will mangle the id for an element with runat="server"). </p>
+
+<p>
+Descendent selectors are the path to enlightenment in Cascading Style Sheets.  To keep your CSS clean:
+<ul>
+<li>Make sure container elements (div, table etc.) are marked with an id or a class attribute.</li>
+<li>Use decent selectors to match the element you want in the style sheet.</li>
+<li>Make sure class attributes indicate content rather than a style.</li>
+<li>Use the Galloway body class technique to make page specific tweaks.</li>
+</ul>
+</p>
+
+</div>
+
+<div class="footer">
+    <!-- Previous -->
+    <!-- Home -->
+    <!-- Next -->
+</div>
+<script src="scripts/prism.js"></script>
+</body>
+</html>

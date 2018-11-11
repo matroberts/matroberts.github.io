@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Kent Beck's Four Hats</title>
+    <meta name="description" content="The trick to controlling the size of you checkout is to only wear one of Kent Beck's four hats." />
+    <link rel="canonical" href="https://moleseyhill.com/2009-05-18-kent-becks-four-hats.html" />
+    <link href="styles/prism.css" rel="stylesheet" />
+    <link rel="shortcut icon" type="image/x-icon" href='favicon.ico' />
+</head>
+<body>
+<div class="header">
+    <h1><a href="index.html">Struggling for Competence</a></h1>
+    <p>Mat Roberts</p>
+</div>
+   
+
+<div class="content">
+<h2>Kent Beck's Four Hats</h2>
+<time datetime="2009-05-18 18:31:57">2009-05-18 18:31:57</time>
+
+<p>Have you ever been coding and had a checkout which has gone out of control?  The change involved a modification to a method, and adjusting the callers of the method too.  It really got bad when some of the callers needed reworking, to cope with the new argument you added to the method.  A colleague wanted a small part of the change, but you couldn't check-in because you would break the build.  After a week you were done.  Your reward was a difficult merge - the code base had moved on in the mean time.</p>
+
+<p>Controlling the size of your checkout is a valuable coding skill.  You should be able to take small, baby steps, and check-in at any time.  There are a number of benefits.  If you check-in frequently the merge to source control becomes trivial.  Your colleagues won't get annoyed, because that change which they need is never far away.  Most importantly you are in control of your work.</p>
+
+<p>The trick to this control is to only wear one of <a href="http://c2.com/cgi/wiki?OnlyWearOneOfFourHats">Kent Beck's Four Hats</a>:</p>
+<table>
+<tr><td></td><th>Interface</th><th>Implementation</th></tr>
+<tr><th>Refactor</th><td>Refactor code.<br/>Only change the interface.</td><td>Refactor code.<br/>Only change the implementation.</td></tr>
+<tr><th>Add</th><td>Add new functionality.<br/>Only change the interface.</td><td>Add new functionality.<br>Only change the implementation.</td></tr>
+</table>
+
+<p>Each time you switch hats, you run the tests.  Each time you switch hats, you are in a position to check-in.  In practice you may well switch hats quite rapidly, spending only a few minutes wearing each one.  You don't have to check-in after each hat switch, it's just that you can if you want.</p>
+
+<p>
+The worst out of control checkouts happen when you want to change the interface to an existing heavily used method, and you just steam in and do it.  Along the way you are trying to do some refactoring as well.  The out of control-ness happens because your trying to change the interface and implementation at the same time.  There is however a safe and incremental  way to proceed:
+<ul>
+<li>Copy the method you want to change.</li>
+<li>Change the interface to the new method.</li>
+<li>Adjust implementation of new method, unit test.</li>
+<li>Work though the code base adjusting the callers to use your new method.</li>
+<li>Delete the old method.</li>
+</ul>
+</p>
+
+<p>With this approach you can check-in at any stage in the re-work, without breaking the build.</p>
+
+<p>When you are working you often-times see a bit of code which could do with a refactor.  It's not part of the mainline task, should you interrupt and refactor?  Go ahead, take 10 minutes and do it.  Opportunistic refactoring improves the code base. But remember Coplien's Maxim <q>Never interrupt an interruption</q> <a href="http://www.amazon.co.uk/gp/product/0321146530?ie=UTF8&tag=struggforcomp-21&linkCode=as2&camp=1634&creative=6738&creativeASIN=0321146530">[Beck p41]</a>.</p>
+
+
+</div>
+
+<div class="footer">
+    <!-- Previous -->
+    <!-- Home -->
+    <!-- Next -->
+</div>
+<script src="scripts/prism.js"></script>
+</body>
+</html>

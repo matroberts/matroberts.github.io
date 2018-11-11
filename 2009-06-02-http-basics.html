@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Http Basics</title>
+    <meta name="description" content="The basics of http are explained, with request and response examples captured using fiddler." />
+    <link rel="canonical" href="https://moleseyhill.com/2009-06-02-http-basics.html" />
+    <link href="styles/prism.css" rel="stylesheet" />
+    <link rel="shortcut icon" type="image/x-icon" href='favicon.ico' />
+</head>
+<body>
+<div class="header">
+    <h1><a href="index.html">Struggling for Competence</a></h1>
+    <p>Mat Roberts</p>
+</div>
+   
+
+<div class="content">
+<h2>Http Basics</h2>
+<time datetime="2009-06-02 22:54:49">2009-06-02 22:54:49</time>
+
+<p>HTTP is the protocol which powers the Internet.  I'm a web developer (allegedly), but I didn't really know much about HTTP until I read the <a href="http://www.amazon.co.uk/gp/product/1565928628?ie=UTF8&amp;tag=struggforcomp-21&amp;linkCode=as2&amp;camp=1634&amp;creative=6738&amp;creativeASIN=1565928628">HTTP Pocket Reference</a>.  HTTP is simple, text based and stateless.  A client (web browser) issues a request, and the server issues a response.</p>
+
+<p>If you want to see the full gore of what's going install <a href="http://www.fiddler2.com/fiddler2/">Fiddler</a>.  It lets you inspect all the traffic going between your browser and the server, measure performance, and lots of other stuff.  Using fiddler I've captured a typical http request and response hitting the front page of this website.</p>
+
+<p>First the request:</p>
+<img title="a typical http request" alt="a typical http request" src="images/http-request.png"/>
+
+<p>The first line of the request is the really important one.  It consists of the Method, URI and HTTP version.  The two main request methods are GET and POST.  GET requests a document from the server, POST submits information to the server.  Other request methods are:  HEAD, PUT, LINK, UNLINK, DELETE, OPTIONS and TRACE.  In practice these aren't used much by web developers.  The URI is the location you want to send the request too, in this case "/" means the root of the web site.  <a href="http://www.w3.org/Protocols/rfc2616/rfc2616.html">HTTP/1.1</a> is the norm,  and you are extremely unlikely to see anything else.  <a href="http://en.wikipedia.org/wiki/Http">HTTP 1.0</a> is archaic, and <a href="http://www.w3.org/TR/WD-http-pep-960820">HTTP 1.2</a> never got out of committee.</p>
+
+<p>Next the response:</p>
+<img  title="a typical http response" alt="a typical http response" src="images/http-response.png" />
+
+<p>The response has three sections: header, blank line and content.  The type of the content is indicated by the "Content-type" line in the header, in this case it is HTML.  Another common content-type is gzip, which the browser would decompress before rendering.  The first line of the header has three parts: http-version, status-code and reason phrase.  In this case the status code is 200 which means OK.  The status codes are split into ranges which define their general meaning:</p>
+<table>
+<tbody>
+<tr>
+<td>Code Range</td>
+<td>Meaning</td>
+<td>Example</td>
+</tr>
+<tr>
+<td>100-199</td>
+<td>Informational</td>
+<td>100 Continue
+101 Switching Protocols</td>
+</tr>
+<tr>
+<td>200-299</td>
+<td>Success</td>
+<td>200 OK</td>
+</tr>
+<tr>
+<td>300-399</td>
+<td>Redirect</td>
+<td>301 Permanent Redirect
+304 Not Modified</td>
+</tr>
+<tr>
+<td>400-499</td>
+<td>Request Incomplete</td>
+<td>403 Forbidden
+404 Not Found</td>
+</tr>
+<tr>
+<td>500-599</td>
+<td>Server Error</td>
+<td>500 Internal Server Error</td>
+</tr>
+</tbody></table>
+
+<p>So that's the basics of http.  The plain text of the protocol makes it easy to see what's going on.  You can imagine parsing the response and implementing a primitive web browser.  More than that though, the bit which really bowls me over, is the blank line in the response message.  A stroke of genius.</p>
+
+</div>
+
+<div class="footer">
+    <!-- Previous -->
+    <!-- Home -->
+    <!-- Next -->
+</div>
+<script src="scripts/prism.js"></script>
+</body>
+</html>

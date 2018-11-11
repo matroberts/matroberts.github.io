@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Unit Testing with Email</title>
+    <meta name="description" content="Unit testing email by faking the SmtpClient.  Example code uses C# and System.Net.Mail." />
+    <link rel="canonical" href="https://moleseyhill.com/2009-07-20-unit-testing-with-email.html" />
+    <link href="styles/prism.css" rel="stylesheet" />
+    <link rel="shortcut icon" type="image/x-icon" href='favicon.ico' />
+</head>
+<body>
+<div class="header">
+    <h1><a href="index.html">Struggling for Competence</a></h1>
+    <p>Mat Roberts</p>
+</div>
+   
+
+<div class="content">
+<h2>Unit Testing with Email</h2>
+<time datetime="2009-07-20 23:21:09">2009-07-20 23:21:09</time>
+
+<p>Lots of applications send email.  You might send email to customers when they request a forgotten password, or you might send an email to support when an unhanded exception occurs.  The problem in unit testing is you don't want to actually send an email every time the test are run, but you may well want to test the logic around the email send.  How can you stub out the email for unit testing?</p>
+
+<p>You might have some code which looks a bit like this:</p>
+<pre>
+<code class="language-csharp">
+public void SendSupportMail(string toAddress)
+{
+    if (Regex.IsMatch(toAddress, @"^([0-9a-zA-Z]([-\.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})$"))
+    {
+        MailMessage message = new MailMessage("support@bigcorp.com", toAddress);
+        message.IsBodyHtml = false;
+        message.Subject = "BigCorp support wants to help";
+        message.Body = string.Format("BigCorp is dealing with your problem./nYour reference for this issue is {0}.", new Random().Next(0, 10000));
+        SmtpClient client = new SmtpClient();
+        client.Send(message);
+    }
+}
+</code>
+</pre>
+
+<p>On it's own, maybe this code isn't so bad.  It's simple enough that a unit test isn't going to provide huge value.  The problem happens later, when the SendSupportMail call get's embedded in some more complex business logic.  When you try to unit test that, emails start flying out, and you look a bit stupid.</p>
+
+<p>
+The problem unit testing this code is the line "SmtpClient client = new SmtpClient()".  Newing the SmtpClient binds the code to the real Smtp client.  It's going to send out a real email and you can't avoid it.  To make this unit-testable you need to fake out the SmtpClient.  With a fake Smtp client in place, the rest of the logic can run ok, but when client.Send(message) is called nothing will actually happen.  How do you do this?
+<ul>
+ <li>Make an Interface for the Smtp client.</li>
+ <li>Make two implementations for the Smtp client:
+  <ul>
+   <li>Real - calls the real Smtp client, for the real code.</li>
+   <li>Fake - for unit testing.</li>
+  </ul>
+ </li>
+ <li>Pass the interface into the constructor of the email helper.</li>
+ <li>Adjust the code to use the interface.</li>
+ <li>Add tests.</li>
+</ul>
+</p>
+
+<p>A unit tested version of the code looks like this:</p>
+<pre>
+<code class="language-csharp">
+using System;
+using System.Net.Mail;
+using System.Text.RegularExpressions;
+using MbUnit.Framework;
+
+namespace EmailDemo
+{
+    [TestFixture]
+    public class EmailTest
+    {
+        public interface ISmtpClient
+        {
+            void Send(MailMessage message);
+        }
+
+        public class RealSmtpClient : ISmtpClient
+        {
+            public void Send(MailMessage message)
+            {
+                SmtpClient client = new SmtpClient();
+                client.Send(message);
+            }
+        }
+
+        public class FakeSmtpClient : ISmtpClient
+        {
+            public bool MailSent { get; set; }
+            public FakeSmtpClient()
+            {
+                MailSent = false;
+            }
+            public void Send(MailMessage message)
+            {
+                MailSent = true;
+            }
+        }
+
+        public class EmailHelper
+        {
+            private ISmtpClient smtpClient;
+
+            public EmailHelper(ISmtpClient smtpClient)
+            {
+                this.smtpClient = smtpClient;
+            }
+
+            public void SendSupportMail(string toAddress)
+            {
+                if (IsValid(toAddress))
+                {
+                    MailMessage message = MakeMessage(toAddress);
+                    smtpClient.Send(message);
+                }
+            }
+
+            public MailMessage MakeMessage(string toAddress)
+            {
+                MailMessage message = new MailMessage("support@bigcorp.com", toAddress);
+                message.IsBodyHtml = false;
+                message.Subject = "BigCorp Support wants to help";
+                message.Body = string.Format("BigCorp is dealing with your problem./nYour reference for this issue is {0}.", new Random().Next(0, 10000));
+                return message;
+            }
+
+            public bool IsValid(string emailAddress)
+            {
+                return Regex.IsMatch(emailAddress, @"^([0-9a-zA-Z]([-\.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})$");
+            }
+        }
+
+        [Test]
+        public void IfEmailAddressIsValid_AnEmailShouldBeSent()
+        {
+            FakeSmtpClient fakeClient = new FakeSmtpClient();
+            EmailHelper helper = new EmailHelper(fakeClient);
+
+            helper.SendSupportMail("mat@littlecorp.com");
+
+            Assert.IsTrue(fakeClient.MailSent);
+        }
+
+        [Test]
+        public void IfEmailAddressIsInvalid_AnEmailShouldNotBeSent()
+        {
+            FakeSmtpClient fakeClient = new FakeSmtpClient();
+            EmailHelper helper = new EmailHelper(fakeClient);
+
+            helper.SendSupportMail("matatlittlecorp.com");
+
+            Assert.IsFalse(fakeClient.MailSent);
+        }
+    }
+}
+</code>
+</pre>
+
+<p>
+There are a few things to say about this code:
+<ul>
+	<li>I've separated the creation of the message, from the send of the message - doing this always seems to make the code clearer.</li>
+	<li>I've extracted the regex into an IsValid method, which better expresses the intention of the code.  It also makes it easy to add tests for just the regex.</li>
+	<li>I've <a href="http://msdn.microsoft.com/en-us/library/ms998267.aspx">copied the regex</a> from a reasonably reputable source, so I'm not really testing it properly.  If I wrote it myself, it would have a bunch of dedicated tests - regex always goes wrong.</li>
+	<li>Validating email addresses with regex is quite a controversial area.  Most regular expressions for validating email addresses <a href="http://haacked.com/archive/2007/08/21/i-knew-how-to-validate-an-email-address-until-i.aspx">are too strict</a>.  The problem is if you do it correctly you end up with <a href="http://www.ex-parrot.com/~pdw/Mail-RFC822-Address.html">something like this</a>.</li>
+	<li>I'm ambivalent about testing the MakeMessage method.  On the one hand it's a method that you could write test for, and that would make me feel good.  On the other I don't think it would actually help - you really need to see a real email, to check it is formatted correctly.</li>
+	<li>This code doesn't actually test sending an email.</li>
+</ul>
+</p>
+
+<p>To be absolutely clear, actually sending an email has not been tested.  This technique allows you to test the other logic <em>without</em> sending an email.  You can also check that a mail would have been sent, if the real Smtp client were plugged in. </p>
+
+<p>To really test the email send, you need an integration test.  Actually sending an email is important.  You need to check that the Smtp client configuration is correct, and you want to make sure the real email looks right.  The simplest way to integration test the code is to just execute it, with your own email address, and check your inbox.  If you only need to check the format of the email you <a href="http://amrelgarhy.com/blog/sending-mails-development-machine-without-actual-mail-server/">can write it to disk</a>, instead of going via smtp. </p>
+
+<p>Failing to put the real Smtp client under test is somewhat unsatisfactory.  What would be really nice is if you could automate that integration test, so your Smtp configuration was tested.  <a href="http://haacked.com/archive/2006/05/30/ATestingMailServerForUnitTestingEmailFunctionality.aspx">Phil Haack describes doing this</a> with an open source Smtp cliemt, and a testing wrapper he wrote for it.  More power to the Haack.  What I can't help thinking though, is that the .net framework needs to be more accessible for testing in this area.</p>
+
+<p>In the code shown here I chose to fake out just the call to the Smtp client.  There's another way you could go - put an interface on the whole email helper class.  The interface would be something like void SendMail(string from, string to, string subject, string message).  With this approach the whole email creation process is behind the interface.  This could well work better.  The problem I've had in the past though, is the types of email sent out can vary quite a lot: Plain-text or html, attachments or not, CC's etc.  By the time I'd finished I'd wrapped the whole MailMessage class, only badly.  Still a perfectly legitimate approach.</p>
+
+<p>The main thing to remember is, if you want to unit test you need to make the external resources replaceable.</p>
+
+    
+</div>
+
+<div class="footer">
+    <!-- Previous -->
+    <!-- Home -->
+    <!-- Next -->
+</div>
+<script src="scripts/prism.js"></script>
+</body>
+</html>
