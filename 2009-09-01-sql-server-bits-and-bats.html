@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Sql Server Bits and Bats</title>
+    <meta name="description" content="Sql Server cheat sheet.  How to do some common tasks in the query window and  GUI.  A few notes about connection strings." />
+    <link rel="canonical" href="https://moleseyhill.com/2009-09-01-sql-server-bits-and-bats.html" />
+    <link href="styles/prism.css" rel="stylesheet" />
+    <link rel="shortcut icon" type="image/x-icon" href='favicon.ico' />
+</head>
+<body>
+<div class="header">
+    <h1><a href="index.html">Struggling for Competence</a></h1>
+    <p>Mat Roberts</p>
+</div>
+   
+
+<div class="content">
+<h2>Sql Server Bits and Bats</h2>
+<time datetime="2009-09-01 18:35:40">2009-09-01 18:35:40</time>
+
+    
+<p><a href="2009-03-09-create-alter-table.html">More of that pesky SQL Server stuff</a> that I can never quite remember (checked with SQL Server 2008):</p>
+
+<table>
+<tr><th colspan="2">From A Query Window</th></tr>
+<tr><td>F5<br/>Ctrl+E<br/>Alt+X</td><td><a href="http://msdn.microsoft.com/en-us/library/ms174205.aspx">Execute Query</a></td></tr>
+<tr><td><a href="http://msdn.microsoft.com/en-us/library/ms174205.aspx">Ctrl+T</a></td><td>Output as Text</td></tr>
+<tr><td><a href="http://msdn.microsoft.com/en-us/library/ms174205.aspx">Ctrl+D</a></td><td>Output as Grid</td></tr>
+<tr><td>select @@version</td><td><a href="http://support.microsoft.com/kb/321185">Version of sql server</a></td></tr>
+<tr><td>select serverproperty('productversion'), <br/>serverproperty('productlevel'), <br/>serverproperty('edition')</td><td><a href="http://support.microsoft.com/kb/321185">Version of sql server</a> (Since 2000)</td></tr>
+<tr><td><a href="http://msdn.microsoft.com/en-us/library/ms187335(SQL.90).aspx">sp_help</a> table</td><td>Long info about a table (or other object)</td></tr>
+<tr><td><a href="http://msdn.microsoft.com/en-us/library/ms186250.aspx">sp_tables</a> table</td><td>Short info about a table</td></tr>
+<tr><td><a href="http://msdn.microsoft.com/en-us/library/ms188771(SQL.90).aspx">sp_helpindex</a> table</td><td>Indexes for a table</td></tr>
+<tr><td><a href="http://msdn.microsoft.com/en-us/library/ms174313.aspx">sp_who</a></td><td>Current  connections</td></tr>
+<tr><td><a href="http://msdn.microsoft.com/en-us/library/ms173730.aspx">kill</a> spid</td><td>Kill a  connection</td></tr>
+<tr><td><a href="http://msdn.microsoft.com/en-us/library/ms188351.aspx">sp_rename</a> 'dbo.oldtable', 'newtable'</td><td>Rename a table (or anything in sys.objects)</td></tr>
+<tr><td><a href="http://msdn.microsoft.com/en-us/library/ms188351.aspx">sp_rename</a> 'dbo.table.oldcolumn', 'newcolumn', 'COLUMN'</td><td>Rename a column</td></tr>
+</table>
+
+<br/>
+<table>
+<tr><th colspan="2">From SQL Server Management Studio GUI</th></tr>
+<tr><td>Limit Server memory</td><td>Right Click (at top level)-&gt;Properties-&gt;Memory-&gt;Maximum Memory</td></tr>
+<tr><td>Logons</td><td>Right Click (at top level)-&gt;Activity Monitor</td></tr>
+<tr><td>Simple Recovery</td><td>Right Click (on database)-&gt;Options-&gt;Recovery-&gt;Simple</td></tr>
+<tr><td>Backup</td><td>Right Click (on database)-&gt;Tasks-&gt;Backup</td></tr>
+<tr><td>Shrink</td><td>Right Click (on database)-&gt;Tasks-&gt;Shrink</td></tr>
+<tr><td>Rename database files</td><td>Right Click (on database)-&gt;Tasks-&gt;Detach<br/>Rename on file system<br/>Right Click (at top level)-&gt;Tasks-&gt;Attach (will have to adjust filenames)</td></tr>
+</table>
+
+<br/>
+<table>
+<tr><th colspan="2">Connection String</th></tr>
+<tr><td>Test connection with telnet</td><td>telnet bsq101 1433<br/>Ctrl + ]<br/>quit</td></tr>
+<tr><td>Test connection with odbc</td><td>On desktop make empty text file: test.udl<br/>double click<br/>fill in odbc credentials<br/>click test connection</td></tr>
+<tr><td><a href="http://weblogs.asp.net/jgalloway/archive/2007/02/24/sql-force-the-protocol-tcp-named-pipes-etc-in-your-connection-string.aspx">Force protocol in connection string</a></td><td>server=tcp:hostname<br/>server=tcp:hostname, portNumber<br/>server=np:hostname<br/>server=np:\\hostname\pipe\pipeName<br/></td></tr>
+<tr><td><a href="http://msdn.microsoft.com/en-us/library/8xx3tyca(VS.71).aspx">Switch off connection pooling in connection string</a></td><td>pooling=false;</td></tr>
+</table>
+
+</div>
+
+<div class="footer">
+    <!-- Previous -->
+    <!-- Home -->
+    <!-- Next -->
+</div>
+<script src="scripts/prism.js"></script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+﻿/* centre align content 
+http://thoughtfulviewfinder.in/vertically-horizontally-center-align-css-html/
+http://pmob.co.uk/pob/hoz-vert-center.htm 
+*/
+
+body, html {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+div, h1 {
+    margin: 0;
+    padding: 0;
+}
+
+body
+{
+    font-size: 16px;
+    font-family: courier new, courier;
+    background-color: white;
+    min-height:380px;
+    min-width:380px;
+}
+
+#tbl {
+    height:100%;
+    width:100%;
+    display:table;
+    vertical-align:middle;
+}
+
+#tcell {
+    text-align: center;
+    position:relative;
+    vertical-align:middle;
+    display:table-cell;
+}
+
+#content h1
+{
+    font-size: 64px;
+}
+
+#content div {
+    margin: 40px 0;
+    font-size: 128px;
+    font-weight: bold;
+}
+
+#content button {
+    font-size: 32px;
+}
+
+/* jquery ui */
+.ui-button,  .ui-button-text, .ui-button {  
+    font-family: courier new, courier !important;
+}

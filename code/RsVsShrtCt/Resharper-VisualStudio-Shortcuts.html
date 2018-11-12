@@ -1,0 +1,215 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <title>ReSharper and Visual Studio Keyboard Shortcuts</title>
+    <meta name="description" content="Selected Resharper and Visual Studio Keyboad Shortcuts (IntelliJ Keybindings)." /> 
+    <link rel="Shortcut Icon" href="resharper.ico" type="image/x-icon"/>    
+    <style type="text/css" media="screen">
+        body
+        {
+        	font-family: Verdana, Arial, Helvetica, sans-serif;
+        	color: #00008B;
+        	background-color: #D8FFB0;
+        }
+        div
+        {
+        	margin-right: 5px;
+        	margin-bottom: 5px;
+        }
+        table
+        {
+        	background-color: #FFFF99;
+        	border-spacing: 0px;
+        	border-style: solid;
+        	border-width: 1px;
+        	border-color: black;
+        	border-collapse: collapse;
+        }
+        th, td
+        {
+        	border-style: solid;
+        	border-width: 1px;
+        	border-color: black;
+        	margin: 0px;
+        	padding: 2px;
+        	font-size: smaller;
+        }
+        a
+        {
+            text-decoration: none;
+        }
+        h1, h3
+        {
+            margin-top:0px;
+        }
+    </style>
+</head>
+<body>
+<h1>ReSharper 6 and Visual Studio 10 Keyboard Shortcuts</h1>
+<h3>IntelliJ Keybindings</h3>
+
+
+
+<div style="float:left">
+    <table>
+        <tr><th colspan="2">Tabbing<a href="http://www.johndcook.com/blog/2009/11/05/patterns-windows-keyboard-shortcuts/">&sup1;</a></th></tr>          
+        <tr><td>Ctrl+Tab</td><td>Cycle tabs in application</td></tr>
+        <tr><td>Ctrl+F4</td><td>Close Tab</td></tr>
+        <tr><td>Esc</td><td>Return to document window</td></tr>
+        <tr><td>Alt+Tab</td><td>Cycle though applications</td></tr>  
+        <tr><td>Alt+F4</td><td>Close application</td></tr>  
+        <tr><th colspan="2">Windows</th></tr>
+        <tr><td>Ctrl+F11</td><td>File Structure</td></tr>
+        <tr><td>F4</td><td>Properties Window</td></tr>
+        <tr><td>F7</td><td>Toggle .aspx + .aspx.cs</td></tr>
+        <tr><td>Ctrl+Alt+L</td><td>Solution explorer</td></tr> 
+        <tr><td>Shift+Alt+L</td><td>Locate in solution explorer<a href="http://www.rasmuskl.dk/post/ReSharper-Series-Part-2-Basic-Navigation.aspx">&#x2076;</a></td></tr>  
+        <tr><td>Shift+Alt+Enter</td><td>Expand to full screen</td></tr>              
+        <tr><td>Ctrl+E</td><td>Recent Files</td></tr>                         
+        <tr><td>Ctrl+Shift+E</td><td>Stack Trace Exprlorer<br />paste in a stack trace.</td></tr>                         
+    </table>
+</div>
+
+<div style="float:left">
+    <table>
+        <tr><th colspan="2">Build</th></tr>
+        <tr><td>Ctrl+Break</td><td>Stop Build</td></tr>
+        <tr><td>Crtl+(Shift)+S</td><td>Save (All)</td></tr>
+        <tr><td>Crtl+Shift+B</td><td>Build All</td></tr>
+        <tr><th colspan="2">Test</th></tr>
+        <tr><td>Alt+R+U+R</td><td>Run test (R#)<a href="http://stackoverflow.com/questions/334933/resharper-run-all-unit-tests-in-a-project-or-solution-at-once/335287#335287">&sup1;&sup1;</a></td></tr>
+        <tr><td>Alt+R+U+D</td><td>Debug test (R#)<a href="http://stackoverflow.com/questions/334933/resharper-run-all-unit-tests-in-a-project-or-solution-at-once/335287#335287">&sup1;&sup1;</a></td></tr>
+        <tr><td>Ctrl+R+T</td><td>Run Test (VS)<a href="http://msdn.microsoft.com/en-us/library/ms182470.aspx#RunTestsFromSolutionFiles">&#x2074;</a></td></tr>
+        <tr><td>Ctrl+R+Ctrl+T</td><td>Debug Test (VS)<a href="http://msdn.microsoft.com/en-us/library/ms182470.aspx#RunTestsFromSolutionFiles">&#x2074;</a></td></tr>
+        <tr><th colspan="2">Debug</th></tr>
+        <tr><td>(Shift)+F5</td><td>Start (Stop)</td></tr>
+        <tr><td>F10</td><td>Step Over</td></tr>
+        <tr><td>Ctrl+F10</td><td>Run to Cursor</td></tr>
+        <tr><td>(Shift)+F11</td><td>Step In (Out)</td></tr>
+        <tr><td>F9</td><td>Breakpoint Toggle</td></tr>
+        <tr><td>Ctrl+Shift+F9</td><td>Clear All Breakpoints</td></tr>
+        <tr><td>Ctrl+Alt+E</td><td>Set up Exceptions</td></tr>
+    </table>
+</div>
+
+<div style="float:left">
+    <table>
+        <tr><th colspan="2">Navigation</th></tr>
+        <tr><td>Ctrl+Shift+G</td><td>Super Go</td></tr>  
+        <tr><td>Crtl+Shift+Alt+G</td><td>Related Files (aspx from ascx)</td></tr>
+        <tr><td>Alt+F7</td><td>Find Usgaes</td></tr>
+        <tr><td>Ctrl+Shift+Alt+F7</td><td>Highlight Usgaes</td></tr>
+        <tr><td><b>Crtl+F12</b></td><td>Go To Member*&#8224;</td></tr>
+        <tr><td><b>(Shift)+F12</b></td><td>Next (Previous) quick fix</td></tr>  
+        <tr><td><b>(Shift)+Alt+F12</b></td><td>Next (Previous) error fix</td></tr>  
+        <tr><td>Ctrl+N</td><td>Go To Type*&#8224;<a href="http://www.rasmuskl.dk/post/ReSharper-Series-Part-2-Basic-Navigation.aspx">&#x2076;</a></td></tr>  
+        <tr><td>Ctrl+Shift+N</td><td>Go To File*&#8224;<a href="http://www.rasmuskl.dk/post/ReSharper-Series-Part-2-Basic-Navigation.aspx">&#x2076;</a></td></tr>   
+        <tr><td>Ctrl+Shift+Alt+N</td><td>Go To Symbol (solution wide)*&#8224;</td></tr>
+        <tr><td>Crtl+-</td><td>Back</td></tr>
+        <tr><td>Crtl+Shift+-</td><td>Forward</td></tr>
+        <tr><td>Crtl+Shift+Backspace</td><td>Previous Edit</td></tr>
+        <tr><td>Crtl+Shift+Alt+Backspace</td><td>Show recent edits</td></tr>
+        <tr><td>Ctrl+G</td><td>Goto Line #</td></tr>
+        <tr><td>Ctrl+[</td><td>Goto containing declaration</td></tr>
+        <tr><td>Ctrl+]</td><td>Find Matching bracket</td></tr>
+        <tr><td>Ctrl+(Shift)+F</td><td>Find (In Files)</td></tr>
+        <tr><td>Ctrl+(Shift)+H</td><td>Replace (In Files)</td></tr>
+        <tr><td>Ctrl+(Shift)+F3</td><td>Find Selected (previous)</td></tr>
+        <tr><td>Alt+Down (Up) Arrow</td><td>Next (previous) member<a href="http://www.rasmuskl.dk/post/ReSharper-Series-Part-4-Moving-Code.aspx">&#x2078;</a></td></tr>
+        <tr><td><b>Ctrl+Alt+Shift+A</b></td><td>Inspect this (inc type hierachy)</td></tr>
+    </table>
+</div>
+
+<div style="float:left">
+    <table>
+        <tr><th colspan="2">Refactor</th></tr>          
+        <tr><td>F2</td><td>Rename</td></tr>  
+        <tr><td>Ctrl+Shift+R</td><td>Refactor this</td></tr>  
+        <tr><td><b>Ctrl+Alt+V</b></td><td>Extract variable<br />type declartion then extract</td></tr>  
+        <tr><td>Alt+Enter</td><td>Quick Fix (lightbulb)<a href="http://www.thejoyofcode.com/My_new_favourite_Resharper_features.aspx">&sup3;</a> <a href="http://www.rasmuskl.dk/post/ReSharper-Series-Part-1-The-Power-of-Alt2bEnter.aspx">&#x2075;</a> <a href="http://resharper.blogspot.com/2007/05/jedi-way-coding-in-reverse.html">&sup1;&#x2070;</a><br />
+                                    &nbsp;split declaration-assignment<br />
+                                    &nbsp;move to outer scope</td></tr>  
+    </table>
+</div>
+
+<div style="float:left">
+    <table>
+        <tr><th colspan="2">Regions</th></tr>          
+        <tr><td>Ctrl+M, Ctrl+M</td><td>Toggle Outlining</td></tr>
+        <tr><td>Ctrl+M, Ctrl+O</td><td>Collapse all region</td></tr>  
+        <tr><td>Ctrl+M, Ctrl+P</td><td>Expand all regions</td></tr>  
+        <tr><th colspan="2">Bookmarks</th></tr>          
+        <tr><td>Ctrl+(number)</td><td>Goto Bookmark</td></tr>  
+        <tr><td>Ctrl+Shift+(number)</td><td>Set Bookmark</td></tr>  
+        <tr><td>Ctrl+`</td><td>View Bookmarks</td></tr>  
+    </table>
+</div>
+
+
+<div style="float:left">
+    <table>
+        <tr><th colspan="2">Coding Assistance</th></tr>          
+        <tr><td>Ctrl+P</td><td>Parameter Information</td></tr>
+        <tr><td>Ctrl+/</td><td>Comment/Uncomment</td></tr>  
+        <tr><td>Ctrl+Shift+/</td><td>Block Comment/Uncomment</td></tr>  
+        <tr><td>Ctrl+(Shift)+W</td><td>Expand (Reduce) Selection</td></tr>  
+        <tr><td>Ctrl+D</td><td>Duplicate line or selection</td></tr>  
+        <tr><td>Ctrl+Shift+Space</td><td>Smart Intellisense&#8225;<a href="http://resharper.blogspot.com/2007/05/code-completion-with-resharper.html">&#x2077;</a></td></tr>  
+        <tr><td>Ctrl+Alt+Space</td><td>Import Symbol Intellisense&#8225;<a href="http://resharper.blogspot.com/2007/05/code-completion-with-resharper.html">&#x2077;</a></td></tr>  
+        <tr><td><b>Ctrl+Shift+Enter</b></td><td>Complete Statement</td></tr>  
+        <tr><td>Ctrl+Shift+Alt+Arrow</td><td>Move Block<a href="http://www.rasmuskl.dk/post/ReSharper-Series-Part-4-Moving-Code.aspx">&#x2078;</a></td></tr>
+    </table>
+</div>
+
+
+<div style="float:left">
+    <table>
+        <tr><th colspan="2">Code Generation/Templates</th></tr>          
+        <tr><td>Alt+Ins</td><td>Generate Members<a href="http://www.thejoyofcode.com/My_new_favourite_Resharper_features.aspx">&sup3;</a> <a href="http://www.rasmuskl.dk/post/ReSharper-Series-Part-5-Generating-Code.aspx">&#x2079;</a><br />
+                                &nbsp;constructor, properties,<br />
+                                &nbsp;override members etc.<br />
+                                &nbsp;ToString (Formatting)<br />
+                                &nbsp;Implement inner accessors<br />
+                                (Works in solution too)</td></tr>  
+        <tr><td>Ctrl+J</td><td>Template<br />
+                                &nbsp;Attribute class</td></tr>  
+        <tr><td>Ctrl+Alt+J</td><td>Surround With Template<br />7 - {}</td></tr>  
+        <tr><td>abbrv+Tab</td><td>Generate Snippet<br />
+                                    &nbsp;ctor<br />
+                                    &nbsp;cw<br />
+                                    &nbsp;prop(g)<br />
+                                    &nbsp;nguid - new guid</td></tr>  
+    </table>
+</div>
+
+<div style="float:left">
+    <table>
+        <tr><th colspan="2">Edit</th></tr>
+        <tr><td>Ctrl+L</td><td>Delete Line (clipboard)</td></tr>  
+        <tr><td>Ctrl+Shift+L</td><td>Delete Line</td></tr>  
+        <tr><td>Ctrl+K, Ctrl+F</td><td>Format Selection</td></tr>
+        <tr><td>Alt+Drag</td><td>Select block of text</td></tr>                        
+        <tr><td>Ctrl+Shift+V</td><td>Paste Multiple</td></tr>
+        <tr><td>Ctrl+Shift+U</td><td>Upper case</td></tr>          
+        <tr><td>Ctrl+Backspace</td><td>Delete previous word</td></tr>          
+        <tr><td>Ctrl+Delete</td><td>Delete next word</td></tr>          
+    </table>
+</div>
+
+<div style="float:left">
+    <table>
+        <tr><td>* Can type just the camel humps</td></tr>
+        <tr><td>&#8224; Switch between these windows, by retyping shortcut</td></tr>
+        <tr><td>&#8225; Tab to replace, Enter to add<a href="http://resharper.blogspot.com/2007/05/code-completion-with-resharper.html">&sup2;</a></td></tr>
+    </table>
+</div>
+
+<hr style="clear:both" />
+<ul>
+<li><a href="http://www.microsoft.com/downloads/details.aspx?FamilyID=e5f902a8-5bb5-4cc6-907e-472809749973&displaylang=en">Visual Studio Keyboard Shortcuts</a></li>
+<li><a href="http://www.jetbrains.com/resharper/documentation/documentation.html">ReSharper Shortcuts</a></li>
+<li><a href="http://blog.excastle.com/2007/02/04/full-list-of-keystrokes-changed-by-resharper-251/">Keybindings after installing ReSharper</a></li>
+<li><a href="http://blog.excastle.com/2007/01/31/blog-event-the-31-days-of-resharper/ ">31 Days of ReSharper</a></li>
+</ul>
+</body>
+</html>

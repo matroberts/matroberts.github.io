@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Bayesian Probability of Success</title>
+    <meta name="description" content="Probability of Success Next Time= (k+1)/(n+2), where k is the number of successful events so far, and n is the total number of trials so far." />
+    <link rel="canonical" href="https://moleseyhill.com/2009-09-22-bayesian-probability-of-success.html" />
+    <link href="styles/prism.css" rel="stylesheet" />
+    <link rel="shortcut icon" type="image/x-icon" href='favicon.ico' />
+</head>
+<body>
+<div class="header">
+    <h1><a href="index.html">Struggling for Competence</a></h1>
+    <p>Mat Roberts</p>
+</div>
+   
+
+<div class="content">
+<h2>Bayesian Probability of Success</h2>
+<time datetime="2009-09-22 22:26:25">2009-09-22 22:26:25</time>
+
+    
+<p>One of the tricky things with probability is what you do when your sample size isn't very big.  For example, say a new rocket has had one successful launch and no launch failures.  How safe is it to ride on the next flight?  A naive frequency based approach would say, "1 launch, 1 success, therefore probability of success is 1", completely discounting the possibility of failure all together.</p>
+
+<p>You know that this is wrong.  Say you have a choice of on a different rocket which has had 99 successful launches and one failure.  The probability for success is 0.99.  What would you choose?  I'd go for the one with the 100 launches, you just know a lot more about it.</p>
+
+<p>Simple statistics don't work properly with small sample sizes.  What we need is a formula which takes account of the fact we don't know anything at the beginning.  <a href="http://en.wikipedia.org/wiki/Baysian">Bayesian statistics</a> to the rescue!  On <a href="http://www.spacelaunchreport.com/reliability2009.txt">space launch report</a> I found this ace formula for estimating the probability properly:</p>
+
+<p><img  alt="probability of success=(k+1)/(n+2)" title="probability of success=(k+1)/(n+2)" src="images/probability-of-success.png" /></p>
+
+<p>
+Here P is the probability of success next time, k is the number of successful events so far, and n is the total number of trials so far.  It's called "the first level Bayesian estimate of mean predicted probability of success".  Therefore:
+<ul>
+	<li>New rocket: k=1, n=1 therefore P=0.67</li>
+	<li>Established rocket: k=99, n=100 therefore P=0.99</li>
+</ul>
+</p>
+
+<p>For the new rocket it predicts a 2/3 chance that the next flight will be successful.  This captures your state of ignorance about the rocket.  It's had one successful flight, and that's good, but you still don't know that much about it.  For the established rocket it predicts a success probability of 0.99, which is pretty much what normal probability would tell you.</p>
+
+<p>What about if no launches have yet occurred?  Well the formula says probability of success is 0.5.   A fifty-fifty chance of failure, kind of makes sense; you've not tried something yet, and you have no other information, so what else can you say?</p>
+
+<p>This last point does raise a tricky problem with Bayesian reasoning.  You have to make an initial guess at the probability, called the prior probability.  In this case the choice was a 50-50 chance, which does sound reasonable, but it's still a guess.</p>
+
+<p>Of course the formula doesn't just apply to rockets.  It works fine for anything which is success/failure, true/false.</p>
+
+</div>
+
+<div class="footer">
+    <!-- Previous -->
+    <!-- Home -->
+    <!-- Next -->
+</div>
+<script src="scripts/prism.js"></script>
+</body>
+</html>

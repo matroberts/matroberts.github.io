@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+    <link rel="stylesheet" type="text/css" href='simpleform.css' />
+    <title>Simple Form</title>
+</head>
+<body>
+<div id="top_container">
+    <h1>Simple Form</h1>
+    <div class="outer_box">
+        <div class="inner_box simpleform">
+            <p>
+                <label for="Name">Name</label>
+                <input id="Name" maxlength="100" name="Name" type="text" value="" />
+            </p>
+            <p>
+                <label for="Address">Address</label>
+                <textarea cols="20" id="Address" name="Address" rows="10"></textarea>
+            </p>
+            <p>
+                <label for="Telephone">Telephone</label>
+                <input id="Telephone" maxlength="15" name="Telephone" type="text" value="" />
+            </p>
+            <p>
+                <label for="Type">Type</label>
+                <select id="Type" name="Type">
+                    <option value="1">Default</option>
+                    <option value="2">Not Default</option>
+                </select>
+            </p>
+            <p>
+                <label for="IsAdmin">Admin</label>
+                <input id="IsAdmin" name="IsAdmin" type="checkbox" value="true" />
+            </p>
+            <div class="button">
+                <ul>
+                    <li><a href=""><span>OK</span></a></li>
+                    <li><a href=""><span>Cancel</span></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

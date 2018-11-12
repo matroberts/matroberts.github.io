@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>CSS Simple Form</title>
+    <meta name="description" content="Example of a simple form layout using CSS.  Also explains how to make a CSS button with a transparent background." />
+    <link rel="canonical" href="https://moleseyhill.com/2009-10-07-css-simple-form.html" />
+    <link href="styles/prism.css" rel="stylesheet" />
+    <link rel="shortcut icon" type="image/x-icon" href='favicon.ico' />
+</head>
+<body>
+<div class="header">
+    <h1><a href="index.html">Struggling for Competence</a></h1>
+    <p>Mat Roberts</p>
+</div>
+   
+
+<div class="content">
+<h2>CSS Simple Form</h2>
+<time datetime="2009-10-07 23:33:36">2009-10-07 23:33:36</time>
+
+    
+<p>Recently at work we've been working on a new website, with a CSS based design.  The initial site design was done by a <a href="http://www.michaeledwards.me.uk/index.php">real web designer</a>.  This post shows some of the CSS techniques I learnt from his style sheets.  The example is hardly ground breaking, just the layout of a simple form, but interesting all the same.  You can see a <a href="code/simpleform/simpleform.htm">simple form here</a>, and the <a href="code/simpleform/simpleform.css">full css file here</a>.</p>
+
+<h3>Fancy Box</h3>
+<p>The simple form is inside a fancy box, with a white inner boarder and a graduated fill background.   The box is made from a div within a div.</p>
+
+<pre>
+<code class="language-markup">
+&lt;div class="outer_box"&gt; 
+&lt;div class="inner_box simpleform"&gt; 
+</code>
+</pre>
+
+<p>The classes outer_box and inner_box together style the fancy box.  The graduated fill is made with an image, a few pixels wide, which is repeated horizontally across the bottom of the inner box.  The background colour of the inner box is chosen to match the color at the top of the graduated fill, so that if the height of the box is bigger than the image, there is no gap in the background.  The thin white strip between the inner and outer boxes is simply 4px of white padding on the outer box.  </p>
+
+<pre>
+<code class="language-css">
+.outer_box {
+border:1px solid #aff53d;  
+background-color:#fff;  
+padding:4px;
+}
+.inner_box {
+padding:1em;
+background-color:#d3f49d;
+background-image:url(background_fill.jpg);
+background-repeat:repeat-x;
+background-position:bottom left;
+}
+</code>
+</pre>
+
+<h3>Column Layout</h3>
+
+<p>The labels and entry boxes have a column layout.  To do this the labels are floated left and given a width (both the float and width are required).  Each row is wrapped in a &lt;p&gt; tag, which is given a bottom margin for row spacing.</p>
+
+<pre>
+<code class="language-markup">
+&lt;p&gt; 
+    &lt;label for="Name"&gt;Name&lt;/label&gt; 
+    &lt;input id="Name" maxlength="100" name="Name" type="text" value="" /&gt; 
+&lt;/p&gt; 
+</code>
+</pre>
+
+<p>The style of all the form content is defined by the simpleform class which is applied to the inner_box div.  Note the use of decent selectors, the <a href="2009-05-11-css-enlightenment.html">key to CSS enlightenment</a>.</p>
+
+<pre>
+<code class="language-css">
+.simpleform p {
+margin-bottom:10px;
+}
+.simpleform label {
+float:left;
+width:12em;
+}
+.simpleform input {
+width:180px;
+padding:1px;
+font-size:8pt;   
+}
+</code>
+</pre>
+
+<h3>Button with Transparent Background</h3>
+
+<p>The buttons have rounded corners with a transparent background.  The markup for the buttons is quite simple:</p>
+
+<pre>
+<code class="language-markup">
+&lt;div class="button"&gt; 
+    &lt;ul&gt; 
+        &lt;li&gt;&lt;a href=""&gt;&lt;span&gt;OK&lt;/span&gt;&lt;/a&gt;&lt;/li&gt; 
+        &lt;li&gt;&lt;a href=""&gt;&lt;span&gt;Cancel&lt;/span&gt;&lt;/a&gt;&lt;/li&gt; 
+    &lt;/ul&gt; 
+&lt;/div&gt; 
+</code>
+</pre>
+
+<p>The CSS for the buttons is rather more complex.  But basically the button is made from three images, attached to the &lt;li&gt;, &lt;a&gt; and &lt;span&gt; elements.</p>
+
+<pre>
+<code class="language-css">
+.button {
+height:24px;
+line-height:14px;
+}
+.button ul {
+list-style:none;
+}
+.button ul li {
+float:left;
+background-image:url(button_right.gif);
+background-repeat:no-repeat;
+background-position:top right;
+margin:0 0 0 10px;
+} 
+.button li:first-child {
+margin:0;    
+}
+.button li a {
+display:block;
+background-image: url(button_left.gif);
+background-repeat:no-repeat;
+background-position:top left;
+padding:0 18px;
+text-decoration:none;
+}
+.button li span {
+display:block;
+background-image:url(button_middle.gif);
+background-repeat:repeat-x;
+background-position:top left;
+padding:5px 0;
+color:#487500;
+font-weight:bold;
+}
+</code>
+</pre>
+
+<p>There are a few subtleties in the CSS:
+<ul>
+	<li>The float:left; on the &lt;li&gt; elements makes the buttons line up horizontally rather than  vertically.</li>
+	<li>Both the &lt;a&gt; and &lt;span&gt; element have display:block, to make them <a href="2009-09-28-css-block-verses-inline.html">respect the top and bottom, margins and paddings</a>.</li>
+	<li>The height (24px) must equal the line-height (14px) plus the spans padding-top (5px) and padding-bottom (5px).</li>
+	<li>The &lt;li&gt; elements have a margin-left of 10px to make the spacing between the buttons.  However you don't want a left-margin on the first button, so this is overridden and set to 0px, with the li:first-child construct.</li>
+</ul>
+</p>
+
+<p>There are <a href="http://speckyboy.com/2009/05/27/22-css-button-styling-tutorials-and-techniques/">lots of tutorials</a> describing CSS based buttons, but I found <a href="http://www.oscaralexander.com/tutorials/how-to-make-sexy-buttons-with-css.html">Alex Griffioen's sexy buttons</a> particularly useful.</p>
+
+
+</div>
+
+<div class="footer">
+    <!-- Previous -->
+    <!-- Home -->
+    <!-- Next -->
+</div>
+<script src="scripts/prism.js"></script>
+</body>
+</html>

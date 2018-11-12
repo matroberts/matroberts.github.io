@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>CSS Block verses Inline</title>
+    <meta name="description" content="This post summarises the differences between the inline and block display types in CSS." />
+    <link rel="canonical" href="https://moleseyhill.com/2009-09-28-css-block-verses-inline.html" />
+    <link href="styles/prism.css" rel="stylesheet" />
+    <link rel="shortcut icon" type="image/x-icon" href='favicon.ico' />
+</head>
+<body>
+<div class="header">
+    <h1><a href="index.html">Struggling for Competence</a></h1>
+    <p>Mat Roberts</p>
+</div>
+   
+
+<div class="content">
+<h2>CSS Block verses Inline</h2>
+<time datetime="2009-09-28 18:21:17">2009-09-28 18:21:17</time>
+
+    
+<p>
+All elements in CSS have one of <a href="http://webdesignfromscratch.com/html-css/css-block-and-inline.php">three display types</a>.  The <a href="http://www.webcredible.co.uk/user-friendly-resources/css/more-css-tricks.shtml">characteristics</a> of these types are:
+<ul>
+  <li>Block (display:block;)
+    <ul>
+      <li>New line before and after.</li>
+      <li>Takes up the available width.</li>
+      <li>Width, height, margin-top, margin-bottom can be set.</li>
+    </ul>
+  </li>
+  <li>Inline (display:inline;)
+    <ul>
+	<li>No new line.</li>
+        <li>Only uses the width it needs.</li>
+        <li>Width, height, margin-top, margin-bottom, <a href="http://www.maxdesign.com.au/presentation/inline/">padding-top, padding-bottom</a> are ignored.</li>
+    </ul>
+  </li>
+  <li>None (display:none;)
+    <ul>
+	<li>Not visible.</li>
+    </ul>
+  </li>
+</ul>
+</p>
+
+<p>Each HTML tag has a natural display type, which can be overridden with the CSS display property.</p>
+<table>
+<caption><a href="http://www.w3.org/TR/xhtml1/dtds.html">Display types for common Html tags</a></caption>
+<tr><th>Block</th><th>Inline</th><th>None</th></tr>
+<tr><td>&lt;div&gt;</td><td>&lt;span&gt;</td><td>&lt;meta&gt;</td></tr>
+<tr><td>&lt;h1&gt;...&lt;h6&gt;</td><td>&lt;a&gt;</td><td>&lt;style&gt;</td></tr>
+<tr><td>&lt;p&gt;</td><td>&lt;b&gt;,&lt;strong&gt;</td><td></td></tr>
+<tr><td>&lt;ul&gt;,&lt;ol&gt;,&lt;dl&gt;</td><td>&lt;img/&gt;</td><td></td></tr>
+<tr><td>&lt;li&gt;,&lt;dt&gt;,&lt;dd&gt;</td><td>&lt;br/&gt;</td><td></td></tr>
+<tr><td>&lt;table&gt;,&lt;tr&gt;</td><td>&lt;em&gt;,&lt;i&gt;</td><td></td></tr>
+<tr><td>&lt;blockquote&gt;</td><td>&lt;input&gt;</td><td></td></tr>
+<tr><td>&lt;pre&gt;</td><td>&lt;addr&gt;,&lt;acronym&gt;</td><td></td></tr>
+<tr><td>&lt;form&gt;,&lt;fieldset&gt;</td><td>&lt;sub&gt;,&lt;sup&gt;</td><td></td></tr>
+<tr><td></td><td>&lt;label&gt;</td><td></td></tr>
+</table>
+
+<p>The <a href="https://stackoverflow.com/a/133064">difference between display:none and visibility:hidden</a>, is that a display:none element takes up no space on the page, whereas an visibility:hidden element still uses space - you just can't see it.</p>
+
+</div>
+
+<div class="footer">
+    <!-- Previous -->
+    <!-- Home -->
+    <!-- Next -->
+</div>
+<script src="scripts/prism.js"></script>
+</body>
+</html>

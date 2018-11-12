@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+    <head>
+        <title>Pomodoro Timer</title>
+        <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/themes/base/jquery-ui.css" />
+        <link rel="stylesheet" type="text/css" href="timer.css" />
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>
+        <script language="javascript" type="text/javascript" src="timer.js" ></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#start').click(function () {
+                    Timer.start();
+                }).button();
+                $('#stop').click(function () {
+                    Timer.stop();
+                }).button();
+            });
+        </script>
+    </head>
+    <body>
+        <div id="tbl">
+            <div id="tcell">
+                <div id="content">
+                    <h1>Pomodoro</h1>
+                    <div id="time_remaining">25:00</div>
+                    <button id="start">Start</button>
+                    <button id="stop">Stop</button>
+                    <audio id="sound" src="stop.mp3" type="audio/mp3" loop="loop" />
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

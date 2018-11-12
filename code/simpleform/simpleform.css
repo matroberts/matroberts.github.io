@@ -1,0 +1,141 @@
+﻿html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td, input {
+margin:0;
+padding:0;
+outline:0;
+}
+
+body {
+background-color:#fff;
+color:#487500;
+text-align: center;
+min-width: 760px;
+font-family:Arial, Helvetica, sans-serif;
+font-size: .7em;
+line-height:1.35em;
+}
+
+h1 {
+height:29px;
+line-height:2.5em;
+text-align:left;
+background-image:none;
+margin-bottom:5px;
+font-size:1.4em;
+font-weight:normal;
+}
+
+#top_container {
+width:500px;
+margin:2em;
+padding:2em;
+} 
+
+/* ************ */
+/* Fancy Box    */
+/* ************ */
+
+.outer_box {
+border:1px solid #aff53d;  
+background-color:#fff;  
+padding:4px;
+}
+
+.inner_box {
+padding:1em;
+background-color:#d3f49d;
+background-image:url(background_fill.jpg);
+background-repeat:repeat-x;
+background-position:bottom left;
+}
+
+/* ********** */
+/* Form Style */
+/* ********** */
+
+.simpleform {
+text-align:left; 
+}
+
+.simpleform p {
+margin-bottom:10px;
+}
+
+.simpleform label {
+float:left;
+width:12em;
+}
+
+.simpleform textarea {
+width:180px;
+padding:1px;
+}
+
+.simpleform select {
+width:186px;
+font-size:8pt;   
+}
+
+.simpleform input {
+width:180px;
+padding:1px;
+font-size:8pt;   
+}
+
+.simpleform input[type="checkbox"],
+.simpleform input[type="radio"] {
+width:13px; 
+}
+
+/* ****************** */
+/* Transparent Button */
+/* ****************** */
+
+.button {
+height:24px;
+line-height:14px;
+}
+
+.button ul {
+list-style:none;
+}
+
+.button ul li {
+float:left;
+background-image:url(button_right.gif);
+background-repeat:no-repeat;
+background-position:top right;
+margin:0 0 0 10px;
+} 
+
+.button li:first-child {
+margin:0;    
+}
+
+.button li a {
+display:block;
+background-image: url(button_left.gif);
+background-repeat:no-repeat;
+background-position:top left;
+padding:0 18px;
+text-decoration:none;
+}
+
+.button li span {
+display:block;
+background-image:url(button_middle.gif);
+background-repeat:repeat-x;
+background-position:top left;
+padding:5px 0;
+color:#487500;
+font-weight:bold;
+}
+
+
+

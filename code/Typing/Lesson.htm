@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+    <head>
+        <title>Typing for Programmers</title>
+        <link rel="stylesheet" type="text/css" href="jquery-ui-1.8.13.custom.css" />
+        <link rel="stylesheet" type="text/css" href="typing.css" />
+        <script type="text/javascript" src="jquery-1.6.1.js" ></script>
+        <script type="text/javascript" src="jquery-ui-1.8.13.custom.js" ></script>
+        <script language="javascript" type="text/javascript" src="lesson.js" ></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#student_text').keydown(function (event) {
+                    Lesson.key_down(event);
+                });
+                $('#student_text').keypress(function (event) {
+                    Lesson.key_press(event);
+                });
+                $('#repeat').click(function () {
+                    $('#results').dialog('close');
+                    $('#lesson_dropdown').trigger('change');
+                });
+                $('#next').click(function () {
+                    $('#results').dialog('close');
+                    $('#lesson_dropdown option:selected').removeAttr('selected').next().attr('selected', 'selected');
+                    $('#lesson_dropdown').trigger('change');
+                });
+                Lesson.init();
+                $('#lesson_dropdown').change(function () {
+                    Lesson.newLesson(LessonText[$('#lesson_dropdown option:selected').text()]);
+                }).trigger('change');
+            });
+        </script>
+    </head>
+    <body>
+        <div id="content">
+            <h1>Typing for Programmers</h1>
+            <div class="select_container">
+                <label for="lesson_dropdown">Lesson: </label>
+                <select id="lesson_dropdown" ></select>
+            </div>
+            <p class="lessontext">
+                <span id="teacher_text" ></span>
+            </p>
+            <p>
+                <textarea id="student_text" rows="6" cols="80" ></textarea>
+            </p>
+
+	    </div>
+        <div id="footer">
+        Jolly Words taken from <a href="http://www.amazon.co.uk/gp/product/1870946790/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&tag=struggforcomp-21&linkCode=as2&camp=1634&creative=6738&creativeASIN=1870946790">Jolly Phonics Word Book by Sue Lloyd and Sara Wernham</a>
+        </div>
+        <div id="results" title="Results">
+            <ul>
+                <li><label for="ewpm">Net WPM: </label><span id="ewpm"></span></li>
+                <li><label for="wpm">Gross WPM: </label><span id="wpm"></span></li>
+                <li><label for="perrors">Errors: </label><span id="perrors"></span><span id="hiddentooltip">%</span></li>
+            </ul>
+            <div class="button_container">
+                <button id="next">Next</button><button id="repeat">Repeat</button>
+            </div>
+        </div>
+    </body>
+</html>

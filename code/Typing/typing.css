@@ -1,0 +1,112 @@
+﻿html,
+body
+{
+    height: 100%;
+}
+
+body
+{
+    font-size: 16px;
+    margin: 0px;
+    padding: 0px;
+    font-family: courier new, courier;
+    margin: 0 auto;
+    width: 825px;
+}
+
+#content
+{
+    min-height: 100%;
+}
+
+#footer
+{
+    position: relative;
+    margin-top: -30px;
+    height: 30px;
+    font-size: 12px;
+}
+
+#content h1
+{
+    margin: 0;
+}
+
+.select_container
+{
+    float: right;
+    padding-bottom: 1em;
+}
+
+#content textarea,
+#content select,
+#content select option
+{
+    font-family: courier new, courier;
+    font-size: 16px;
+}
+
+.lessontext
+{
+    clear: both;
+    margin: 1px;
+    border: 1px;
+    padding: 2px;
+}
+
+.currentletter
+{
+    background-color: #DBFF94;
+}
+
+.currentlettererror
+{
+    background-color: #DBFF94;
+    border-bottom: 2px solid red;
+}
+
+.errorletter
+{
+    background-color: #ffe6e0;
+}
+
+#results
+{
+    overflow: hidden;
+}
+
+#results ul
+{
+    list-style-type: none;
+}
+
+#results label
+{
+    width: 150px;
+    float: left;
+}
+
+button
+{
+    margin-left: 10px;
+}
+
+.button_container,
+.button_container #next
+{
+    float: right;
+}
+
+/* */
+/* jquery ui */
+
+.ui-widget,
+.ui-widget button
+{
+    font-family: courier new, courier;
+}
+
+.ui-dialog .ui-dialog-title
+{
+    font-size: 1.2em;
+}

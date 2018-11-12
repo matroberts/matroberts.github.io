@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>XP Engineering Practices</title>
+    <meta name="description" content="Describes extreme programming (XP) engineering practices, including a brief discussion of incremental design." />
+    <link rel="canonical" href="https://moleseyhill.com/2009-09-07-xp-engineering-practices.html" />
+    <link href="styles/prism.css" rel="stylesheet" />
+    <link rel="shortcut icon" type="image/x-icon" href='favicon.ico' />
+</head>
+<body>
+<div class="header">
+    <h1><a href="index.html">Struggling for Competence</a></h1>
+    <p>Mat Roberts</p>
+</div>
+   
+
+<div class="content">
+<h2>XP Engineering Practices</h2>
+<time datetime="2009-09-07 23:59:59">2009-09-07 23:59:59</time>
+
+    
+<p>I've read <a href="http://codebetter.com/blogs/jeremy.miller/archive/2007/09/08/scrum-is-fine-but-don-t-leave-the-xp-at-home.aspx">several</a> <a href="http://www.controlchaos.com/about/xp.php">times</a> that the methodology people use is Scrum plus the engineering practices from XP.  In fact were loosely following this approach in our current project.</p>
+
+<p><img alt="methodology equals scrum plus xp engineering practices" title="methodology equals scrum plus xp engineering practices" src="images/methodology-scrum-xp.png" /></p>
+
+<p>
+But exactly what are the engineering practices from XP?  According to <a href="http://www.amazon.co.uk/gp/product/0321278658?ie=UTF8&tag=struggforcomp-21&linkCode=as2&camp=1634&creative=6738&creativeASIN=0321278658">Extreme Programming Explained</a> they are:
+<ul>
+<li>Pair Programming
+  <ul>
+    <li>Write all production programs with two people sitting at one machine.</li>
+  </ul>
+</li>
+<li>10 minute build
+  <ul>
+    <li><em>Automatically</em> build the <em>whole</em> system and run <em>all</em> the tests in 10 minutes.</li>
+  </ul>
+</li>
+<li>Continuous Integration <a href="http://martinfowler.com/articles/continuousIntegration.html">[1]</a>,<a href="http://martinfowler.com/bliki/FeatureBranch.html">[2]</a>
+  <ul>
+    <li>Everyone commits to the mainline at least every day.</li>
+    <li>Each commit results in an automatic build and test of the system.</li>
+  </ul>
+</li>
+<li>Test-Driven Development <a href="http://www.amazon.co.uk/gp/product/0321146530?ie=UTF8&tag=struggforcomp-21&linkCode=as2&camp=1634&creative=6738&creativeASIN=0321146530">[3]</a>
+  <ul>
+    <li>Write a failing automated test before you write any code.</li>
+    <li>Refactor to remove duplication.</li>
+  </ul>
+</li>
+<li>Incremental Design
+  <ul>
+    <li>Invest in the design of the system every day.  Strive to make the design of the system an excellent fit for the needs of the system that day.</li>
+  </ul>
+</li>
+</ul>
+</p>
+
+<p>Sounds easy?</p>
+
+<p>The thing I've always liked about XP, is the specificness of the advice it gives.  There's a balls out attempt to identify what best practice actually means.  Most other methodologies are rather vague when defining what you should actually do - "it's context specific" they say.  They're just not extreme enough I guess.</p>
+
+<p>
+Of all the practices, the hardest one to pin down is incremental design.  Fowler calls it <a href="http://martinfowler.com/articles/designDead.html">evolutionary design</a> and Ron Jeffries calls it <a href="http://c2.com/cgi/wiki?XpSimplicityRules">simple design</a>.  Jeffries wrote down the <a href="http://agileinaflash.blogspot.com/2009/02/simple-design.html">simple design rules</a>:
+<ul>
+<li>Runs all the tests.</li>
+<li>No Duplication.</li>
+<li>Expresses developer intent.</li>
+<li>Minimises number of classes/methods.</li>
+</ul>
+</p>
+
+
+<p>Back on c2.com, the originating point of XP, they <a href="http://c2.com/cgi/wiki?ExtremeProgramming">put it something like this</a>:</p>
+
+<blockquote>
+<a href="http://c2.com/cgi/wiki?DoTheSimplestThingThatCouldPossiblyWork">Do The Simplest Thing That Could Possibly Work</a>. <a href="http://c2.com/cgi/wiki?BigDesignUpFront">Big Design Up Front</a> is avoided because <a href="http://c2.com/cgi/wiki?YouArentGonnaNeedIt">You Aren't Gonna Need It (YAGNI)</a>. Once the simplest thing is done, you <a href="http://c2.com/cgi/wiki?RefactorMercilessly">Refactor Mercilessly</a>, so that things are expressed <a href="http://c2.com/cgi/wiki?OnceAndOnlyOnce">Once And Only Once</a>.
+</blockquote>
+
+<p>I think there's something incomplete about incremental design, as expressed here.  For sure, most of the big design up front I've been involved with was overkill, and took nearly as much time as writing the code anyway.  YAGNI speaks a definite truth.  But, but.  Sometimes you do need a bit of big design, for example the repository pattern for data access, and when you do you need to know which way your going.</p>
+
+
+
+</div>
+
+<div class="footer">
+    <!-- Previous -->
+    <!-- Home -->
+    <!-- Next -->
+</div>
+<script src="scripts/prism.js"></script>
+</body>
+</html>
