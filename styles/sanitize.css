@@ -57,7 +57,7 @@ html {
   tab-size: 4; /* 4 */
   -ms-text-size-adjust: 100%; /* 5 */
   -webkit-text-size-adjust: 100%; /* 5 */
-  word-break: break-word; /* 6 */
+  word-break: normal; /* 6 */
 }
 
 /* Sections
