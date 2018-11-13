@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>XHTML - What's that all about?</title>
+    <meta name="description" content="Examines the rules for making XHTML documents, focusing on the XHTML 1.0 Strict doctype." />
+    <link rel="canonical" href="https://moleseyhill.com/2009-10-18-xhtml-whats-that-all-about.html" />
+    <link href="styles/prism.css" rel="stylesheet" />
+    <link rel="shortcut icon" type="image/x-icon" href='favicon.ico' />
+</head>
+<body>
+<div class="header">
+    <h1><a href="index.html">Struggling for Competence</a></h1>
+    <p>Mat Roberts</p>
+</div>
+   
+
+<div class="content">
+<h2>XHTML - What's that all about?</h2>
+<time datetime="2009-10-18 21:24:52">2009-10-18 21:24:52</time>
+
+    
+<p>XHTML is a reformulation of HTML as XML.  It aims to make a clean separation between document structure and presentation.  To make XHTML you have to follow <a href="http://msdn.microsoft.com/en-us/library/aa479043.aspx">these</a> <a href="http://www.w3.org/TR/xhtml1/#diffs">rules</a>:
+<ul>
+  <li>The document must start with a doctype.  There are 4 common <a href="http://www.w3.org/QA/2002/04/valid-dtd-list.html">doctypes</a>:
+    <ul>
+      <li>XHTML 1.0 Transitional</li>
+      <li>XHTML 1.0 Strict</li>
+      <li>XHTML 1.0 Frameset</li>
+      <li>XHTML 1.1</li>
+    </ul>
+The default install of Asp.net MVC uses XHTML 1.0 Strict, so the following line appears at the top of the document:
+<pre>
+<code class="language-markup">
+&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"&gt;
+</code>
+</pre>
+  </li>
+
+  <li>The html element must specify a default namespace:
+<pre>
+<code class="language-markup">
+&lt;html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"&gt;
+</code>
+</pre>
+  </li>
+  <li>Script and Style elements must wrap their content in CDATA sections.   This is because javascript can contain characters like &lt; and &amp; which are not allowed in xml.  To stop <a href="https://developer.mozilla.org/en/Properly_Using_CSS_and_JavaScript_in_XHTML_Documents">older browsers from choking</a>, a javascript comment, //,  is put before the CDATA.
+<pre>
+<code class="language-javascript">
+    &lt;script type="text/javascript"&gt;
+        //&lt;![CDATA[
+        var i = 0;
+        while  (++i &lt; 10)
+        {
+              // ...
+        }
+        //]]&gt;                 
+    &lt;/script&gt;
+</code>
+</pre>
+  </li>
+
+  <li>All elements and attributes must be in lower case.  (XML is case sensitive.)</li>
+  <li>Attribute values must be in quotes (<a href="http://www.w3schools.com/Xml/xml_attributes.asp">single or double</a>).
+    <ul>
+      <li>This leads to the <a href="http://www.w3schools.com/Xhtml/xhtml_syntax.asp">rather bizarre syntax</a> for checked, readonly, disabled and selected:
+<pre>
+<code class="language-markup">
+&lt;input type="checkbox" checked="checked" /&gt;
+&lt;input readonly="readonly" /&gt;
+&lt;input disabled="disabled" /&gt;
+&lt;option selected="selected" /&gt;
+</code>
+</pre>
+      </li>
+    </ul>
+  </li>
+  <li>Elements must be closed.
+    <ul>
+      <li>In particular for the empty elements line break and horizontal rule use &lt;br /&gt; and &lt;hr /&gt;.  Note that using this compact form rather than the also legal &lt;br&gt;&lt;/br&gt; gives better compatibility with older browsers.  Note also the space between before the /&gt; again for older browsers.
+      </li>
+    </ul>
+  </li>
+  <li>Elements must nest correctly.</li>
+  <li>The id attribute should be used, instead of the name attribute, to identify elements: &lt;a&gt;, &lt;form&gt;, &lt;img&gt;, and &lt;map&gt;.</li>
+</ul>
+</p>
+
+<p>Most of these rules are basically saying that the document must be valid xml, but with the added twist of making it work with older browsers.  You can check the validity of your XHTML using the <a href="http://validator.w3.org/">W3C validator</a>.</p>
+
+<h3>Html, head, title and body are mandatory</h3>
+
+<p>In XHTML the html, head, title and body elements <a href="http://www.landofcode.com/xhtml/html-to-xhtml-convert.php">are</a> <a href="http://www.w3schools.com/Xhtml/xhtml_syntax.asp">mandatory</a>.  So a minimal html document is:</p>
+<pre>
+<code class="language-markup">
+&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"&gt;
+&lt;html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"&gt;
+  &lt;head&gt;
+    &lt;title&gt;Controversial Title&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Interesting Content&lt;/h1&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code>
+</pre>
+
+<h3>Difference between Strict and Transitional</h3>
+
+<p>The strict doctype <a href="http://24ways.org/2005/transitional-vs-strict-markup">removes the presentation elements and attributes</a> from the document.  In particular the &lt;center&gt;, &lt;font&gt; and &lt;iframe&gt; elements may not be used.</p>
+
+<h3>Special Rules</h3>
+
+<p>
+The <a href="http://www.w3.org/TR/html401/struct/global.html#h-7.5.3">general rule</a> is that:
+<ul>
+<li>Block-level elements may contain inline elements and block elements.</li>
+<li>Inline elements may contain only data and other inline elements.</li>
+</ul>
+There are however an number of special rules:
+<ul>
+<li>&lt;p&gt; and &lt;h1&gt;...&lt;h6&gt; are block level elements, but <a href="http://www.w3.org/TR/xhtml1/dtds.html#a_dtd_XHTML-1.0-Strict">may only</a> <a href="http://www.webmasterworld.com/html/3560080.htm">contain inline</a> elements.  I guess what this is trying to say is that paragraphs and headings are the lowest block level elements in the document.</li>
+<li>&lt;blockquote&gt;, &lt;body&gt;, and &lt;form&gt; elements <a href="http://24ways.org/2005/transitional-vs-strict-markup">may only contain block</a> elements as direct descendants (strict doctype).</li>
+<li>&lt;form&gt; <a href="http://www.w3.org/TR/xhtml1/#prohibitions">must not contain other &lt;form&gt; elements</a> at any level.</li>
+<li>Other more <a href="http://www.w3.org/TR/xhtml1/#prohibitions">esoteric rules</a>.</li>
+</ul>
+</p>
+
+</div>
+
+<div class="footer">
+    <!-- Previous -->
+    <!-- Home -->
+    <!-- Next -->
+</div>
+<script src="scripts/prism.js"></script>
+</body>
+</html>

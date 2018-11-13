@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Optional Filtering in Stored Procedures</title>
+    <meta name="description" content="Optional filtering in a stored procedure." />
+    <link rel="canonical" href="https://moleseyhill.com/2009-11-23-optional-filtering-in-stored-procedures.html" />
+    <link href="styles/prism.css" rel="stylesheet" />
+    <link rel="shortcut icon" type="image/x-icon" href='favicon.ico' />
+</head>
+<body>
+<div class="header">
+    <h1><a href="index.html">Struggling for Competence</a></h1>
+    <p>Mat Roberts</p>
+</div>
+   
+
+<div class="content">
+<h2>Optional Filtering in Stored Procedures</h2>
+<time datetime="2009-11-23 23:11:30">2009-11-23 23:11:30</time>
+
+    
+<p>I've seen this little trick in some of our stored procedures for optional filtering.  There's a running example below, but the interesting line of code is in the where clause of the select statement:</p>
+<pre>
+<code class="language-sql">
+WHERE (@IsBroadsheet is null OR IsBroadsheet = @IsBroadsheet)
+</code>
+</pre>
+<p>@IsBroadsheet is the filtering parameter passed into the stored procedure.  If you pass in null the filter will be ignored.  If a value is supplied the result set will be filtered by that parameter.  An elegant solution I think.</p>
+
+<p>This example runs on SQL Server 2008:</p>
+
+<pre>
+<code class="language-sql">
+IF EXISTS(SELECT 1 FROM sys.objects WHERE OBJECT_ID = OBJECT_ID(N'NewsPapers', N'U')) DROP TABLE NewsPapers;
+IF EXISTS(SELECT 1 FROM sys.objects WHERE OBJECT_ID = OBJECT_ID(N'GetNewsPapers', N'P')) DROP PROCEDURE GetNewsPapers;
+    
+CREATE TABLE NewsPapers
+(
+    Id INT CONSTRAINT PK_Newspaper PRIMARY KEY IDENTITY (1,1),
+    Title NVARCHAR(100) NOT NULL,
+    IsBroadsheet BIT NOT NULL
+)
+
+INSERT INTO NewsPapers(Title, IsBroadsheet) VALUES
+                         ('Times', 1),
+                         ('Sun', 0),
+                         ('Mail', 0),
+                         ('Telegraph', 1),
+                         ('Mirror', 0)
+GO
+                      
+CREATE PROCEDURE GetNewsPapers
+    @IsBroadsheet BIT
+AS
+    SELECT *
+    FROM NewsPapers
+    WHERE (@IsBroadsheet is null OR IsBroadsheet = @IsBroadsheet)
+GO
+
+EXEC GetNewsPapers null;
+EXEC GetNewsPapers 1;
+EXEC GetNewsPapers 0;
+</code>
+</pre>
+
+</div>
+
+<div class="footer">
+    <!-- Previous -->
+    <!-- Home -->
+    <!-- Next -->
+</div>
+<script src="scripts/prism.js"></script>
+</body>
+</html>

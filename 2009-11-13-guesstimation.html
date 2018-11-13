@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Guesstimation</title>
+    <meta name="description" content="A guesstimate is an answer correct within a factor of 10.  You may think such a rough answer is useless, but it's infinitely more valuable than no answer at all." />
+    <link rel="canonical" href="https://moleseyhill.com/2009-11-13-guesstimation.html" />
+    <link href="styles/prism.css" rel="stylesheet" />
+    <link rel="shortcut icon" type="image/x-icon" href='favicon.ico' />
+</head>
+<body>
+<div class="header">
+    <h1><a href="index.html">Struggling for Competence</a></h1>
+    <p>Mat Roberts</p>
+</div>
+   
+
+<div class="content">
+<h2>Guesstimation</h2>
+<time datetime="2009-11-13 22:40:08">2009-11-13 22:40:08</time>
+
+    
+<p>I've been doing a few <a href="http://www.amazon.co.uk/gp/product/0691129495?ie=UTF8&tag=struggforcomp-21&linkCode=as2&camp=1634&creative=6738&creativeASIN=0691129495">guesstimation</a> problems on the train.  The type of question it contains is "how much domestic waste does the UK produce in a year?"  Back in the day I used to do lots of these problems.  You can't go out to dinner with a bunch of physicist, without one of them solving a problem on a napkin.  I remember one professor proudly showing me a napkin with his design for a magnetic monopole detector.</p>
+
+<p>Back of the envelope calculation are the essence of science and engineering.  Non-scientist think that science is about complex formula, involved computer simulations and precision answers.  In fact getting an order of magnitude estimate, quickly, is a key competency.  An order of magnitude estimate, or guesstimate, is an answer which is correct within a factor of 10.  You may think such a rough answer is useless, but it is in fact infinitely more valuable than no estimate at all.  You need to get a rough answer first, then you can decide if it's worth the effort of doing a more careful analysis.</p>
+
+<p>Often when your doing a guesstimate you have to get a value for a quantity which you don't know very well.  You should, however, be able to put upper and lower bounds on the quantity, then take the "average" of the numbers somehow.  Let's say your lower and upper bounds were 1 and 1000.  You could take the mean of the numbers,  (1+1000)/2 = 500.5.  The problem is this average is that it's 500 times bigger than the lower bound, but only a factor of two less than the upper bound.  What you need instead is the average in fractional terms, or <a href="http://en.wikipedia.org/wiki/Geometric_mean">geometric mean</a>.  The guestimation book has a really simple formula for approximating the geometric mean:</p>
+
+<blockquote>
+Approximate geometric mean:
+<ul>
+	<li>Write the numbers in scientific notation.</li>
+	<li>Average the coefficients and the exponents.</li>
+	<li>If the averaged exponents ends in .5, knock off the .5 and multiply the coefficient by 3.</li>
+</ul>
+</blockquote>
+
+<p>So in the example of 1 and 1000.  First write in scientific notation, 1x10<sup>0</sup> and 1x10<sup>3</sup>.  Average the coefficients and exponents: 1x10<sup>1.5</sup>.  Since the exponent ends in .5, knock it off and multiply the coefficient by 3: 3x10<sup>1</sup> = 30.  Now 30 is 30 times bigger than one and roughly 30 times less than 1000, so fractionally it's half way between the the lower and upper bounds.</p>
+
+<p>How much domestic waste <em>does</em> the UK produce in a year?  We have a big green wheelie bin which we fill up with rubbish every week.  Most of the rubbish we put in the bin isn't very compacted, I'd say a typical bin bag weighs about 3 kg, and we get 6 or 7 bags in the bin, so say 20 kg per week.  There are 60 million people in the country, so lets say 20 million households with a wheelie bin collected each week, and about 50 weeks in a year.  Therefore a guesstimate is  (2x10<sup>1</sup> kg/week)x(2x10<sup>7</sup>)x(5x10<sup>1</sup> week/year) ~ 2x10<sup>10</sup> kg/year.  <a href="http://www.defra.gov.uk/evidence/statistics/environment/waste/kf/wrkf02.htm">Government statistics</a> show that in 2004 the UK produced 335 million tonnes of waste, of which 9% was household rubbish, so the measured value is 3x10<sup>10</sup> kg/year.  The guesstimate has worked out quite well.</p>
+
+
+
+
+
+
+</div>
+
+<div class="footer">
+    <!-- Previous -->
+    <!-- Home -->
+    <!-- Next -->
+</div>
+<script src="scripts/prism.js"></script>
+</body>
+</html>

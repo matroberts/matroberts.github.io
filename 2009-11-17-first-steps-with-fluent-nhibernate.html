@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>First Steps with Fluent NHibernate</title>
+    <meta name="description" content="A super simple example of using Fluent NHibernate." />
+    <link rel="canonical" href="https://moleseyhill.com/2009-11-17-first-steps-with-fluent-nhibernate.html" />
+    <link href="styles/prism.css" rel="stylesheet" />
+    <link rel="shortcut icon" type="image/x-icon" href='favicon.ico' />
+</head>
+<body>
+<div class="header">
+    <h1><a href="index.html">Struggling for Competence</a></h1>
+    <p>Mat Roberts</p>
+</div>
+   
+
+<div class="content">
+<h2>First Steps with Fluent NHibernate</h2>
+<time datetime="2009-11-17 23:09:17">2009-11-17 23:09:17</time>
+
+    
+<p>I've started to play a bit with <a href="http://fluentnhibernate.org/">Fluent NHibernate</a>.  NHibernate is a Object Relational Mapping (ORM) tool, which aims to make persisting objects in a database easier.  Fluent NHibernate is an add-on which allows in-code configuration, rather than the traditional XML file configuration.  There's not much support for NHibernate at work, due to it's reputation for bloated complexity.  But, let's proceed without prejudice and see how hard it is to make it work.</p>
+
+<p>The code here uses the <a href="http://fluentnhibernate.org/downloads">Fluent NHibernate 1.0 RTM binaries</a>.  The <a href="http://wiki.fluentnhibernate.org/Getting_started">getting started</a> guide is quite good, and the code here leans heavily on it.  The <a href="http://wiki.fluentnhibernate.org/Main_Page">wiki</a> is also very helpful, though quite small.</p>
+
+<p>It's best to start really simple with this type of thing, so I'm attempting the amazing feat of saving and loading a single record from a single table.</p>
+
+<p><img alt="fluent nhibernate referenced assembilies" title="fluent nhibernate referenced assembilies" src="images/fluent-nhibernate-referenced-assembilies.png" /></p>
+
+<p>The picture shows the project set-up.  The first 6 referenced assemblies came with the fluent NHibernate download, and are all necessary.  I'm also using <a href="http://www.nunit.org/index.php">NUnit 2.5.2</a> for test automation.</p>
+
+<p>First make the following table in a SQL Server 2008 database:</p>
+<pre>
+<code class="language-sql">
+CREATE TABLE StickyNote
+(
+	Id INT CONSTRAINT PK_StickyNoteId PRIMARY KEY IDENTITY(1,1),
+	Note NVARCHAR(1024) NOT NULL
+)
+</code>
+</pre>
+
+<p>I want to map the StickyNote table to following StickyNote object.  Note that the properties must be made virtual for NHibernate <a href="http://davybrion.com/blog/2009/03/must-everything-be-virtual-with-nhibernate/">to do its stuff</a>.</p>
+<pre>
+<code class="language-csharp">
+namespace minimal_with_unit_test
+{
+    public class StickyNote
+    {
+        public virtual int Id { get; private set; }
+        public virtual string Note { get; set; }
+    }
+}
+</code>
+</pre>
+
+<p>Next define the mapping between the object and the database.  The mappings are made in the constructor of a dedicated class which inherits from ClassMap&lt;&gt;.  You must identify the primary key of the object with the Id() method, other properties are mapped with the Map() method.  I'm not doing foreign keys in this super simple example; see the <a href="http://wiki.fluentnhibernate.org/Getting_started">getting started</a> guide for that.</p>
+<pre>
+<code class="language-csharp">
+using FluentNHibernate.Mapping;
+namespace minimal_with_unit_test
+{
+    public class StickyNoteMap : ClassMap&lt;StickyNote&gt;
+    {
+        public StickyNoteMap()
+        {
+            Id(x =&gt; x.Id);
+            Map(x =&gt; x.Note);
+        }
+    }
+}
+</code>
+</pre>
+
+<p>If the property name and column name are different, you can <a href="http://wiki.fluentnhibernate.org/Fluent_mapping">supply the column name like this</a>: Id(x =&gt; x.Id).Column("StickyNoteId").  If the class name and table name are different, you can supply the table name with a <a href="http://stackoverflow.com/questions/633888/how-to-specify-table-name-in-fluent-nhibernate-classmap-class">method call to Table()</a> in the constructor, like this: Table("Sticky_Note").  Fluent NHibernate also provides an <a href="http://wiki.fluentnhibernate.org/Auto_mapping">auto mapping feature</a>, but I haven't tried that.</p>
+
+<p>Now to test it.  The set up of the test class makes a thing called ISessionFactory.  ISessionFactory is a "<a href="https://www.hibernate.org/hib_docs/nhibernate/1.2/reference/en/html/architecture.html">threadsafe (immutable) cache of compiled mappings for a single database</a>".  ISessionFactory is an expensive object to create, so you should make only one per application.  Again the fluent configuration is used to <a href="http://wiki.fluentnhibernate.org/Database_configuration">simplify database configuration</a>.</p>
+<pre>
+<code class="language-csharp">
+using FluentNHibernate.Cfg;
+using FluentNHibernate.Cfg.Db;
+using FluentNHibernate.Testing;
+using NHibernate;
+using NUnit.Framework;
+namespace minimal_with_unit_test
+{
+    [TestFixture]
+    public class TestSaveAndLoad
+    {
+        private ISessionFactory SessionFactory { get; set; }
+
+        [TestFixtureSetUp]
+        public void CreateSessionFactory()
+        {
+            SessionFactory = Fluently.Configure()
+                .Database(MsSqlConfiguration.MsSql2008.ConnectionString(
+                  &quot;Server=(local);Database=NhibernateDemo;Trusted_Connection=True;&quot;))
+                .Mappings(m =&gt; m.FluentMappings.AddFromAssemblyOf&lt;StickyNote&gt;())
+                .BuildSessionFactory();
+        }
+</code>
+</pre>
+
+<p>Interaction with the database is done though a thing called ISession.  An ISession is a "<a href="https://www.hibernate.org/hib_docs/nhibernate/1.2/reference/en/html/architecture.html">single-threaded, short-lived object representing a conversation between the application and the persistent store</a>".  ISession contains methods to get objects from, and persist object to the database.  It also contains a method to create transactions.  The following test saves an object, then loads a copy back into memory:</p>
+<pre>
+<code class="language-csharp">
+        [Test]
+        public void SaveAndLoadTest()
+        {
+            var stickyNote = new StickyNote {Note = &quot;Woop&quot;};
+            using (var session = SessionFactory.OpenSession())
+            {
+                using (var transaction = session.BeginTransaction())
+                {
+                    session.SaveOrUpdate(stickyNote);
+                    transaction.Commit();
+                }
+            }
+            Assert.IsTrue(stickyNote.Id &gt; 0);
+
+            using (var session = SessionFactory.OpenSession())
+            {
+                using (session.BeginTransaction())
+                {
+                    var persistedNote = session.Get&lt;StickyNote&gt;(stickyNote.Id);
+                    Assert.AreNotSame(stickyNote, persistedNote);
+                    Assert.AreEqual(persistedNote.Note, &quot;Woop&quot;);
+                }
+            }
+        }
+</code>
+</pre>
+
+<p>There are a couple of things to note.  The first is that the persisted note is a different object to the original note (Assert.AreNotSame()).  If the code was changed, and all the work done within a single session, the same object would be returned in the Get query, since NHibernate <a href="http://www.hibernate.org/hib_docs/nhibernate/html/transactions.html#transactions-identity">caches the objects within a session</a>.  The second thing is that even the get (select) query is done within a transaction, <a href="http://www.nhprof.com/Learn/Alerts/DoNotUseImplicitTransactions">which improves performance</a>.</p>
+
+<p>The final test does the same type of thing but uses <a href="http://wiki.fluentnhibernate.org/Persistence_specification_testing">persistence specification</a>:</p>
+<pre>
+<code class="language-csharp">
+        [Test]
+        public void SameAsBefore_ButWith_PersistenceSpecification()
+        {
+            using (var session = SessionFactory.OpenSession())
+            {
+                new PersistenceSpecification&lt;StickyNote&gt;(session)
+                    //.CheckProperty(c =&gt; c.Id, 1)
+                    // can't test the ID since it has identity insert
+                    .CheckProperty(c =&gt; c.Note, &quot;DeDoop&quot;)
+                    .VerifyTheMappings();
+            }
+        }
+</code>
+</pre>
+
+<p>The PerstenceSpecification creates a StickyNote object, inserts it in the database, retrieves the record into a new object and checks that the objects match.  This looks like a real boon for testing; it considerably reduces the repetition and tedium of testing the mapping code.  It does have a couple of limitations though.  It <a href="http://www.mail-archive.com/fluent-nhibernate@googlegroups.com/msg02785.html">doesn't work</a> when you have foreign keys with the <a href="http://wiki.fluentnhibernate.org/Getting_started">Inverse()</a> relationship.  Also as you can see it doesn't work for the Id column, since I'm using Identity Insert on the database for that.  This identity thing is interesting.  Though NHibernate <a href="http://ayende.com/Blog/archive/2009/03/20/nhibernate-avoid-identity-generator-when-possible.aspx">works OK with identity insert</a>, the <a href="http://nhforge.org/blogs/nhibernate/archive/2009/03/20/nhibernate-poid-generators-revealed.aspx">preferred NHibernate way</a> seems to be to let NHibernate handle Id creation.  This is certainly a change in approach from previous work I've done.</p>
+
+<p>
+So that's it, using Fluent NHibernate isn't too hard so far.  But NHibernate is pushing for a few changes in how I do things:
+<ul>
+	<li>Making properties virtual.</li>
+	<li>Putting select queries in a transaction.</li>
+	<li>Not using identity insert on the database.</li>
+</ul>
+</p>
+
+<p>I guess the identity insert issue is the one that makes me uncomfortable, but maybe it would work out OK.</p>
+
+</div>
+
+<div class="footer">
+    <!-- Previous -->
+    <!-- Home -->
+    <!-- Next -->
+</div>
+<script src="scripts/prism.js"></script>
+</body>
+</html>

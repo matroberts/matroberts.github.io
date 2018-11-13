@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Pimp my Visual Studio</title>
+    <meta name="description" content="My Pimps for Visual Studio: ReSharper, Tabs Studio, DiffMerge, Custom Menu." />
+    <link rel="canonical" href="https://moleseyhill.com/2009-12-18-pimp-my-visual-studio.html" />
+    <link href="styles/prism.css" rel="stylesheet" />
+    <link rel="shortcut icon" type="image/x-icon" href='favicon.ico' />
+</head>
+<body>
+<div class="header">
+    <h1><a href="index.html">Struggling for Competence</a></h1>
+    <p>Mat Roberts</p>
+</div>
+   
+
+<div class="content">
+<h2>Pimp my Visual Studio</h2>
+<time datetime="2009-12-18 21:45:34">2009-12-18 21:45:34</time>
+
+    
+<blockquote>
+Use a Single Editor Well
+&mdash;<a href="http://www.amazon.co.uk/gp/product/020161622X?ie=UTF8&tag=struggforcomp-21&linkCode=as2&camp=1634&creative=6738&creativeASIN=020161622X">The Pragmatic Programmer</a>
+</blockquote>
+
+<p>I've had the pragmatic's advice one my mind for many years, but never really attained power user status in Visual Studio.  The problem I have is with keyboard short-cuts - I'm just not very good at remembering them.  A friend, Mihir, said "if I do a short-cut 3 or 4 time I usually remember it", for me it's more like 30 or 40 times.  Anyway back in September I decided to get ReSharper and learn Visual Studio a bit better.  This has lead to a series of pimp's to make Visual Studio 2008 work better for me.</p>
+
+<h3>ReSharper</h3>
+<p><a href="http://www.jetbrains.com/resharper/">ReSharper</a> is a productivity tool for Visual Studio which provides enhanced navigation, refactoring and editing capabilities.  Earlier in the year I was at a <a href="http://parlezuml.com/softwarecraftsmanship/">Software Craftsmanship</a> conference, and asked a few of the C# guys there if they would spend their own money on ReSharper.  Most of them said they would and had.  They also said to use Intelli-J keyboard bindings, since they're more common.</p>
+
+<p>To help me remember, I've made a page summarizing <a href="code/RsVsShrtCt/Resharper-VisualStudio-Shortcuts.html">Resharper and Visual Studio keyboard short-cuts</a>.   Some of the ReSharper features are so good, I use them all the time:</p>
+
+<table>
+<tr><td>Ctrl+W</td><td>Expand Selection</td><td>From the current cursor position Ctrl+W will select the current word, repeating Ctrl+W increases the lexical scope of the selection.  Simple but incredibly useful.</td></tr>
+<tr><td>Ctrl+N</td><td>Find Type</td><td> Searches for Types in the solution.  The really sweet thing is you can just type the capital letters of a camel humped name and it lists all the matches, which means if you can make a rough guess of what your looking for you can usually find it.</td></tr>
+<tr><td>Ctrl+Shift+G </td><td>Super Go</td><td>Mini menu for GoTo Implementation, GoTo Declaration, GoTo Base, Find Usages, etc.</td></tr>
+<tr><td>F2</td><td>Rename</td><td>Rename Refactor</td></tr>
+<tr><td>Crtl+Shift+R</td><td>Refactor</td><td>Brings up a list of available refactorings for the current cursor position.</td></tr>
+<tr><td>Ctrl+Shift+Space</td><td>Intellisense</td><td>Only shows matching types.</td></tr>
+<tr><td>Ctrl+Alt+Space</td><td>Intellisense with using</td><td>Searches all types in referenced assemblies, and will add a using if necessary.</td></tr>
+</table>
+
+<p>
+The default setting for ReSharper are very good, and it's makes smart naming suggestions.  I've only made a few tweaks:
+<ul>
+	<li>Ctrl+U - return to VS default of ToLower.</li>
+	<li>Added templates for <a href="http://stackoverflow.com/questions/186709/do-you-have-a-less-well-known-but-powerful-feature-of-resharper/186825#186825">MsTest and NUnit</a>.</li>
+	<li>Tweaked to private members so as not to require an _.  May well tweak to allow _ separated names in tests methods.</li>
+	<li>I'm unsure about all of it's coding suggestions.  For example I though the use var suggestion was stupid, but when I started to use it I really liked it.  I may well switch make static off because it just doesn't seem like a good idea.</li>
+</ul>
+</p>
+
+<p>There are a few downsides.  It cost £140,  which is quite a lot of cash.  I was really excited about the unit test runner, but quite disappointed with the result.  It runs MsTest slower than the native runner (which ain't exactly quick either), even after bug fix in build 1288.  The runner doesn't seem to fit on the screen nicely either.  The really cool feature it doesn't have is automatic incremental test running.</p>
+
+<h3>Tab Rage</h3>
+<p>I am perplexed by the way tabs work in Visual Studio 2005 & 2008.  I'm quite a visual thinker and so I remember where a tab is, rather than what it's called.  I find it incredibly frustrating when VS changes the order of the tabs, and hides the one I'm working on.</p>
+
+<p>A quick search of the interweb shows I'm not the only one challenged <a href="http://ang3lfir3.wordpress.com/2006/05/07/tabs-in-visual-studio-2005-arrrgh-stop-that/">by</a> <a href="http://blog.sidu.in/2007/12/visual-studio-2008-is-still-crap.html">the</a> <a href="http://www.mrspeaker.net/2006/10/12/tab-un-stupidifier/">tab</a> <a href="http://blogs.msdn.com/msbuild/archive/2007/04/13/window-tab-management-in-visual-studio.aspx">feature</a>.  However the Visual Studio team have conducted "extensive usability studies" on their tabbing solution and concluded that it's <a href="http://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=119525">optimal</a> <a href="http://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=98921">for</a> <a href="http://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=105810">all</a> <a href="http://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=105818">users</a> <a href="http://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=106454">and</a> <a href="http://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=106455">they're</a> <a href="http://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=108540">not</a> <a href="http://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=110069">going</a> <a href="http://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=111293">to</a> <a href="http://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=113471">change</a> <a href="http://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=128358">it</a>, <a href="http://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=135425">no</a> <a href="http://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=176200">way</a> <a href="http://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=275460">Jos&eacute;</a>.  Clearly they didn't have me in their usability study, because a chair through the one-way observation mirror followed by an enraged developer intent on GBH, may have suggested to them that this feature was not universally liked. </p>
+
+<p>I recently discovered <a href="http://www.tabsstudio.com/">Tabs Studio</a>, which replaces the Visual Studio tabs with sane behaviour.  No longer does visual studio capriciously hide the tab I'm working on.  I costs money, but £25 is a small price to pay to prevent an aneurysm.  With sane tabs in place I also <a href="http://collingrady.wordpress.com/2006/08/31/visual-studio-2005-disabling-the-new-ctrltab-menu/">changed the Ctrl+Tab</a> behaviour to be like a normal application.</p>
+
+<p>Tabs Studio is not perfect.  My main gripe is its lack visual polish.  The icons and tabs should match the visual studio default much more closely.  You can customise the look with XAML, and my tweak is shown below.  The other thing is the vertical and horizontal tab group are not available as a right click option (they still work just not off right click).  But hey, I'm no longer raging against the machine.</p>
+
+<pre>
+<code class="language-markup">
+&lt;Style TargetType="TabsStudio:CloseTabButton" BasedOn="{StaticResource DefaultCloseTabButtonStyle}"&gt;
+    &lt;Style.Triggers&gt;
+        &lt;Trigger Property="IsTabSelected" Value="False"&gt;
+            &lt;Setter Property="Visibility" Value="Visible"/&gt;
+        &lt;/Trigger&gt;
+    &lt;/Style.Triggers&gt;
+&lt;/Style&gt;
+
+&lt;Style TargetType="{x:Type TabsStudio:Tab}" BasedOn="{StaticResource DefaultTabStyle}"&gt;
+    &lt;Setter Property="Template"&gt;
+        &lt;Setter.Value&gt;
+            &lt;ControlTemplate TargetType="{x:Type TabsStudio:Tab}"&gt;
+                &lt;Grid&gt;
+                    &lt;Border Name="Border" BorderBrush="DarkGray" BorderThickness="1,1,1,1"  CornerRadius="3,3,0,0" &gt;
+                        &lt;ContentPresenter ContentSource="Header" Margin="2,1,2,1"/&gt;
+                    &lt;/Border&gt;
+                &lt;/Grid&gt;
+                &lt;ControlTemplate.Triggers&gt;
+                    &lt;Trigger Property="IsTabSelected" Value="True"&gt;
+                        &lt;Setter TargetName="Border" Property="Background" Value="White"/&gt;
+                    &lt;/Trigger&gt;
+                    &lt;Trigger Property="IsTabSelected" Value="False"&gt;
+                        &lt;Setter TargetName="Border" Property="Background" Value="LightGray" /&gt;
+                    &lt;/Trigger&gt;
+                &lt;/ControlTemplate.Triggers&gt;
+            &lt;/ControlTemplate&gt;
+        &lt;/Setter.Value&gt;
+    &lt;/Setter&gt;
+&lt;/Style&gt;
+</code>
+</pre>
+
+<p>Paying money to get tabs to work is ridiculous.  I think the Visual Studio team need to have a hug, and ask themselves how they got into this position.</p>
+
+<h3>Diff Tool</h3>
+<p>The Visual Studio diff tool is, I think, the one used in Visual Source Safe 6.  I've replaced it with Source Gear's <a href="http://www.sourcegear.com/diffmerge/">DiffMerge</a>, and followed <a href="http://statestreetgang.net/post/2008/01/Using-DiffMerge-with-Visual-Studio-and-Team-Foundation-Server-client.aspx">these configuration instruction</a>, to integrate it to Visual Studio.  This is actually the oldest pimp that I have.  I've used DiffMerge for over a year - I like it, and it's free.  Lots of the folks at work swear by <a href="http://winmerge.org/">WinMerge</a> - I find the colour scheme garish.</p>
+
+<h3>Custom Menu</h3>
+
+<p>Part of Visual Studios feature army is a cohort of menu bars.  I half feel like I should investigate the features and find the gems hidden within.  But every time I look at them I find crap all that I care about, so I've just been switching them off; after all it's quite nice to see the code window.  I realised that the "standard" toolbar was almost pointless, so I <a href="http://msdn.microsoft.com/en-us/library/wdee4yb6(VS.80).aspx">made my own</a> replacement toolbar which does exactly what I want:</p>
+
+<p><img alt="mat-menu" title="mat-menu" src="images/mat-menu.png" /></p>
+
+<ul>
+	<li><a href="http://blog.iangoodsell.com/2009/08/visual-studio-tfs-why-no-keyboard.html">Open TFS Explorer</a></li>
+	<li><a href="http://blogs.msdn.com/jannemattila/archive/2008/10/30/attaching-debugger-to-w3wp-exe-using-nice-and-easy-keyboard-shortcut.aspx">Debug w3wp</a></li>
+	<li>Set project configuration</li>
+	<li>Save All</li>
+	<li>Undo and Redo</li>
+</ul>
+
+<p>I did a bit of <a href="http://blogs.msdn.com/saraford/archive/2008/01/30/did-you-know-you-can-customize-the-commands-on-the-context-menus.aspx">customisation on the right click (context) menus</a>.  There's a lot of rubbish on them which obscures the good, so I've cleansed them.  I moved the excellent CollapseAll Resharper feature to the top of the menu. </p>
+
+<h3>Performance</h3>
+
+<p>At work we've all been having performance problems lately.  It's unclear what the problem is.  It could be our Kapersky virus scanner or one of the barrage of security updates from Microsoft.  I read that something called Windows 7 has just come out - coincidence?  Our dev machines are pretty decent spec, Intel Core2 Quad Q9300 @ 2.5 GHz, with 4GB RAM running XP64.  The weak point is probably the 7200 rpm hard drives.  It could be that the <a href="http://www.codinghorror.com/blog/archives/001304.html">alpha devs have moved up to solid state HDD</a>'s, and aren't optimising for disk access anymore.  Resharper has a torrid performance history and that's another possible culprit, however my fellow monkeys are having similar problems and they're not resharped.</p>
+
+<p>To try and wring a bit more out of the machine I've tweaked a <a href="http://www.tweakxp.com/article37016.aspx">couple of registry settings</a>, defragged the hard drive and re-installed Kapersky.  I've also made some <a href="http://stackoverflow.com/questions/8440/visual-studio-optimizations/8453#8453">Visual Studio optimisations</a>, via the Tools->Options menu:</p>
+
+<ul>
+	<li>Disable F1. (Environment->Keyboard)</li>
+	<li>Disable "Animate environment tools" (Environment->General).</li>
+	<li>Disable Start Page (Environment->Startup).</li>
+	<li>Disable "Track Active Item in Solution Explorer" (Projects and Solutions).</li>
+	<li>Disable Navigation Bar (Text Editor->C#).</li>
+	<li>Set "AutoToolboxPopulate" to false (Windows Forms Designer).</li>
+</ul>
+
+<h3>Windows</h3>
+
+<p>There are a few things I have to do to windows to make it work "right":</p>
+
+<ul>
+	<li><a href="http://support.microsoft.com/kb/244407">Tab Completion on Command Line</a></li>
+	<li><a href="http://www.reversealchemy.net/2008/11/26/adding-the-visual-studio-2008-command-prompt-to-your-explorer-context-menu/">Open Visual Studio Command Prompt</a> from Right Click menu in Windows Explorer</li>
+	<li><a href="http://johnhaller.com/jh/useful_stuff/disable_caps_lock/">Disable the CAPS LOCK</a> key</li>
+	<li>Add notepad as a Send To option.</li>
+</ul>
+<p>I saw this <a href="http://www.johndcook.com/blog/2009/11/05/patterns-windows-keyboard-shortcuts/">really good explanation of Windows shortcuts</a>.  Pointing out the unity behind the scheme has helped me a lot.</p>
+
+    
+</div>
+
+<div class="footer">
+    <!-- Previous -->
+    <!-- Home -->
+    <!-- Next -->
+</div>
+<script src="scripts/prism.js"></script>
+</body>
+</html>

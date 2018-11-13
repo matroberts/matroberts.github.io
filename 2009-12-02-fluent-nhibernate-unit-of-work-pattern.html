@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Fluent NHibernate Unit Of Work Pattern</title>
+    <meta name="description" content="Example of the Unit of Work pattern, using Fluent NHibernate." />
+    <link rel="canonical" href="https://moleseyhill.com/2009-12-02-fluent-nhibernate-unit-of-work-pattern.html" />
+    <link href="styles/prism.css" rel="stylesheet" />
+    <link rel="shortcut icon" type="image/x-icon" href='favicon.ico' />
+</head>
+<body>
+<div class="header">
+    <h1><a href="index.html">Struggling for Competence</a></h1>
+    <p>Mat Roberts</p>
+</div>
+   
+
+<div class="content">
+<h2>Fluent NHibernate Unit Of Work Pattern</h2>
+<time datetime="2009-12-02 23:03:14">2009-12-02 23:03:14</time>
+
+    
+<p>I've been trying to understand how to fit NHibernate into a MVC web application.   I want a clean separation of model and data layer, so I can unit test the model.  I'm planning on using the repository pattern for saving and retrieving objects.  The other pattern I need to make a clean separation from the data layer is the Unit Of Work pattern.</p>
+
+<p>Fowler defines the Unit Of Work pattern as:</p>
+<blockquote>
+<a href="http://martinfowler.com/eaaCatalog/unitOfWork.html">Unit of Work</a>
+Maintains a list of objects affected by a business transaction and coordinates the writing out of changes and the resolution of concurrency problems.
+</blockquote>
+
+<p>So Fowler's unit of work has three responsibilities.  In my application the repositories are going to maintain lists of objects affected by the transaction.  Concurrency problems, I'm not sure about, but I think will be handled in the application logic.  That leaves the Unit Of Work with the single responsibility for handling transactions, so my Unit Of Work is:</p>
+
+<p><img alt="unit of work" title="unit of work" src="images/unit-of-work.png" /></p>
+
+<blockquote>
+Unit of Work (ITransaction)
+An interface to the database transaction, which is careful not to expose details of the persistence mechanism.
+</blockquote>
+
+<p>It's arguable that what I'm talking is really an ITransaction.  However NHibernate has already used that name, so I'm gonna stick with IUnitOfWork to avoid the name clash.</p>
+
+<p>Looking round for an implementation to copy, I eventually found Weston Binford's <a href="http://trason.net/journal/2009/10/7/bootstrapping-nhibernate-with-structuremap.html">Bootstrapping NHibernate with StructureMap</a>, which was just what I wanted.  The following code bears a remarkable similarity to his implementation.</p>
+<pre>
+<code class="language-csharp">
+    public interface IUnitOfWork : IDisposable
+    {
+        void Rollback();
+        void Commit();
+    }
+</code>
+</pre>
+<pre>
+<code class="language-csharp">
+    public class UnitOfWork : IUnitOfWork
+    {
+        private readonly ISessionFactory sessionFactory;
+        private readonly ITransaction transaction;
+
+        public UnitOfWork(ISessionFactory sessionFactory)
+        {
+            this.sessionFactory = sessionFactory;
+            Session = this.sessionFactory.OpenSession();
+            transaction = Session.BeginTransaction();
+        }
+
+        public ISession Session { get; private set; }
+
+        public void Dispose()
+        {
+            Session.Close();
+            Session = null;
+        }
+
+        public void Rollback()
+        {
+            if(transaction.IsActive)
+                transaction.Rollback();
+        }
+
+        public void Commit()
+        {
+            if(transaction.IsActive)
+                transaction.Commit();
+        }
+    }
+</code>
+</pre>
+
+<p>I have some integration tests to convince myself that I understand what's going on.  These tests use the same model objects and database as the <a href="2009-11-17-first-steps-with-fluent-nhibernate.html">first steps with fluent nhibernate</a> article:</p>
+
+<pre>
+<code class="language-csharp">
+    [TestFixture]
+    public class UnitOfWorkTest
+    {
+        private ISessionFactory SessionFactory { get; set; }
+
+        [TestFixtureSetUp]
+        public void CreateSessionFactory()
+        {
+            SessionFactory = Fluently.Configure()
+                .Database(MsSqlConfiguration.MsSql2008.ConnectionString(
+                  &quot;Server=(local);Database=NhibernateDemo;Trusted_Connection=True;&quot;))
+                .Mappings(m =&gt; m.FluentMappings.AddFromAssemblyOf&lt;StickyNote&gt;())
+                .BuildSessionFactory();
+        }
+
+        [Test]
+        public void Uow_Commit_ShouldWork()
+        {
+            var note = new StickyNote() { Note =  &quot;Voo&quot;};
+            using (var uow = new UnitOfWork(SessionFactory))
+            {
+                uow.Session.SaveOrUpdate(note);
+                uow.Commit();
+            }
+
+            using (var uow = new UnitOfWork(SessionFactory))
+            {
+                Assert.IsNotNull(uow.Session.Get&lt;StickyNote&gt;(note.Id));
+            }
+        }
+
+        [Test]
+        public void Uow_Rollback_ShouldWork()
+        {
+            var note = new StickyNote {Note = &quot;Woo&quot;};
+            using (var uow = new UnitOfWork(SessionFactory))
+            {
+                uow.Session.SaveOrUpdate(note);
+                uow.Rollback();
+            }
+
+            using (var uow = new UnitOfWork(SessionFactory))
+            {
+                Assert.IsTrue(note.Id &gt; 0);
+                Assert.IsNull(uow.Session.Get&lt;StickyNote&gt;(note.Id));
+            }
+        }
+
+        [Test]
+        public void Uow_RollbackThenCommit_ShouldRollback()
+        {
+            var note = new StickyNote { Note = &quot;Xoo&quot; };
+            using (var uow = new UnitOfWork(SessionFactory))
+            {
+                uow.Session.SaveOrUpdate(note);
+                uow.Rollback();
+                uow.Commit();
+            }
+            using (var uow = new UnitOfWork(SessionFactory))
+            {
+                Assert.IsNull(uow.Session.Get&lt;StickyNote&gt;(note.Id));
+            }
+        }
+
+        [Test]
+        public void Uow_CommitThenRollback_ShouldCommit()
+        {
+            var note = new StickyNote { Note = &quot;Yoo&quot; };
+            using (var uow = new UnitOfWork(SessionFactory))
+            {
+                uow.Session.SaveOrUpdate(note);
+                uow.Commit();
+                uow.Rollback();
+            }
+            using (var uow = new UnitOfWork(SessionFactory))
+            {
+                Assert.IsNotNull(uow.Session.Get&lt;StickyNote&gt;(note.Id));
+            }
+        }
+
+        [Test]
+        public void Uow_WithNoCommit_ShouldRollback()
+        {
+            var note = new StickyNote { Note = &quot;Zoo&quot; };
+            using (var uow = new UnitOfWork(SessionFactory))
+            {
+                uow.Session.SaveOrUpdate(note);
+            }
+            using (var uow = new UnitOfWork(SessionFactory))
+            {
+                Assert.IsTrue(note.Id &gt;0);
+                Assert.IsNull(uow.Session.Get&lt;StickyNote&gt;(note.Id));
+            }
+        }
+    }
+</code>
+</pre>
+
+
+</div>
+
+<div class="footer">
+    <!-- Previous -->
+    <!-- Home -->
+    <!-- Next -->
+</div>
+<script src="scripts/prism.js"></script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Browser Differences</title>
+    <meta name="description" content="Discusses techniques for dealing with cross browser rendering differences, including: browser reset, IE8 compatibility mode and IE conditional comments." />
+    <link rel="canonical" href="https://moleseyhill.com/2009-10-27-browser-differences.html" />
+    <link href="styles/prism.css" rel="stylesheet" />
+    <link rel="shortcut icon" type="image/x-icon" href='favicon.ico' />
+</head>
+<body>
+<div class="header">
+    <h1><a href="index.html">Struggling for Competence</a></h1>
+    <p>Mat Roberts</p>
+</div>
+   
+
+<div class="content">
+<h2>Browser Differences</h2>
+<time datetime="2009-10-27 23:18:19">2009-10-27 23:18:19</time>
+
+    
+<p>In recent work I've been using Chrome, Firefox and IE8.  To be honest with you there doesn't seem to be much difference between their implementations of CSS 2.1.  They all have a few quirks here and there, but they basically behave as their meant to.</p>
+
+<table>
+<caption><a href="http://marketshare.hitslink.com/browser-market-share.aspx?qprid=2">Browser Market Share (September 2009)</a></caption>
+<tr><th>Browser</th><th>Market Share</th></tr>
+<tr><td>IE6</td><td>26%</td></tr>
+<tr><td>IE7</td><td>20%</td></tr>
+<tr><td>IE8</td><td>19%</td></tr>
+<tr><td>Firefox</td><td>24%</td></tr>
+<tr><td>Safari</td><td>4%</td></tr>
+<tr><td>Chrome</td><td>3%</td></tr>
+<tr><td>Opera</td><td>2%</td></tr>
+<tr><td>Other</td><td>2%</td></tr>
+</table>
+
+<p>This is good news if you want to develop a website with a CSS based design.  However it is still necessary to make your website function with older browsers, in particular the lamentable IE6.</p>
+
+<h3>Browser Reset</h3>
+
+<p>Lots of the cross browser differences happen because of difference in browsers' default style. What happens is you develop in Firefox, say, and without realising come to rely on some parts of Firefox's default css. When you look in Chrome or IE8 you then see subtle differences in the positioning of the elements. The way to avoid this is to use a browser reset, which sets all the elements to have a common style.  A basic reset sets the margin and padding to zero on all elements:</p>
+<pre>
+<code class="language-css">
+* {
+margin:0;
+padding:0;
+}
+</code>
+</pre>
+
+<p>More thorough, and better considered resets are <a href="http://meyerweb.com/eric/thoughts/2007/05/01/reset-reloaded/">Erik Meyer</a> and <a href="http://developer.yahoo.com/yui/reset/#code">YUI</a>.  You put the reset in before you begin developing, and tweak it for your own needs.</p>
+
+<h3>IE8 Compatibility Mode</h3>
+
+<p>IE8 has a <a href="http://blogs.msdn.com/ie/archive/2008/08/27/introducing-compatibility-view.aspx">compatibility mode</a> which renders a web page "like IE7".  By default IE8 will render localhost and the internet in IE8 standards mode, but will render the <em>intranet</em> in compatibility mode.  To force IE8 into standards mode all the time add the <a href="http://www.thesitewizard.com/webdesign/prepare-your-site-for-ie8.shtml">following meta tag</a> to the head section in your document:</p>
+
+<pre>
+<code class="language-markup">
+&lt;meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" /&gt;
+</code>
+</pre>
+
+<h3>IE6 The Horror</h3>
+
+<p>The best resource I found dealing with IE6 is the <a href="http://www.virtuosimedia.com/tutorials/ultimate-ie6-cheatsheet-how-to-fix-25-internet-explorer-6-bugs">Ultimate IE6 Cheatsheet</a>.  Some good general advice it contains is:</p>
+<ul>
+	<li>Develop in standards compliant browsers first.  The compliant browsers all render in a fairly similar way, so you start off in a good position.  Also you learn how to do CSS properly, before learning hacks.</li>
+	<li>Validate your xhtml and css.</li>
+	<li>Use jQuery.  This irons out many cross browser Javascript incompatibilities.</li>
+	<li>Use a correct doctype.  This stops IE6 quirks mode, and in particular means the box model will be correct.</li>
+	<li>Use a <a href="http://msdn.microsoft.com/en-us/library/ms537512(VS.85).aspx">conditional comment</a> to add an IE6 specific "hacks" stylesheet.  This concentrates the IE6 weirdness in a single place and stops it polluting the main style.  The following code adds Ie6Hacks.css if the browser is less than or equal to IE6.  You put it in the head element:
+<pre>
+<code class="language-markup">
+&lt;!--[if lte IE 6]&gt;
+&lt;link rel="stylesheet" type="text/css" href='Ie6Hacks.css' /&gt;
+&lt;![endif]--&gt; 
+</code>
+</pre>
+</li>
+</ul>
+
+
+<p>It's also helpful to understand exactly what IE6 is meant to be able to do.  This document shows the <a href="http://msdn.microsoft.com/en-us/library/cc351024(VS.85).aspx">CSS compliance of IE 5,6,7 and 8</a>.</p>
+
+<p>There are <a href="http://www.gtalbot.org/BrowserBugsSection/MSIE6Bugs/">119 documented IE6 bugs</a>.  The <a href="http://www.virtuosimedia.com/tutorials/ultimate-ie6-cheatsheet-how-to-fix-25-internet-explorer-6-bugs">Ultimate IE6 Cheatsheet</a> covers 25 of the most common, but your quite likely to find more.  If something odd is happening, the best advice is to keep googling; it's bound to have been seen and solved already.  Some of the IE6 issues we had on our most recent project were:</p>
+
+<ul>
+  <li><a href="http://blogs.msdn.com/ie/archive/2006/01/17/514076.aspx">IE6 select z-index bug</a>.  The bug is "You have a select box on the main page.  When you open a pop-up the select box shows through into the pop-up."  There is no  CSS based fix for this bug.  Fortunately we were using jQuery dialogs, which have the <a href="http://docs.jquery.com/Plugins/bgiframe">bgiframe</a> <a href="http://docs.jquery.com/UI/Dialog#options">option</a> to specifically fix this problem.  When the dialog opens, bgiframe covers the select boxes with iframes which stops showing through.</li>
+  <li><a href="http://qsdqsd.free.fr/Articles/MSIE6_CSS_bug_float_right/index2.html">IE6 invisible text next to a floated right element</a>.  The bug text to the left of a right floated element turned invisible.  The bodge is to a position:relative to the container containing the text.</li>
+  <li>Incorrect cursor on hyper-links.  For some reason hyper-links in IE6 and IE7 didn't have the pointer cursor (which looks like a hand), but instead had the text cursor.  The fix was to reapply the <a href="http://www.quirksmode.org/css/cursor.html">pointer cursor</a> to the a element: a { cursor:pointer; }</li>
+  <li>Menu lists stacked vertically instead of horizontally.  It's fairly common to use an unordered list to represent menu items for site navigation.  Our initial css used float:left on the &lt;ul&gt; and &lt;li&gt; elements to make the list items render horizontally, across the top of the page.  This didn't work in IE6, which stubbornly showed a vertical list.  The solution was to change the &lt;ul&gt; and &lt;li&gt; elements to display:inline; as described in this <a href="http://www.alistapart.com/articles/taminglists/">Taming Lists</a> article.</li>
+</ul>
+
+
+
+
+
+
+</div>
+
+<div class="footer">
+    <!-- Previous -->
+    <!-- Home -->
+    <!-- Next -->
+</div>
+<script src="scripts/prism.js"></script>
+</body>
+</html>

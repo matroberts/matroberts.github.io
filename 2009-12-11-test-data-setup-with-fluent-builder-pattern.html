@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Test Data Setup with Fluent Builder Pattern</title>
+    <meta name="description" content="Example of the fluent builder pattern, used for test data set-up." />
+    <link rel="canonical" href="https://moleseyhill.com/2009-12-11-test-data-setup-with-fluent-builder-pattern.html" />
+    <link href="styles/prism.css" rel="stylesheet" />
+    <link rel="shortcut icon" type="image/x-icon" href='favicon.ico' />
+</head>
+<body>
+<div class="header">
+    <h1><a href="index.html">Struggling for Competence</a></h1>
+    <p>Mat Roberts</p>
+</div>
+   
+
+<div class="content">
+<h2>Test Data Setup with Fluent Builder Pattern</h2>
+<time datetime="2009-12-11 21:34:49">2009-12-11 21:34:49</time>
+
+    
+<p>When writing tests I like to follow the <a href="http://c2.com/cgi-bin/wiki?ArrangeActAssert">arrange, act, assert</a> pattern:</p>
+<blockquote>
+<a href="http://c2.com/cgi-bin/wiki?ArrangeActAssert">Arrange-Act-Assert</a>: a pattern for arranging and formatting code in UnitTest methods.
+Each method should group these functional sections, separated by blank lines:
+<ul>
+	<li>Arrange all necessary preconditions and inputs.</li>
+	<li>Act on the object or method under test.</li>
+	<li>Assert that the expected results have occurred.</li>
+</ul>
+</blockquote>
+
+<p>The first part of this pattern is explicit set-up of the test data in the test itself.  I like this because you can see the connection between the test inputs and outputs, which makes the test easier to understand.  I think once you've overcome the challenge of actually writing tests, the next big hurdle is making them comprehensible.  I'm still working at this.</p>
+
+<p>In the past I've often set-up test data like this:</p>
+
+<pre>
+<code class="language-csharp">
+        [Test]
+        public void CrummySetup()
+        {
+            var request = new Request(&quot;GoodbyeCruleWorld&quot;)
+                               {
+                                   Fields = new List&lt;Field&gt;()
+                                                {
+                                                    new Field(&quot;XYZ&quot;, &quot;Raleigh Chopper&quot;),
+                                                    new Field(&quot;ABC&quot;, &quot;Ford Fiesta&quot;)
+                                                }
+                               };
+        }
+</code>
+</pre>
+
+<p>
+It's OK, but there are some problems.  I want 3 things in my test data set-up:
+<ul>
+    <li>Terse - I want to be able to understand at a glance what's being set up.</li>
+    <li>Refactorable - explicit use of the "new" operator, means that a change to the class's constructor causes a refactor of many test methods.  On a recent project, where we started using dependency injection in anger, this point became a major ball breaker.  Each addition of a new dependency caused a fantastically tedious rework of all the test methods.</li>
+    <li>Hide irrelevance - I want to show a connection between input and output, so showing lots of parameters which don't matter makes the test hard to understand. Use of "new" exposes all of the parameters of the class, so the test gets cluttered up with irrelevance.</li>        
+</ul>
+</p>
+
+<p>You want to hide the new operator for refactorability and to hide constructor irrelevance.  The easiest way to do this is with a static factory method, which creates a fully valid default object.  You want to the syntax to be terse, and emphasise the data which matters.  A nice way to do this is with a <a href="http://www.martinfowler.com/bliki/FluentInterface.html">fluent interface</a>.  A fluent interface  allows method chaining, in the simplest case by returning the original object.</p>
+
+<pre>
+<code class="language-csharp">
+       [Test]
+        public void QuailitySetup()
+        {
+            var request = RequestBuilder.Create(&quot;NewWorldOrder&quot;)
+                                        .WithField(&quot;XYZ&quot;, &quot;Carbon Racing Bike&quot;)
+                                        .WithField(&quot;ABC&quot;, &quot;Bugatti Veyron&quot;);
+        }
+</code>
+</pre>
+
+<p>The syntax is terse, refactorable and hides irrelevance.  Win, win, win.  You implement it like this:</p>
+
+<pre>
+<code class="language-csharp">
+public static class RequestBuilder
+{
+    public static Request Create(string name)
+    {
+        return new Request(name);
+    }
+    public static Request WithField(this Request request, string code, string name)
+    {
+        request.Fields.Add(new Field(code, name));
+        return request;
+    }
+}
+</code>
+</pre>
+
+<h3>Fluent Builder</h3>
+<p>If you check out the builder pattern in the Gang of Four book, you may be hard pressed to see the connection with the code shown here.  However if you check out the consequences of the builder pattern you see:</p>
+<blockquote>
+<a href="http://www.amazon.co.uk/gp/product/0201633612?ie=UTF8&tag=struggforcomp-21&linkCode=as2&camp=1634&creative=6738&creativeASIN=0201633612">Builder Pattern</a>
+<ul>
+	<li>Let's you vary the products internal representation.</li>
+	<li>Isolates code for construction from representation.</li>
+	<li>Gives you finer control over the construction process.</li>
+</ul>
+</blockquote>
+
+<p>Which is exactly what the fluent builder does.  It moves the construction code into it's own class, and allows you to vary what's made by calling different fluent extension methods.</p>
+
+<p>My colleague Rich came up with this idea last week while we were working together.  If you look around you can see we were not the first folks to <a href="http://richarddingwall.name/2009/06/01/fluent-builder-pattern-for-classes-with-long-ish-constructors/">have</a> or <a href="http://refactormycode.com/codes/194-fluent-builder">name</a> this idea.  I guess that's what makes it a pattern.  A full code listing follows:</p>
+
+<pre>
+<code class="language-csharp">
+using System.Collections.Generic;
+using NUnit.Framework;
+
+namespace FluentDataBuilderDemo
+{
+    public class Field
+    {
+        public string Code { get; set; }
+        public string Name { get; set; }
+
+        public Field(string code, string name)
+        {
+            Code = code;
+            Name = name;
+        }
+    }
+
+    public class Request
+    {
+        public string Name { get; set; }
+        public List&lt;Field&gt; Fields { get; set; }
+
+        public Request(string name)
+        {
+            Name = name;
+            Fields = new List&lt;Field&gt;();
+        }
+    }
+
+    [TestFixture]
+    public class ShowDataSetup
+    {
+        [Test]
+        public void CrummySetup()
+        {
+            var request = new Request(&quot;GoodbyeCruleWorld&quot;)
+                               {
+                                   Fields = new List&lt;Field&gt;()
+                                                {
+                                                    new Field(&quot;XYZ&quot;, &quot;Raleigh Chopper&quot;),
+                                                    new Field(&quot;ABC&quot;, &quot;Ford Fiesta&quot;)
+                                                }
+                               };
+
+            Assert.AreEqual(2, request.Fields.Count);
+        }
+
+        [Test]
+        public void QuailitySetup()
+        {
+            var request = RequestBuilder.Create(&quot;NewWorldOrder&quot;)
+                                        .WithField(&quot;XYZ&quot;, &quot;Carbon Racing Bike&quot;)
+                                        .WithField(&quot;ABC&quot;, &quot;Bugatti Veyron&quot;);
+
+            Assert.AreEqual(2, request.Fields.Count);
+        }
+    }
+
+    public static class RequestBuilder
+    {
+        public static Request Create(string name)
+        {
+            return new Request(name);
+        }
+        public static Request WithField(this Request request, string code, string name)
+        {
+            request.Fields.Add(new Field(code, name));
+            return request;
+        }
+    }
+}
+</code>
+</pre>
+
+</div>
+
+<div class="footer">
+    <!-- Previous -->
+    <!-- Home -->
+    <!-- Next -->
+</div>
+<script src="scripts/prism.js"></script>
+</body>
+</html>
