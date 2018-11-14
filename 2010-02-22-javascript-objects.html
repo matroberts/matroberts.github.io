@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Javascript Objects</title>
+    <meta name="description" content="Shows the basic mechanics of creating objects in JavaScript." />
+    <link rel="canonical" href="https://moleseyhill.com/2010-02-22-javascript-objects.html" />
+    <link href="styles/sanitize.css" rel="stylesheet" />
+    <link href="styles/prism.css" rel="stylesheet" />
+    <link href="styles/struggle.css" rel="stylesheet" />
+    <link rel="shortcut icon" type="image/x-icon" href='favicon.ico' />
+</head>
+<body>
+<div class="header">
+    <h1><a href="index.html">Struggling for Competence</a></h1>
+    <p>Mat Roberts</p>
+</div>
+   
+
+<div class="content">
+<h2>Javascript Objects</h2>
+<time datetime="2010-02-22 18:03:40">2010-02-22 18:03:40</time>
+
+    
+<p>I've been trying to learn some JavaScript (again).  I've got a couple of books which are both pretty useful <a href="http://www.amazon.co.uk/gp/product/0596517742?ie=UTF8&tag=struggforcomp-21&linkCode=as2&camp=1634&creative=6738&creativeASIN=0596517742">JavaScript: The Good Parts</a> and <a href="http://www.amazon.co.uk/gp/product/0980285844?ie=UTF8&tag=struggforcomp-21&linkCode=as2&camp=1634&creative=6738&creativeASIN=0980285844">The Art &amp; Science of JavaScript</a>.  I would also strongly recommend reading <a href="http://devlicio.us/blogs/sergio_pereira/archive/2009/02/09/javascript-5-ways-to-call-a-function.aspx">JavaScript, 5 ways to call a function</a>; an excellent blog post.</p>
+
+<p><img src="images/firebug.png" alt="firebug" title="firebug" /></p>
+
+<h3>Command Line</h3>
+
+<p>Firebug has a JavaScript command line, which is useful for trying things out.  For it to work correctly you need to be pointing at a real web page.  To reset the state of the script, you simply refresh the web page.</p>
+
+<p>The same tab also has a console which you can log too.  It can do a <a href="http://getfirebug.com/logging">bunch of stuff</a>, but the most useful commands are:</p>
+<ul>
+	<li>console.log('text') which just writes to the console.</li>
+	<li>console.dir(object) which lists the objects properties.</li>
+</ul>
+
+<h3>Objects</h3>
+
+<p>JavaScript primitive types are bool, string and number.  Everything else, including function, is an Object.  An object is effectively a hash.  The hash can have keys (properties) of any type, though they are normally strings.  The values can be any type, including other objects and functions.</p>
+
+<p>Object literals are a convenient way to make new objects:</p>
+
+<pre>
+<code class="language-javascript">
+//Empty object
+var myPaper  = {};   
+
+//Square bracket notation can get\set keys of any type
+myPaper['newspaper'] = 'The Telegraph';
+//The dot notation can get\set string keys (aka expando properties)
+myPaper.cost = 1.2;
+//A function can be assigned to a property
+myPaper.gravitas = function(){
+	console.log("I have it");
+};
+
+//The for-in loop is used to examine properties on an object
+for(key in myPaper){
+    console.log(key+':'+myPaper[key]);
+}
+</code>
+</pre>
+
+<p>An object literal can also define the properties in-line:</p>
+
+<pre>
+<code class="language-javascript">
+//Can define the properties within the object literal
+var yourPaper = {
+	newspaper: "The Sun",
+	cost: 0.3,
+	gravitas: function(){
+		console.log("You dont");
+	}
+};
+//Can examine the object with console.dir
+console.dir(yourPaper);
+</code>
+</pre>
+
+<h3>Functions</h3>
+
+<p>Functions are a type of object.  They can be assigned to properties, variables and passed to other functions.  When a function is created, it is given a <strong>prototype property</strong> which is itself an object.</p>
+
+<pre>
+<code class="language-javascript">
+//named function
+function add(a, b) {
+    return a+b;
+}
+console.log(add(3,5));
+console.dir(add);
+// => 8
+// => prototype   Object{}
+ 
+// anonymous function assigned to variable
+var myFunc = function(a, b) {
+    return a+b;
+}
+console.log(myFunc(7,11));
+console.dir(myFunc);
+// => 18
+// => prototype   Object{}
+</code>
+</pre>
+
+<h3>New</h3>
+
+<p>Another way to make objects is with the new operator.  New is called on a <em>function</em>.  When a function is called this way its behaviour is changed:</p>
+
+<ul>
+	<li>A new object is created.</li>
+	<li>The new object has a hidden link to the original functions prototype object.</li>
+	<li>"this" is bound to the new object.</li>
+	<li>The return value from the function is ignored and the new object is returned instead.</li>
+</ul>
+
+<pre>
+<code class="language-javascript">
+function Foo() { };
+Foo.prototype = {
+    write: function() {
+        console.log('woop');
+    },
+    writeAll: function() {
+        this.write();
+    }
+};
+var myFoo = new Foo();
+myFoo.writeAll();
+//=> woop
+</code>
+</pre>
+
+<p>And that's the basic mechanics of creating objects in JavaScript.</p>
+
+
+</div>
+
+<div class="footer">
+    <!-- Previous -->
+    <!-- Home -->
+    <!-- Next -->
+</div>
+<script src="scripts/prism.js"></script>
+</body>
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>This JavaScript</title>
+    <meta name="description" content="The behaviour of this in JavaScript is explained, with examples." />
+    <link rel="canonical" href="https://moleseyhill.com/2010-03-01-this-javascript.html" />
+    <link href="styles/sanitize.css" rel="stylesheet" />
+    <link href="styles/prism.css" rel="stylesheet" />
+    <link href="styles/struggle.css" rel="stylesheet" />
+    <link rel="shortcut icon" type="image/x-icon" href='favicon.ico' />
+</head>
+<body>
+<div class="header">
+    <h1><a href="index.html">Struggling for Competence</a></h1>
+    <p>Mat Roberts</p>
+</div>
+   
+
+<div class="content">
+<h2>This JavaScript</h2>
+<time datetime="2010-03-01 00:50:13">2010-03-01 00:50:13</time>
+
+    
+<p>In the <a href="2010-02-22-javascript-objects.html">last post</a> I showed the basic methods of making objects in JavaScript.  The trouble began however when I tried to use them.  The fundamental problem I had was not understanding the rather odd behaviour of "this" in JavaScript....</p>
+
+<blockquote>
+<a href="http://devlicio.us/blogs/sergio_pereira/archive/2009/02/09/javascript-5-ways-to-call-a-function.aspx">Code which is just "loose" inside your script is actually being written in the context of the global object.</a>
+</blockquote>
+
+<p>In the browser the global object is "window", therefore the following are equivalent:</p>
+
+<pre>
+<code class="language-javascript">
+var myVar = 3;
+window.myVar = 3;
+</code>
+</pre>
+
+<p>Writing all you code in global scope is not a very good idea, since any other script which gets added to the page may unintentionally interact with it.</p>
+
+<blockquote>
+One way to minimize the use of global variables is to create a single global variable [as] the container for your application.
+&mdash; <a href="http://www.amazon.co.uk/gp/product/0596517742?ie=UTF8&tag=struggforcomp-21&linkCode=as2&camp=1634&creative=6738&creativeASIN=0596517742">Crockford p25</a> 
+</blockquote>
+
+<p>That sounds like a good idea, so this is what I tried:</p>
+
+<pre>
+<code class="language-javascript">
+var notes = {
+    getNote: function() {
+        console.log('add called');
+    },
+    getAllNotes: function() {
+        getNote();
+    }
+}
+notes.getAllNotes();
+//=>getNote is not defined
+</code>
+</pre>
+
+<p>So getAllNotes() cannot see getNote(), despite the fact that they are in the same object.  The problem is that:</p>
+
+<blockquote>
+No binding exists between the function and the object to which it assigned.
+&mdash; <a href="http://www.amazon.co.uk/gp/product/0980285844?ie=UTF8&tag=struggforcomp-21&linkCode=as2&camp=1634&creative=6738&creativeASIN=0980285844">Adams et. al. p156</a>
+</blockquote>
+
+<p>That's quite different to a "normal" object orientated language, when a method knows about the other the other functions in a class and can just call them.  The fix is to add "this" when calling the getNote function.</p>
+
+<pre>
+<code class="language-javascript">
+var notes = {
+    getNote: function() {
+        console.log('getNote called');
+    },
+    getAllNotes: function() {
+        this.getNote();
+    }
+}
+notes.getAllNotes();
+//=> getNote called
+</code>
+</pre>
+
+<p>So with that problem resolved I tried to call my getAllNotes method from an event handler.  On the screen I had a "Save" button, which I wanted to invoke my code.  I'm using jQuery, so I tried this:</p>
+
+<pre>
+<code class="language-javascript">
+$(document).ready(function() {
+    $('#Save').click(notes.getAllNotes)
+});
+//=> this.getNote is not a function
+</code>
+</pre>
+
+<p>So now "this" has gone wrong, it can't see the getNote function, but why?</p>
+
+<blockquote>
+"this" points at the object which <em>calls</em> the function.
+</blockquote>
+
+<p>The getAllNotes function has been assigned to the save buttons event handler.  So when the function gets called "this" has the value of the save button.  Effectively the event handler has stolen the getAllNotes function from the note object.  </p>
+
+<p>The fix is to wrap the call to the getAllNotes inside an anonymous function, to make sure it's the note object which calls the function, like this:</p>
+
+<pre>
+<code class="language-javascript">
+$(document).ready(function() {
+    $('#Save').click(function(){
+        notes.getAllNotes();
+    });
+});
+//=> getNote called
+</code>
+</pre>
+
+<p>The final thing I wanted to do was use jQuery to send some Json up to the server.  The example, isn't exactly what I was doing but it illustrates the point:</p>
+
+<pre>
+<code class="language-javascript">
+var notes = {
+    getNote: function() {
+        console.log('getNote called');
+    },
+    getAllNotes: function() {
+        console.log(this);
+        this.getNote();
+    },
+    saveNotes: function() {
+        $.ajax({
+            url: "Note/SaveNotes",
+            type: "POST",
+            dataType: 'json',
+            data: "",
+            contentType: "application/json; charset=utf-8",
+            beforeSend: function() {
+                this.getAllNotes(); 
+            }
+        });
+    }
+}
+$(document).ready(function() {
+    $('#Save').click(function(){
+        notes.saveNotes();
+    });
+});
+//=> this.getAllNotes is not a function
+</code>
+</pre>
+
+<p>So "this" has gone wrong again.  The beforeSend method on $.ajax, is attempting to call this.getAllNotes().  The problem is that "this" isn't the note object, but is in fact  the global object:</p>
+
+<blockquote>
+"this" is not captured in a closure
+</blockquote>
+
+<p>Normal variables are however captured, so the fix to assign "this" to a variable outside the scope of the anonymous function, like this:</p>
+
+<pre>
+<code class="language-javascript">
+var notes = {
+    getNote: function() {
+        console.log('getNote called');
+    },
+    getAllNotes: function() {
+        console.log(this);
+        this.getNote();
+    },
+    saveNotes: function() {
+        var that = this;
+        $.ajax({
+            url: "Note/SaveNotes",
+            type: "POST",
+            dataType: 'json',
+            data: "",
+            contentType: "application/json; charset=utf-8",
+            beforeSend: function() {
+                that.getAllNotes();
+            }
+        });
+    }
+}
+$(document).ready(function() {
+    $('#Save').click(function() {
+        notes.saveNotes();
+    });
+});
+//=> getNote called
+</code>
+</pre>
+
+<p>So overall I had several days worth of confusion trying to understand the behaviour of "this" in JavaScript.  Not because it's wrong, but because it's so different to a statically typed language like C#.  I guess ultimately the thing which foxed me was</p>
+
+<blockquote>
+The binding of "this" to the object happens at invocation time.
+&mdash;<a href="http://www.amazon.co.uk/gp/product/0596517742?ie=UTF8&tag=struggforcomp-21&linkCode=as2&camp=1634&creative=6738&creativeASIN=0596517742">Crockford p28</a> 
+</blockquote>
+
+<p>Though there's quite a long way to go from reading that statement, to really understanding what it means.</p>
+
+</div>
+
+<div class="footer">
+    <!-- Previous -->
+    <!-- Home -->
+    <!-- Next -->
+</div>
+<script src="scripts/prism.js"></script>
+</body>
+</html>

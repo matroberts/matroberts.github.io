@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Unit Test Logging on a Custom MsBuild Task</title>
+    <meta name="description" content="How to unit test a custom MsBuild task when you have logging." />
+    <link rel="canonical" href="https://moleseyhill.com/2010-02-14-unit-test-logging-on-a-custom-msbuild-task.html" />
+    <link href="styles/sanitize.css" rel="stylesheet" />
+    <link href="styles/prism.css" rel="stylesheet" />
+    <link href="styles/struggle.css" rel="stylesheet" />
+    <link rel="shortcut icon" type="image/x-icon" href='favicon.ico' />
+</head>
+<body>
+<div class="header">
+    <h1><a href="index.html">Struggling for Competence</a></h1>
+    <p>Mat Roberts</p>
+</div>
+   
+
+<div class="content">
+<h2>Unit Test Logging on a Custom MsBuild Task</h2>
+<time datetime="2010-02-14 22:24:12">2010-02-14 22:24:12</time>
+
+    
+<p>One of the problems areas for testing a custom MsBuild tasks is logging.  In a custom task you create a log message with code like "Log.LogMessage("hullo")" or "Log.LogError("It's gone wrong")".   The "Log" in this code is in fact the <a href="http://msdn.microsoft.com/en-us/library/microsoft.build.utilities.tasklogginghelper.aspx">TaskLoggingHelper</a>, which gets created behind the scenes by <a href="http://msdn.microsoft.com/en-us/library/microsoft.build.buildengine.engine.aspx">task engine</a>.  The TaskLoggingHelper has no interface, which on the face of it means you can't test code which does logging without creating a task engine and testing the whole custom task end-to-end.</p>
+
+<p>That was what I though at least until this week, when I had a cunning idea.  Make a logging interface myself anyway, which my classes can use and I can mock during unit testing.  Then make the custom task implement the logging interface, using it's (untestable) logging functionality.  </p>
+
+<p>So here's an example, first the ILog interface which just defines a LogMessage method, which is the only logging I want to do at the moment:</p>
+
+<pre>
+<code class="language-csharp">
+using Microsoft.Build.Utilities;
+using Moq;
+using NUnit.Framework;
+namespace MsBuildLogDemo
+{
+    public interface ILog
+    {
+        void LogMessage(string message);
+    }
+</code>
+</pre>
+
+<p>Next the class, ApplyChanges, which I want to unit test.  The ILog interface is passed to ApplyChanges by constrcutor injection:</p>
+
+<pre>
+<code class="language-csharp">
+public class ApplyChanges
+    {
+        public ILog Log { get; set; }
+
+        public ApplyChanges(ILog log)
+        {
+            Log = log;
+        }
+
+        public void Apply()
+        {
+            Log.LogMessage(&quot;Apply Called&quot;);
+        }
+    }
+</code>
+</pre>
+
+<p>Next a genuine unit test, which uses the mocking framework <a href="http://code.google.com/p/moq/">Moq</a>, to test that the call to LogMessage is made:</p>
+
+<pre>
+<code class="language-csharp">
+    [TestFixture]
+    public class ApplyChangesTest
+    {
+        [Test]
+        public void ApplyTest()
+        {
+            var logMock = new Mock&lt;ILog&gt;();
+            var applyChanges = new ApplyChanges(logMock.Object);
+
+            applyChanges.Apply();
+
+            logMock.Verify(l =&gt; l.LogMessage(&quot;Apply Called&quot;), Times.Once());
+        }
+    }
+</code>
+</pre>
+
+<p>Finally the custom task, which implements the ILog interface using it's own logging functionality.  Note that when the custom task creates the ApplyChanges class, it passes "this" into the constructor, to give Apply changes "real" logging functionality:</p>
+
+<pre>
+<code class="language-csharp">
+    public class MyTask : Task, ILog
+    {
+        public override bool Execute()
+        {
+            new ApplyChanges(this).Apply();
+            return true;
+        }
+
+        public void LogMessage(string message)
+        {
+            Log.LogMessage(message);
+        }
+    }
+}
+</code>
+</pre>
+
+<p>So that's unit testing with logging in a custom MsBuild task.  I was quite pleased with the idea, though I'm sure it's not original.  I can't however find any references for other folks doing the same thing, kinda hard to know what to search for.</p>
+
+    
+</div>
+
+<div class="footer">
+    <!-- Previous -->
+    <!-- Home -->
+    <!-- Next -->
+</div>
+<script src="scripts/prism.js"></script>
+</body>
+</html>

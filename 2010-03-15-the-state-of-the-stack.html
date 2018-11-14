@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>The State of the Stack</title>
+    <meta name="description" content="I present my current understanding of how to best architect a testable web application using Asp.mvc:" />
+    <link rel="canonical" href="https://moleseyhill.com/2010-03-15-the-state-of-the-stack.html" />
+    <link href="styles/sanitize.css" rel="stylesheet" />
+    <link href="styles/prism.css" rel="stylesheet" />
+    <link href="styles/struggle.css" rel="stylesheet" />
+    <link rel="shortcut icon" type="image/x-icon" href='favicon.ico' />
+</head>
+<body>
+<div class="header">
+    <h1><a href="index.html">Struggling for Competence</a></h1>
+    <p>Mat Roberts</p>
+</div>
+   
+
+<div class="content">
+<h2>The State of the Stack</h2>
+<time datetime="2010-03-15 23:52:39">2010-03-15 23:52:39</time>
+
+    
+<p>About a year ago, I started this blog.  In <a href="2009-02-21-struggling-for-competence.html">the first post</a> I stated these goals:</p>
+
+<blockquote>
+I want all the code I write to be under automated test. This is currently only a goal though, not a reality. Understanding how to best deal with external interfaces, in particular the database and UI, represents an ongoing learning process. 
+To do the job properly, you need to have capability across the whole stack...so I choose, for now at least, to focus on: Windows, IIS, SQL Server, C#, <del datetime="2010-03-14T22:11:16+00:00">Asp.net</del> Asp.mvc and JavaScript/JQuery.
+</blockquote>
+
+<p>During the year I worked on a project, building an application in Mvc from scratch.  Mvc was a real pleasure to work with, and surprisingly didn't take long to pick up.  There's normally quite a painful learning curve with a new framework, but Mvc was OK.</p>
+
+<p>On the testing side the big break through for me was the <a href="#Model">repository pattern</a>.  Using repositories tames the database interface, and makes the model unit testable.  In general applying the Dependency Inversion-Dependency Injection (DiDi) pattern to all external interfaces, ensures the model is never directly bound to an external interface, and allows substitution of the interface during testing.</p>
+
+<p>Once you get to injecting dependencies for external interfaces, the natural progression is to inject dependencies for all objects, which in turn leads to a dependency injection tool.  We used StructureMap, which seems to do everything you need and is reasonably well documented.  I would recommend it to others, though I have no experience of its competitors.</p>
+
+<p>The guys at work are committed to a Data Layer, built with code-gen and for data objects and CRUD stored procedures.  I think this approach is pants.  The killer problem for me is no caching.  I tried out <a href="#DataLayer">Fluent NHibernate</a>.  The Fluent mapping stuff works very well, and you get lazy loading and caching out of the box.  Understanding how to set it up took a bit of a while.</p>
+
+<p>The other area I've spent time on is the client: <a href="#HtmlAndCss">Html, Css</a>, <a href="#JavaScriptAndJQuery">Javascript and JQuery</a>.  I'm still quite beginner at JavaScript.  It's a fascinating language, seemingly requiring skill and discipline to write well, but allowing great flexibility and creativity.</p>
+
+<p>So this where I'm up to on the architecture of a web based application using Asp.mvc:</p>
+
+<p><img alt="the-stack" title="the-stack" src="images/the-stack.png" /></p>
+
+And these are the posts I've written about the various bits of the stack:
+
+<h3 id="HtmlAndCss">Html and Css</h3>
+<ul>
+<li><a href="2009-05-06-css-selectors.html">CSS Selectors</a></li>
+<li><a href="2009-05-11-css-enlightenment.html">CSS Enlightenment</a></li>
+<li><a href="2009-09-28-css-block-verses-inline.html">CSS Block verses Inline</a></li>
+<li><a href="2009-10-07-css-simple-form.html">CSS Simple Form</a></li>
+<li><a href="2009-10-18-xhtml-whats-that-all-about.html">XHTML - What’s that all about?</a></li>
+<li><a href="2009-10-27-browser-differences.html">Browser Differences</a></li>
+<li><a href="2010-01-24-css-shorthand-properties.html">CSS Shorthand Properties</a></li>
+</ul>
+
+<h3 id="JavaScriptAndJQuery">Javascript and jQuery</h3>
+<ul>
+<li><a href="2009-04-27-first-steps-javascript-jquery.html">First Steps with JavaScript and jQuery</a></li>
+<li><a href="2010-02-22-javascript-objects.html">Javascript Objects</a></li>
+<li><a href="2010-03-01-this-javascript.html">This JavaScript</a></li>
+</ul>
+
+<h3 id="WebLayer">Web Layer</h3>
+<ul>
+<li><a href="2009-03-24-aspnet-session-state.html">Asp.net Session State</a></li>
+<li><a href="2009-06-02-http-basics.html">Http Basics</a></li>
+</ul>
+
+<h3 id="Model">Model</h3>
+<ul>
+<li><a href="2009-06-29-simple-repository-pattern.html">Simple Repository Pattern</a></li>
+<li><a href="2009-07-06-unit-testing-with-repository-pattern.html">Unit Testing with the Repository Pattern</a></li>
+<li><a href="2009-07-13-active-record-verses-repository.html">Active Record verses Repository</a></li>
+<li><a href="2009-07-20-unit-testing-with-email.html">Unit Testing with Email</a></li>
+<li><a href="2009-08-11-dependency-inversion-repository-pattern.html">Dependency Inversion and the Repository Pattern</a></li>
+</ul>
+
+<h3 id="DataLayer">Data Layer</h3>
+<ul>
+<li><a href="2009-11-17-first-steps-with-fluent-nhibernate.html">First Steps with Fluent NHibernate</a></li>
+<li><a href="2009-12-02-fluent-nhibernate-unit-of-work-pattern.html">Fluent NHibernate Unit Of Work Pattern</a></li>
+</ul>
+
+<h3 id="Database">Database</h3>
+<ul>
+<li><a href="2009-03-09-create-alter-table.html">Create Table and Alter Table</a></li>
+<li><a href="2009-11-23-optional-filtering-in-stored-procedures.html">Optional Filtering in Stored Procedures</a></li>
+</ul>
+
+<h3 id="Build">Build</h3>
+<ul>
+<li><a href="2009-06-08-test-msbuild-from-mstest.html">Sometimes it’s just much harder than it should be</a></li>
+<li><a href="2010-01-31-unit-test-msbuild-custom-task.html">Unit Test MsBuild Custom Task</a></li>
+<li><a href="2010-02-14-unit-test-logging-on-a-custom-msbuild-task.html">Unit Test Logging on a Custom MsBuild Task</a></li>
+</ul>
+
+
+</div>
+
+<div class="footer">
+    <!-- Previous -->
+    <!-- Home -->
+    <!-- Next -->
+</div>
+<script src="scripts/prism.js"></script>
+</body>
+</html>

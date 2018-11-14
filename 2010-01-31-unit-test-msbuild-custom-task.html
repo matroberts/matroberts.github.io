@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Unit Test MsBuild Custom Task</title>
+    <meta name="description" content="Example code for calling an MsBuild project from a unit test.  Can be used for testing custom MsBuild Tasks." />
+    <link rel="canonical" href="https://moleseyhill.com/2010-01-31-unit-test-msbuild-custom-task.html" />
+    <link href="styles/sanitize.css" rel="stylesheet" />
+    <link href="styles/prism.css" rel="stylesheet" />
+    <link href="styles/struggle.css" rel="stylesheet" />
+    <link rel="shortcut icon" type="image/x-icon" href='favicon.ico' />
+</head>
+<body>
+<div class="header">
+    <h1><a href="index.html">Struggling for Competence</a></h1>
+    <p>Mat Roberts</p>
+</div>
+   
+
+<div class="content">
+<h2>Unit Test MsBuild Custom Task</h2>
+<time datetime="2010-01-31 23:35:21">2010-01-31 23:35:21</time>
+
+    
+<p>We have a few custom MsBuild tasks in our build system at work.  MsBuild tasks are not as easy to test as you might hope.  My previous effort involved <a href="2009-06-08-test-msbuild-from-mstest.html">creating a process</a> to call MsBuild and swearing a lot.  I've had another go and come up with a much better solution; <a href="http://msdn.microsoft.com/en-us/library/microsoft.build.buildengine.engine.aspx">creating an MsBuild engine in code</a>. Check it out:</p>
+
+<pre>
+<code class="language-csharp">
+using System.IO;
+using System.Text;
+using Microsoft.Build.BuildEngine;
+using Microsoft.Build.Framework;
+using NUnit.Framework;
+
+namespace MsBuildDemo
+{
+    [TestFixture]
+    public class TestMsBuild
+    {
+        const string projectXml =
+@&quot;&lt;Project xmlns='http://schemas.microsoft.com/developer/msbuild/2003'&gt;
+  &lt;Target Name='WriteToConsole'&gt;
+    &lt;Message Text='Hullo World'/&gt;
+  &lt;/Target&gt;
+&lt;/Project&gt;&quot;;
+    
+        public bool CallMsBuild(string buildProject, out string consoleOutput)
+        {
+            var engine = new Engine{DefaultToolsVersion = &quot;3.5&quot;};
+
+            var project = new Project(engine);
+            project.LoadXml(buildProject);
+
+            var builder = new StringBuilder();
+            var writer = new StringWriter(builder);
+            WriteHandler handler = (x) =&gt; writer.WriteLine(x);
+            var logger = new ConsoleLogger(LoggerVerbosity.Normal, handler, null, null);
+            engine.RegisterLogger(logger);
+
+            bool result = engine.BuildProject(project);
+
+            engine.UnregisterAllLoggers();
+            consoleOutput = builder.ToString();
+            return result;
+        }
+
+        [Test]
+        public void CallMsBuildAndCaptureOutput()
+        {
+            string consoleOutput;
+
+            bool success = CallMsBuild(projectXml, out consoleOutput);
+
+            Assert.IsTrue(success, consoleOutput);
+            StringAssert.Contains(&quot;Hullo World&quot;, consoleOutput);
+            StringAssert.DoesNotContain(&quot;MSB4056&quot;, consoleOutput);
+        }
+    }
+}
+</code>
+</pre>
+
+<p>The bit I am particularly pleased with is subverting the <a href="http://msdn.microsoft.com/en-us/library/microsoft.build.buildengine.consolelogger.writehandler.aspx">WriteHandler</a> for the console logger to capture the output as a string.</p>
+
+<p>I'm using the 3.5 version of the engine and framework.  When I first tried to call the Message task in the test I got an error "MSB4127: The "Message" task could not be instantiated from the assembly".  The <a href="http://stsdev.codeplex.com/WorkItem/View.aspx?WorkItemId=754">solution</a> was to create the engine with the property DefaultToolsVersion = "3.5".</p>
+
+<p>I also spent quite a bit of time getting a warning "MSB4056: The MSBuild engine must be called on a single-threaded-apartment."  The apartment is to do with <a href="http://www.albahari.com/threading/part3.aspx">COM interop</a>, and so <a href="http://social.msdn.microsoft.com/Forums/en-US/msbuild/thread/0ad10a3c-9451-4902-9bfe-0d23bfe101a6/">probably doesn't matter in this case</a>.  It is however annoying.  I was able to make NUnit run in STA mode by <a href="http://www.hedgate.net/articles/2007/01/08/instantiating-a-wpf-control-from-an-nunit-test/">creating a config file</a> <a href="http://watin.sourceforge.net/apartmentstateinfo.html">for the test assembly</a>.  NUnit has an attribute to set the <a href="http://www.nunit.org/index.php?p=requiresSTA&r=2.5.3">apartment mode</a> but this didn't seem to work, possibly because I am calling the tests via the ReSharper test runner, or possibly due to incompetence.</p>
+
+<p>So that's calling an MsBuild project from inside a test.  You can use this technique to unit test custom MsBuild tasks.</p>
+
+
+</div>
+
+<div class="footer">
+    <!-- Previous -->
+    <!-- Home -->
+    <!-- Next -->
+</div>
+<script src="scripts/prism.js"></script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>CSS Shorthand Properties</title>
+    <meta name="description" content="A brief summary of css shorthand properties." />
+    <link rel="canonical" href="https://moleseyhill.com/2010-01-24-css-shorthand-properties.html" />
+    <link href="styles/sanitize.css" rel="stylesheet" />
+    <link href="styles/prism.css" rel="stylesheet" />
+    <link href="styles/struggle.css" rel="stylesheet" />
+    <link rel="shortcut icon" type="image/x-icon" href='favicon.ico' />
+</head>
+<body>
+<div class="header">
+    <h1><a href="index.html">Struggling for Competence</a></h1>
+    <p>Mat Roberts</p>
+</div>
+   
+
+<div class="content">
+<h2>CSS Shorthand Properties</h2>
+<time datetime="2010-01-24 23:49:51">2010-01-24 23:49:51</time>
+
+    
+<p>CSS shorthand properties let you set several properties in one go.  The compact form reduces files size, and once you get used to to them are fairly easy to read.  <a href="http://www.webcredible.co.uk/user-friendly-resources/css/css-shorthand-properties.shtml">WebCredible</a> and <a href="http://www.456bereastreet.com/archive/200502/efficient_css_with_shorthand_properties/">456 Berea St</a> both have good explanations of the shorthand properties.  Here is a brief summary.</p>
+
+<table>
+<caption>CSS Shorthand Properties</caption>
+<tr><th>Property</th><th>Example</th><th>Definition</th></tr>
+<tr><td><a href="http://www.w3.org/TR/CSS2/fonts.html#propdef-font">font</a></td><td>font: italic small-caps bold 1em/1.5em Arial;</td><td>style variant weight size/line-height family&sup1;</td></tr>
+<tr><td><a href="http://www.w3.org/TR/CSS2/colors.html#propdef-background">background</a></td><td>background:red url(img.gif) repeat fixed top left;</td><td>color image repeat attachment position &sup2;</td></tr>
+<tr><td><a href="http://www.w3.org/TR/CSS2/generate.html#propdef-list-style">list-style</a></td><td>list-style: disc outside url(img.gif);</td><td>type position image &sup2;</td></tr>
+<tr><td><a href="http://www.w3.org/TR/CSS2/box.html#propdef-border">border</a></td><td>border: 1px black solid;</td><td>width style color &sup2;</td></tr>
+<tr><td><a href="http://www.w3.org/TR/CSS2/box.html#propdef-margin">margin</a><br /><a href="http://www.w3.org/TR/CSS2/box.html#propdef-padding">padding</a><br /> <a href="http://www.w3.org/TR/CSS2/box.html#propdef-border-width">border-width</a></td><td>margin: 4px 3px 2px 1px;</td><td>top&nbsp;&nbsp;right&nbsp;&nbsp;bottom&nbsp;&nbsp;left&nbsp;&nbsp;(clockwise)</td></tr>
+<tr><td></td><td>margin: 4px 2px 0px;</td><td>top&nbsp;&nbsp;right+left&nbsp;&nbsp;bottom</td></tr>
+<tr><td></td><td>margin: 4px 2px;</td><td>top+bottom&nbsp;&nbsp;right+left</td></tr>
+<tr><td></td><td>margin: 5px;</td><td>top+right+bottom+left</td></tr>
+<tr><td colspan="3">&sup1; size and family are <em>mandatory</em>, and must be in that order.  The other properties are optional.<br />
+&sup2; properties are optional, and may be in any order.</td></tr>
+</table>
+
+<p>Since the border properties are optional, you can abbreviate the border-width property to border, for example, border: 5px;</p>
+
+    
+</div>
+
+<div class="footer">
+    <!-- Previous -->
+    <!-- Home -->
+    <!-- Next -->
+</div>
+<script src="scripts/prism.js"></script>
+</body>
+</html>
