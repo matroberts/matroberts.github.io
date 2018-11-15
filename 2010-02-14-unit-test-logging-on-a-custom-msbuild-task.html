@@ -16,14 +16,12 @@
 <body>
 <header>
 <h1><a href="index.html">Struggling for Competence</a></h1>
-<p>Mat Roberts</p>
 </header>
 <nav>
 </nav>
 
 <article>
 <h2>Unit Test Logging on a Custom MsBuild Task</h2>
-<time datetime="2010-02-14 22:24:12">2010-02-14 22:24:12</time>
 
     
 <p>One of the problems areas for testing a custom MsBuild tasks is logging.  In a custom task you create a log message with code like "Log.LogMessage("hullo")" or "Log.LogError("It's gone wrong")".   The "Log" in this code is in fact the <a href="http://msdn.microsoft.com/en-us/library/microsoft.build.utilities.tasklogginghelper.aspx">TaskLoggingHelper</a>, which gets created behind the scenes by <a href="http://msdn.microsoft.com/en-us/library/microsoft.build.buildengine.engine.aspx">task engine</a>.  The TaskLoggingHelper has no interface, which on the face of it means you can't test code which does logging without creating a task engine and testing the whole custom task end-to-end.</p>
@@ -115,9 +113,8 @@ public class ApplyChanges
 </article>
 
 <footer>
-    <!-- Previous -->
-    <!-- Home -->
-    <!-- Next -->
+    <address class="author">Mat Roberts</address>
+    <p><time datetime="2010-02-14 22:24:12">2010-02-14 22:24:12</time></p>
 </footer>
 <script src="scripts/prism.js"></script>
 </body>
