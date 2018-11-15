@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Functions as First Class Objects</title>
+    <meta name="description" content="Describes the characteristics that make a function a first class object, with a simple example of a higher-order procedure in Scheme." />
+    <link rel="canonical" href="https://moleseyhill.com/2010-04-21-functions-as-first-class-objects.html" />
+    <link href="styles/sanitize.css" rel="stylesheet" />
+    <link href="styles/prism.css" rel="stylesheet" />
+    <link href="styles/struggle.css" rel="stylesheet" />
+    <link rel="shortcut icon" type="image/x-icon" href='favicon.ico' />
+</head>
+<body>
+<div class="header">
+    <h1><a href="index.html">Struggling for Competence</a></h1>
+    <p>Mat Roberts</p>
+</div>
+   
+
+<div class="content">
+<h2>Functions as First Class Objects</h2>
+<time datetime="2010-04-21 21:42:47">2010-04-21 21:42:47</time>
+
+    
+<p>In Scheme, and other functional programming languages, functions are "First Class Objects".  But what does that mean?  </p>
+
+<p>An object is first class if it can be <a href="http://www.cs.uni.edu/~wallingf/teaching/cs3540/sessions/session05.html#first-class-functions">treated the same way as a value</a>, that is it <a href="http://www.cs.uni.edu/~wallingf/teaching/cs3540/sessions/session06.html#perlis">can be</a>:</p>
+<ul>
+	<li>Named.</li>
+	<li>Assigned to a variable.</li>
+	<li>Passed to a procedure.</li>
+	<li>Returned from a procedure.</li>
+</ul>
+<p>Having functions as first class objects provides another dimension for program abstraction.  A procedure which receives a procedure as an input or generates a procedure as an output, is called a <em>higher order</em> procedure.</p>
+
+<p>Another feature in practice of functional programming is the <a href="http://code.google.com/edu/parallel/mapreduce-tutorial.html#MapReduce">map-reduce pattern</a>.  In map-reduce an algorithm is split into two parts, the "map" where a calculation is done on each element in a list, and the "reduce" where the result of the individual calculations are aggregated.  </p>
+
+<p>Scheme has two methods which help implement simple cases of map-reduce:</p>
+
+<ul>
+	<li>Map - Takes a procedure and a list as arguments, and returns a list containing the result of applying the procedure to <strong>each</strong> item in the list.</li>
+	<li>Apply - Takes a procedure and a list as arguments, and returns the result of calling the procedure with <strong>all</strong> the values in the list.</li>
+</ul>
+
+<p>So say you want to calculate the sum of the squares of a bunch of numbers:</p>
+<pre>
+<code class="language-scheme">
+(define square
+  (lambda (x)
+    (* x x)))
+
+(define sum-of-squares
+ (lambda x 
+   (apply + (map square x))))
+
+(sum-of-squares 2 2 2)
+
+=> 12
+</code>
+</pre>
+
+<p>Now, say you want to calculate the sum of the cubes of a bunch of numbers.  Well you could just copy the sum-of-squares function, change the name and change the call to square to a call to cube:</p>
+
+<pre>
+<code class="language-scheme">
+(define cube
+  (lambda (x)
+    (* x x x)))
+
+(define sum-of-cube
+ (lambda x 
+   (apply + (map cube x))))
+
+(sum-of-cube 3 3 3)
+=> 27
+</code>
+</pre>
+
+<p>But you can see most of the sum-of-squares and sum-of-cubes functions are the same, only differing by the function which gets called.  You can remove the duplication by exploiting first class functions.  Define a sum-of-func procedure, which takes the function you want to apply as an argument, and returns a sum-of function as its result:</p>
+
+<pre>
+<code class="language-scheme">
+(define sum-of-func
+  (lambda (f)
+    (lambda x
+      (apply + (map f x)))))
+</code>
+</pre>
+
+<p>You use the higher-order procedure sum-of-func like this:</p>
+
+<pre>
+<code class="language-scheme">
+(define sum-of-square (sum-of-func square))
+(sum-of-square 2 2 2)
+=> 12
+
+(define sum-of-cube (sum-of-func cube))
+(sum-of-cube 3 3 3)
+=> 27
+</code>
+</pre>
+
+<p>It's really quite beautiful.</p>
+
+
+
+
+</div>
+
+<div class="footer">
+    <!-- Previous -->
+    <!-- Home -->
+    <!-- Next -->
+</div>
+<script src="scripts/prism.js"></script>
+</body>
+</html>

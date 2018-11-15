@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Prefix, Infix and Postfix</title>
+    <meta name="description" content="The difference between prefix, infix and postfix operator notation is discussed." />
+    <link rel="canonical" href="https://moleseyhill.com/2010-04-13-prefix-infix-and-postfix.html" />
+    <link href="styles/sanitize.css" rel="stylesheet" />
+    <link href="styles/prism.css" rel="stylesheet" />
+    <link href="styles/struggle.css" rel="stylesheet" />
+    <link rel="shortcut icon" type="image/x-icon" href='favicon.ico' />
+</head>
+<body>
+<div class="header">
+    <h1><a href="index.html">Struggling for Competence</a></h1>
+    <p>Mat Roberts</p>
+</div>
+   
+
+<div class="content">
+<h2>Prefix, Infix and Postfix</h2>
+<time datetime="2010-04-13 17:40:32">2010-04-13 17:40:32</time>
+
+    
+<p>One of the odd things about Scheme compared with the C-style languages is it's use of <strong>prefix notation</strong> for operators.  In prefix notation you put the operator first followed by the things it acts on and enclose the whole lot in brackets.  So for example if you want to write 3+4, in Scheme you say:</p>
+
+<pre>
+<code class="language-scheme">
+(+ 3 4)
+</code>
+</pre>
+
+<p>In normal math when you write 3x4+2, you have to know some rules about multiplication and addition.  First  you multiply 3 by 4, <em>then</em> add 2.  So you evaluate multiplication operators before addition operators.  Multiplication has a higher precedence than addition.</p>
+  
+<p>The advantage of the prefix notation is that no operator precedence is required; the bracketing shows what the operator acts on.  So in Scheme if you want 3x4+2, you say</p>
+
+<pre>
+<code class="language-scheme">
+(+ (* 3 4) 2)
+</code>
+</pre>
+
+<p>And if you want 3x(4+2), you write:</p>
+<pre>
+<code class="language-scheme">
+(* 3 (+ 4 2))
+</code>
+</pre>
+
+<p>So in Scheme you don't need operator precedence, but you do need lots of brackets.</p>
+
+<p>The reason Scheme makes this choice is it simplifies the job of the language interpreter.  It doesn't have to understand operator precedence, only how brackets work.  I think though it goes a bit further than just saving the interpreter writer a bit of work though.  One of Schemes key features is a common notation for both data and program representation, which means a program can be represented as data and data can be interpreted as a program.  That's quite a powerful feature, and I think the simple syntax of Scheme is part of what makes it possible.</p>
+
+<h3>Postfix notation</h3>
+<p><img src="images/hp11c.jpg" alt="The hp11c2 Calculator" title="The hp11c2 Calculator" /><p>
+
+<p>There is another possible way of writing operators, with the postfix, or "reverse Polish" notation.  In postfix notation, the operator comes after it's operands.  It has the advantage that you don't need operator precedence and you don't need brackets either.
+
+<p>Some computer languages, such as the printer language <a href="http://en.wikipedia.org/wiki/PostScript">PostScript</a> and the general purpose language <a href="http://en.wikipedia.org/wiki/Forth_(programming_language)">Forth</a> use postfix notation.  But the most common use of postfix is probably in <a href="http://www.hpmuseum.org/">old style Hewlett-Packard calculators</a>.  I remember one of the old timers at my first job talking longingly about these machines, and the efficiency of postfix.</p>
+
+<p>In postfix if you want to write 3+4, you write</p>
+<pre>
+<code class="language-scheme">
+3 4 +
+</code>
+</pre>
+
+<p>And if you want 3x4+2 you write </p>
+<pre>
+<code class="language-scheme">
+3 4 * 2 +
+</code>
+</pre>
+
+
+<h3>Infix notation</h3>
+
+<p>Infix notation is the normal style of writing maths.  It requires brackets and operator precedence, and so is the most complex of the three forms.  It does however have the massive advantage of familiarity, and is probably the most human readable of the three forms.</p>
+
+<p>One unusual feature of the infix notation used in the C-style languages is the <a href="http://www.difranco.net/cop2220/op-prec.htm">operator precedence</a> of the bitwise operators & and | is incorrect.  Dennis Ritchie <a href="http://www.lysator.liu.se/c/dmr-on-or.html">explains the historical accident</a> which led to the unusual operator precedence as follows:</p>
+
+<blockquote>
+<p>Early C had no separate operators for & and && or | and ||.  (Got that?)  Instead it used the notion (inherited from B and BCPL) of "truth-value context": where a Boolean value was expected, after "if" and "while" and so forth, the & and | operators were interpreted as && and || are now; in ordinary expressions, the bitwise interpretations were used.  It worked out pretty well, but was hard to explain. (There was the notion of "top-level operators" in a truth-value context.)</p>
+
+<p>The precedence of & and | were as they are now.</p>
+
+<p>Primarily at the urging of Alan Snyder, the && and || operators were added.  This successfully separated the concepts of bitwise operations and short-circuit Boolean evaluation.  However, I had cold feet about the precedence problems.  For example, there were lots of programs with things like</p>
+
+<p>	if (a==b & c==d) ...</p>
+
+<p>In retrospect it would have been better to go ahead and change the precedence of & to higher than ==,  but it seemed safer just to split & and && without moving & past an existing operator.  (After all, we had several hundred kilobytes of source code, and maybe 3 installations....)</p>
+</blockquote>
+
+<p>Personally I find the precedence of the logical operators and (&&) and or (||) surprising as well.  <a href="http://www.linuxforu.com/teach-me/%EF%BB%BFsome-puzzling-things-about-c-language/">For example</a> in the expression:</p>
+<pre>
+<code class="language-c">
+a && b == c && d
+</code>
+</pre>
+
+<p>I would expect (a && b) == (c && d), but in fact what you get is a && (b==c) && d.  I guess you learn fairly early on is to use brackets where there <a href="http://stackoverflow.com/questions/465706/should-one-know-operator-precedence-thoroughly/465731#465731">could be any ambiguity</a>.</p>
+
+
+</div>
+
+<div class="footer">
+    <!-- Previous -->
+    <!-- Home -->
+    <!-- Next -->
+</div>
+<script src="scripts/prism.js"></script>
+</body>
+</html>

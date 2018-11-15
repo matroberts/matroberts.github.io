@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Simple Recursion</title>
+    <meta name="description" content="Simple recursion is described, with examples in Scheme.  The Little Schemers commandments for recursion on a list are described." />
+    <link rel="canonical" href="https://moleseyhill.com/2010-05-14-simple-recursion.html" />
+    <link href="styles/sanitize.css" rel="stylesheet" />
+    <link href="styles/prism.css" rel="stylesheet" />
+    <link href="styles/struggle.css" rel="stylesheet" />
+    <link rel="shortcut icon" type="image/x-icon" href='favicon.ico' />
+</head>
+<body>
+<div class="header">
+    <h1><a href="index.html">Struggling for Competence</a></h1>
+    <p>Mat Roberts</p>
+</div>
+   
+
+<div class="content">
+<h2>Simple Recursion</h2>
+<time datetime="2010-05-14 17:13:24">2010-05-14 17:13:24</time>
+
+    
+<p>A recursive procedure is a procedure which applies itself.  In C# recursion is possible, but generally iteration is the preferred idiom.   Scheme is a languages designed to be good at recursion, and since it doesn't have iteration it is in fact the only way.</p>
+
+<p>In Scheme you can learn a lot about recursion, using a tiny subset of the language; an approach  exemplified by the <a href="http://www.amazon.co.uk/gp/product/0262560992?ie=UTF8&tag=struggforcomp-21&linkCode=as2&camp=1634&creative=6738&creativeASIN=0262560992">Little Schemer</a>.  The basic bits you need are:</p>
+
+<table>
+<tr><td>(quote x)</td><td>returns x, normally (quote x) is abbreviated to 'x.</td></tr>
+<tr><td>(car l)</td><td>returns the first element of a list, l.</td></tr>
+<tr><td>(cdr l)</td><td>returns the list l, except for it's first element.</td></tr>
+<tr><td>(cons e l)</td><td>pushes e onto the front of the list, l.</td></tr>
+<tr><td>(cond (p1 e1)....(pn en))</td><td>Conditional expression.  
+The p expressions are evaluated in order until one of them returns true.  
+When one is found the corresponding e expression is returned.</td></tr>
+<tr><td>(null? l)</td><td>returns true (#t) if the list l is empty, false (#f) otherwise.</td></tr>
+<tr><td>(eq? a b)</td><td>returns true (#t) if a and b are equal, false (#f) otherwise.</td></tr>
+</table>
+
+<p>Most recursive procedures should have at least two basic elements, a base case and a recursion step.  Consider these examples:</p>
+
+<p>The procedure member? takes 2 arguments, a symbol, e, and a list, lst.  It returns true if e is in the list, otherwise returns false.</p>
+
+<pre>
+<code class="language-scheme">
+(define member?
+  (lambda(e lst)
+    (cond
+      ((null? lst) #f)
+      ((eq? e (car lst)) #t)
+      (else (member? e (cdr lst))))))
+</code>
+</pre>
+
+<p>The procedure insert-right takes 3 arguments, new, old and lst.  It inserts new into lst to the right of the first occurance of old.</p>
+
+<pre>
+<code class="language-scheme">
+(define insert-right
+  (lambda (new old lst)
+    (cond
+      ((null? lst) '())
+      ((eq? old (car lst)) (cons old (cons new (cdr lst))))
+      (else (cons (car lst) (insert-right new old (cdr lst)))))))
+</code>
+</pre>
+
+<p>The procedure any? takes a list of booleans as an argument.  It returns true if any are true, otherwise returns false.</p>
+
+<pre>
+<code class="language-scheme">
+(define any?
+  (lambda (lst)
+    (cond
+      ((null? lst) #f)
+      ((car lst) #t)
+      (else (any? (cdr lst))))))
+</code>
+</pre>
+
+<p>The procedure reject takes two arguments a predicate test? and a list lst.  It returns a new list of items which fail test?</p>
+
+<pre>
+<code class="language-scheme">
+(define reject
+  (lambda (test? lst)
+    (cond
+      ((null? lst) '())
+      ((test? (car lst)) (reject test? (cdr lst)))
+      (else (cons (car lst) (reject test? (cdr lst)))))))
+</code>
+</pre>
+
+<p>The <a href="http://www.amazon.co.uk/gp/product/0262560992?ie=UTF8&tag=struggforcomp-21&linkCode=as2&camp=1634&creative=6738&creativeASIN=0262560992">Little Schemer</a> summarises it's rules for writing recursive procedures as commandments:</p>
+
+<ul>
+	<li><strong>First Commandment</strong> - When recurring on a list, lst, ask two questions about it: (null? lst) and else.</li>
+	<li><strong>Second  Commandment</strong> - Use cons to build lists.</li>
+	<li><strong>Third Commandment</strong> - When building a list, describe the first typical element, and then cons it on to the natural recursion.</li>
+	<li><strong>Fourth Commandment</strong> - Always change at least one argument while recurring.  When recurring on a list, lst, use (cdr lst).  It must be changed closer to termination.  The changing argument must be tested in the termination condition.  When using cdr test termination with null?</li>
+</ul>
+
+<p>You can download the code with tests <a href='code/simple-recursion/simple_recursion.ss'>here</a>.</p>
+
+
+</div>
+
+<div class="footer">
+    <!-- Previous -->
+    <!-- Home -->
+    <!-- Next -->
+</div>
+<script src="scripts/prism.js"></script>
+</body>
+</html>

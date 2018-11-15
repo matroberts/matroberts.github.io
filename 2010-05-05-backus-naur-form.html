@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Backus Naur Form (BNF)</title>
+    <meta name="description" content="A brief discussion of Backus Naur Form, with examples of defining simple data structures like the binary tree." />
+    <link rel="canonical" href="https://moleseyhill.com/2010-05-05-backus-naur-form.html" />
+    <link href="styles/sanitize.css" rel="stylesheet" />
+    <link href="styles/prism.css" rel="stylesheet" />
+    <link href="styles/struggle.css" rel="stylesheet" />
+    <link rel="shortcut icon" type="image/x-icon" href='favicon.ico' />
+</head>
+<body>
+<div class="header">
+    <h1><a href="index.html">Struggling for Competence</a></h1>
+    <p>Mat Roberts</p>
+</div>
+   
+
+<div class="content">
+<h2>Backus Naur Form (BNF)</h2>
+<time datetime="2010-05-05 18:47:34">2010-05-05 18:47:34</time>
+
+    
+<p><a href="http://en.wikipedia.org/wiki/Backus%E2%80%93Naur_Form">Backus Naur Form</a> (or Backus Normal Form or BNF) is a way of specifying data types and language syntax.  It <a href="http://www.cs.uni.edu/~wallingf/teaching/cs3540/sessions/session07.html#computing-as-language">has three components</a>:</p>
+
+<ul>
+	<li>A set of terminals which require no further definition.</li>
+	<li>A set of non-terminals or syntactic categories that are defined in terms of other terminals and non-terminals.</li>
+	<li>A set of productions or rules, that state how to construct a terminal from non-terminals and terminals.</li>
+</ul>
+
+<p>The left hand side of the definition is the non-terminal, and the right hand side is the production or rule.</p>
+
+<p>For example, the BNF for a list of symbols in Scheme is:</p>
+
+<pre>
+<code class="language-scheme">
+&lt;list-of-symbols&gt; ::= ()
+                       | (&lt;symbol&gt; . &lt;list-of-symbols&gt;)
+</code>
+</pre>
+
+<p>Here "( )",  "." and "&lt;symbol&gt;" are terminals and &lt;list-of-symbols&gt; is the non-terminal.  To explain the Scheme syntax a little () is an empty list, (x . y) is a "dotted pair", and and a proper list is made by dotting pairs together terminating in an empty list, so (x . (y . (z . ()))) equals the proper list (x y z).</p>
+
+<table>
+<tr><th colspan="2">Backus Naur Form</th></tr>
+<tr><td>::=</td><td>Definition</td></tr>
+<tr><td>|</td><td>or</td></tr>
+<tr><td>{....}*</td><td>0 or more</td></tr>
+<tr><td>{....}+</td><td>1 or more</td></tr>
+<tr><td>[....]</td><td>optional</td></tr>
+<tr><td>&lt;....&gt;</td><td>terminal or non-terminal</td></tr>
+</table>
+
+<p>Backus Normal Form is an inductive definition.  In an inductive definition you list one or more specific examples, and describe how to construct more complex examples from simpler ones.  You can see that the list of symbols example is inductive, since list-of-symbols appears on both sides of the equation.</p>
+
+<p>Another example is the BNF for a binary tree:</p>
+
+<pre>
+<code class="language-scheme">
+&lt;tree&gt; ::= &lt;number&gt;
+          | (&lt;symbol&gt; &lt;tree&gt; &lt;tree&gt;)
+</code>
+</pre>
+
+<p>Here are some binary trees which obey this definition:</p>
+
+<p><img src="images/tree.png" alt="examples of binary trees" title="examples of binary trees" /></p>
+
+<p>I recently saw on Eric Lippert's blog a rather more <a href="http://blogs.msdn.com/ericlippert/archive/2010/04/19/every-binary-tree-there-is.aspx">thorough discussion of binary trees</a>, including the interesting snippet that the number of binary trees with n nodes is given by the <a href="http://en.wikipedia.org/wiki/Catalan_number">Catalan numbers</a> (2n)!/(n+1)!n!</p>
+
+<p>An final example of BNF is the definition for a <a href="http://www.cs.uni.edu/~wallingf/teaching/cs3540/sessions/session09.html#s-list">nested list of symbols, s-list</a>:</p>
+
+<pre>
+<code class="language-scheme">
+&lt;s-list&gt; ::= ()
+          | (&lt;symbol-expression&gt; . &lt;s-list&gt;)
+
+&lt;symbol-expression&gt; ::= &lt;symbol&gt; 
+                     | &lt;s-list&gt; 
+</code>
+</pre>
+
+<p>Examples of the types of nested list you can make are:</p>
+
+<pre>
+<code class="language-scheme">
+()
+(())
+(a)
+(a b c d)
+((a) (b) (c) (d))
+((a b) c (d e (f (g))))
+</code>
+</pre>
+
+<p>In the past I've always been quite annoyed by Back Naur Form, mainly because computer manual writers tend to tell you the BNF for some language syntax rather than giving examples of actual usage.  Maybe now I understand BNF a little better I won't be quite so annoyed.  But I still think examples work best for explaining, definitions are only really useful when you understand what your talking about.</p>
+
+
+</div>
+
+<div class="footer">
+    <!-- Previous -->
+    <!-- Home -->
+    <!-- Next -->
+</div>
+<script src="scripts/prism.js"></script>
+</body>
+</html>
