@@ -1,24 +1,27 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Active Record verses Repository</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Comparison of the Active Record and Repository patterns.  Explanation of the inherent untestability of the Active Record pattern." />
+    <meta name="author" content="Mat Roberts">
     <link rel="canonical" href="https://moleseyhill.com/2009-07-13-active-record-verses-repository.html" />
     <link href="styles/sanitize.css" rel="stylesheet" />
     <link href="styles/prism.css" rel="stylesheet" />
     <link href="styles/struggle.css" rel="stylesheet" />
     <link rel="shortcut icon" type="image/x-icon" href='favicon.ico' />
 </head>
-<body>
-<div class="header">
-    <h1><a href="index.html">Struggling for Competence</a></h1>
-    <p>Mat Roberts</p>
-</div>
-   
 
-<div class="content">
+<body>
+<header>
+<h1><a href="index.html">Struggling for Competence</a></h1>
+<p>Mat Roberts</p>
+</header>
+<nav>
+</nav>
+
+<article>
 <h2>Active Record verses Repository</h2>
 <time datetime="2009-07-13 22:20:18">2009-07-13 22:20:18</time>
 
@@ -59,13 +62,13 @@ You just seem to get a general mixing of the business and database logic.  Got s
 
 <p>So the big advantage of the repository, is its inherent testability.  The unit test are easy to write when you use a repository interface with dependency injection.  It's inherent goodness, does not however translate into popularity.  In a googlefight, <a href="http://www.googlefight.com/index.php?lang=en_GB&word1=repository&word2=active+record">Active Record beats Repository hands down</a>.  Clearly the battle for testable architecture has not yet been won.</p>
 
-</div>
+</article>
 
-<div class="footer">
+<footer>
     <!-- Previous -->
     <!-- Home -->
     <!-- Next -->
-</div>
+</footer>
 <script src="scripts/prism.js"></script>
 </body>
 </html>
