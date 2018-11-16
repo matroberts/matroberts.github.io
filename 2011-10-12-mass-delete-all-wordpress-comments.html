@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Mass Delete All Wordpress Comments</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="How to delete all existing WordPress comments." />
+    <meta name="author" content="Mat Roberts">
+    <link rel="canonical" href="https://moleseyhill.com/2011-10-12-mass-delete-all-wordpress-comments.html" />
+    <link href="styles/sanitize.css" rel="stylesheet" />
+    <link href="styles/prism.css" rel="stylesheet" />
+    <link href="styles/struggle.css" rel="stylesheet" />
+    <link rel="shortcut icon" type="image/x-icon" href='favicon.ico' />
+</head>
+
+<body>
+<header>
+<h1><a href="index.html">Struggling for Competence</a></h1>
+</header>
+<nav>
+</nav>
+
+<article>
+<h2>Mass Delete All Wordpress Comments</h2>
+
+    
+<p>I discovered a couple of days ago that I had 118,000 comments on this blog.  The vast majority were, of course, spam.  In fact as best as I can tell I had only 2 genuine comments, one from my mate Barry and another from a guy in China.</p>
+
+<p>I installed <a href="http://wordpress.org/extend/plugins/akismet/" title="akismet">Akismet</a> to do spam filtering, but this did not deal with the existing spam mountain.  I made various attempts to scale the spam peak, and recover the odd real comment which may have been lost there.  But this resulted in me maxing out the CPU on the webserver, and my host suspending the website.  </p>
+
+<p>After a courteous email exchange <a href="http://www.justhost.com/" title="justhost">JustHost</a> graciously reinstated my account, and I was left feeling somewhat nervous.  After googling for a while the only apparent viable option was to <a href="http://www.blogopreneur.com/2009/04/08/mass-delete-pending-comments-from-wordpress/">delete the comments directly in the database</a>.  </p>
+
+<p>After <strong>backing up the database</strong> and looking at the <a href="http://codex.wordpress.org/Database_Description ">database schema</a>, I chose the following sql delete commands:</p>
+
+<pre>
+<code class="language-sql">
+delete from wp_commentmeta limit 1000;
+
+delete from wp_comments limit 1000;
+</code>
+</pre>
+
+<p>The "limit 1000", means only 1000 records are deleted at a time, so the commands had to be run repeatedly.  First I deleted from wp_commentmeta, then wp_comments.  I left 15 seconds between each delete, so as not to hit the CPU too heavily and incur the wrath of my host.</p>
+
+<p>All the comments are gone.  Barry and the guy in China &mdash; sorry.</p>
+
+
+</article>
+
+<footer>
+    <address class="author">Mat Roberts</address>
+    <p><time datetime="2011-10-12 22:51:03">2011-10-12 22:51:03</time></p>
+</footer>
+<script src="scripts/prism.js"></script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Maximum Contiguous Sum</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Discusses a problem from Jon Bentley's Programming Pearls, of finding the maximum contiguous sum of an input vector" />
+    <meta name="author" content="Mat Roberts">
+    <link rel="canonical" href="https://moleseyhill.com/2012-05-30-maximum-contiguous-sum.html" />
+    <link href="styles/sanitize.css" rel="stylesheet" />
+    <link href="styles/prism.css" rel="stylesheet" />
+    <link href="styles/struggle.css" rel="stylesheet" />
+    <link rel="shortcut icon" type="image/x-icon" href='favicon.ico' />
+</head>
+
+<body>
+<header>
+<h1><a href="index.html">Struggling for Competence</a></h1>
+</header>
+<nav>
+</nav>
+
+<article>
+<h2>Maximum Contiguous Sum</h2>
+
+    
+<p>I have been reading <a href="http://www.amazon.co.uk/gp/product/0201657880/ref=as_li_tf_tl?ie=UTF8&tag=struggforcomp-21&linkCode=as2&camp=1634&creative=6738&creativeASIN=0201657880">Programming Pearls</a> by Jon Bentley.  It's an old school book about programming.  One of the problem posed by is from image processing, to find the maximum contiguous sum:</p>
+
+<blockquote>
+<p>For an input vector x of n [integers]; the output is the maximum sum found in any contiguous subvector of the input.</p>
+<p>For instance, if the input vector contains these ten elements: (31, -41, 59, 26, -53, 58, 97, -93, -23, 84) then the program returns the sum of x[2...6], or 187.  The problem is easy when all the numbers are positive; the maximum subvector is the entire input vector.  The rub comes when some of the numbers are negative: should we include a negative number in hopes that positive numbers on either side will compensate for it?  To complete the problem definition , we'll say that when all inputs are negative the maximum-sum subvector is the empty vector, which has sum zero.</p>
+</blockquote>
+
+<p>Its straight forward to find an inefficient solution, but harder to find a solution which copes well with large n.</p>
+<p><img alt="Maximum Contiguous Sum" title="Maximum Contiguous Sum" src="images/MaximumContiguousSum.png" /></p>
+<p>The idea for my solution is shown in the picture.  Loop through the vector adding up the values as you go, making the sum.  Keep track of the minimum sum so far.  If the difference between rolling sum and the minimum sum is a new best value, update the best value.</p>
+
+<pre>
+<code class="language-csharp">
+private int Mcs(int[] vec)
+{
+    int minSum = 0;
+    int bestSum = 0;
+    int sum=0;
+    for (int i = 0; i &lt; vec.Length; i++)
+    {
+        sum += vec[i];
+
+        if (sum &lt; minSum)
+            minSum = sum;
+                
+        if ((sum - minSum) &gt; bestSum)
+            bestSum = sum - minSum;
+    }
+
+    return bestSum;
+}
+</code>
+</pre>
+
+<p>It's not ground breaking stuff, but I was pleased all the same to find an O(n) solution.</p>
+
+    
+</article>
+
+<footer>
+    <address class="author">Mat Roberts</address>
+    <p><time datetime="2012-05-30 22:13:26">2012-05-30 22:13:26</time></p>
+</footer>
+<script src="scripts/prism.js"></script>
+</body>
+</html>
