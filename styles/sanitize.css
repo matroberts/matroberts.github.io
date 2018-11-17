@@ -33,7 +33,7 @@
  * 4. Use a 4-space tab width in all browsers (opinionated).
  * 5. Prevent adjustments of font size after orientation changes in
  *    IE on Windows Phone and in iOS.
- * 6. Breaks words to prevent overflow in all browsers (opinionated).
+ * 6. Changed word-break to normal (my opinion).
  */
 
 html {
@@ -64,11 +64,11 @@ html {
  * ========================================================================== */
 
 /**
- * Remove the margin in all browsers (opinionated).
+ * Small margin on sides and bottom (my opinion).
  */
 
 body {
-  margin: 0;
+  margin: 0 10px;
 }
 
 /**
