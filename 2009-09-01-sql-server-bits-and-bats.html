@@ -17,7 +17,11 @@
 <header>
     <h1><a href="index.html">Struggling for Competence</a></h1>
     <nav>
-    </nav>
+<menu>
+<li><a href="2009-08-27-dreyfus-model.html">Previous</a></li>
+<li><a href="2009-09-07-xp-engineering-practices.html">Next</a></li>
+</menu>
+</nav>
 </header>
 
 <article>
@@ -28,11 +32,11 @@
 
 <table>
 <tr><th colspan="2">From A Query Window</th></tr>
-<tr><td>F5<br/>Ctrl+E<br/>Alt+X</td><td><a href="http://msdn.microsoft.com/en-us/library/ms174205.aspx">Execute Query</a></td></tr>
+<tr><td>F5<br>Ctrl+E<br>Alt+X</td><td><a href="http://msdn.microsoft.com/en-us/library/ms174205.aspx">Execute Query</a></td></tr>
 <tr><td><a href="http://msdn.microsoft.com/en-us/library/ms174205.aspx">Ctrl+T</a></td><td>Output as Text</td></tr>
 <tr><td><a href="http://msdn.microsoft.com/en-us/library/ms174205.aspx">Ctrl+D</a></td><td>Output as Grid</td></tr>
 <tr><td>select @@version</td><td><a href="http://support.microsoft.com/kb/321185">Version of sql server</a></td></tr>
-<tr><td>select serverproperty('productversion'), <br/>serverproperty('productlevel'), <br/>serverproperty('edition')</td><td><a href="http://support.microsoft.com/kb/321185">Version of sql server</a> (Since 2000)</td></tr>
+<tr><td>select serverproperty('productversion'), <br>serverproperty('productlevel'), <br>serverproperty('edition')</td><td><a href="http://support.microsoft.com/kb/321185">Version of sql server</a> (Since 2000)</td></tr>
 <tr><td><a href="http://msdn.microsoft.com/en-us/library/ms187335(SQL.90).aspx">sp_help</a> table</td><td>Long info about a table (or other object)</td></tr>
 <tr><td><a href="http://msdn.microsoft.com/en-us/library/ms186250.aspx">sp_tables</a> table</td><td>Short info about a table</td></tr>
 <tr><td><a href="http://msdn.microsoft.com/en-us/library/ms188771(SQL.90).aspx">sp_helpindex</a> table</td><td>Indexes for a table</td></tr>
@@ -42,7 +46,7 @@
 <tr><td><a href="http://msdn.microsoft.com/en-us/library/ms188351.aspx">sp_rename</a> 'dbo.table.oldcolumn', 'newcolumn', 'COLUMN'</td><td>Rename a column</td></tr>
 </table>
 
-<br/>
+<br>
 <table>
 <tr><th colspan="2">From SQL Server Management Studio GUI</th></tr>
 <tr><td>Limit Server memory</td><td>Right Click (at top level)-&gt;Properties-&gt;Memory-&gt;Maximum Memory</td></tr>
@@ -50,15 +54,15 @@
 <tr><td>Simple Recovery</td><td>Right Click (on database)-&gt;Options-&gt;Recovery-&gt;Simple</td></tr>
 <tr><td>Backup</td><td>Right Click (on database)-&gt;Tasks-&gt;Backup</td></tr>
 <tr><td>Shrink</td><td>Right Click (on database)-&gt;Tasks-&gt;Shrink</td></tr>
-<tr><td>Rename database files</td><td>Right Click (on database)-&gt;Tasks-&gt;Detach<br/>Rename on file system<br/>Right Click (at top level)-&gt;Tasks-&gt;Attach (will have to adjust filenames)</td></tr>
+<tr><td>Rename database files</td><td>Right Click (on database)-&gt;Tasks-&gt;Detach<br>Rename on file system<br>Right Click (at top level)-&gt;Tasks-&gt;Attach (will have to adjust filenames)</td></tr>
 </table>
 
-<br/>
+<br>
 <table>
 <tr><th colspan="2">Connection String</th></tr>
-<tr><td>Test connection with telnet</td><td>telnet bsq101 1433<br/>Ctrl + ]<br/>quit</td></tr>
-<tr><td>Test connection with odbc</td><td>On desktop make empty text file: test.udl<br/>double click<br/>fill in odbc credentials<br/>click test connection</td></tr>
-<tr><td><a href="http://weblogs.asp.net/jgalloway/archive/2007/02/24/sql-force-the-protocol-tcp-named-pipes-etc-in-your-connection-string.aspx">Force protocol in connection string</a></td><td>server=tcp:hostname<br/>server=tcp:hostname, portNumber<br/>server=np:hostname<br/>server=np:\\hostname\pipe\pipeName<br/></td></tr>
+<tr><td>Test connection with telnet</td><td>telnet bsq101 1433<br>Ctrl + ]<br>quit</td></tr>
+<tr><td>Test connection with odbc</td><td>On desktop make empty text file: test.udl<br>double click<br>fill in odbc credentials<br>click test connection</td></tr>
+<tr><td><a href="http://weblogs.asp.net/jgalloway/archive/2007/02/24/sql-force-the-protocol-tcp-named-pipes-etc-in-your-connection-string.aspx">Force protocol in connection string</a></td><td>server=tcp:hostname<br>server=tcp:hostname, portNumber<br>server=np:hostname<br>server=np:\\hostname\pipe\pipeName<br></td></tr>
 <tr><td><a href="http://msdn.microsoft.com/en-us/library/8xx3tyca(VS.71).aspx">Switch off connection pooling in connection string</a></td><td>pooling=false;</td></tr>
 </table>
 

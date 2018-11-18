@@ -17,7 +17,11 @@
 <header>
     <h1><a href="index.html">Struggling for Competence</a></h1>
     <nav>
-    </nav>
+<menu>
+<li><a href="2009-04-13-csharp-ienumerable-yield.html">Previous</a></li>
+<li><a href="2009-04-27-first-steps-javascript-jquery.html">Next</a></li>
+</menu>
+</nav>
 </header>
 
 <article>
@@ -105,21 +109,21 @@ namespace EventDemo
 <p>
 In the "PageLoad" method the HandleOnClick method is attached to the ButtonClick event.  There are a number of approaches for attaching a method to the event:
 <ul>
-<li>Attach a named method programmatically:<br/>
+<li>Attach a named method programmatically:<br>
 <pre>
 <code class="language-csharp">
 widget.ButtonClick += HandleOnClick;
 </code>
 </pre>
 </li>
-<li>Attach an anonymous method programmatically:<br/>
+<li>Attach an anonymous method programmatically:<br>
 <pre>
 <code class="language-csharp">
 widget.ButtonClick += (Object sender, EventArgs e) => { TextBoxText = "ButtonClicked"; };
 </code>
 </pre>
 </li>
-<li>Attach a named method declaritivly, on an asp.net page in-front:<br/>
+<li>Attach a named method declaritivly, on an asp.net page in-front:<br>
 <pre>
 <code class="language-markup">
 &lt;asp:UiButton id="widget" runat="server" OnButtonClick="HandleOnClick" /&gt;

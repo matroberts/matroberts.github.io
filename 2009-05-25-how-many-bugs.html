@@ -17,7 +17,11 @@
 <header>
     <h1><a href="index.html">Struggling for Competence</a></h1>
     <nav>
-    </nav>
+<menu>
+<li><a href="2009-05-18-kent-becks-four-hats.html">Previous</a></li>
+<li><a href="2009-06-02-http-basics.html">Next</a></li>
+</menu>
+</nav>
 </header>
 
 <article>
@@ -26,7 +30,7 @@
 <p>Have you every wondered how many bugs are in the system you're developing?  One thing you do know is that there are more bugs than the ones you know about right now.  Those pesky testers and users will keep unearthing new bugs seemingly for ever.</p>
 
 <p>A similar problem is estimating the number of typographical errors in a book.  Eastaway &amp; Wyndham describe a technique used by printers for doing this. (<a href="http://www.amazon.co.uk/gp/product/1861056257?ie=UTF8&tag=struggforcomp-21&linkCode=as2&camp=1634&creative=6738&creativeASIN=1861056257">How Long Is a Piece of String?</a> p160.)  A chapter of the book is given to two proof-readers who check for typos independently.  Say the first spots E<sub>1</sub> errors and, the second spots E<sub>2</sub>.  If the number of errors in common is S, then the Lincoln Index estimates the total number of errors:</p>
-<img  alt="expected-errors=E1xE2/S" title="expected-errors=E1xE2/S" src="images/expected-errors.png"/>
+<img alt="expected-errors=E1xE2/S" title="expected-errors=E1xE2/S" src="images/expected-errors.png">
 
 <p>Presumably this technique could be used to estimate the number of bugs in a software system.  Or at least a well defined part of a system, say a new feature.  You could set a couple of testers going on your new feature, and see how many bugs they find.  You would need to be careful to make the testing independent.  They would not be allowed to talk (or email or IM) and they would not be able to enter the bugs in the bug log until the test runs were complete.  Say the first tester found 5 bugs and the second found 7.  If the number of bugs in common was 3, then the total number of bugs is roughly 5x7/3 = 11.6, of which 9 have been found so far.</p>
 

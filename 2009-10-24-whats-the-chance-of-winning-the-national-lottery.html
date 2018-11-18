@@ -17,7 +17,11 @@
 <header>
     <h1><a href="index.html">Struggling for Competence</a></h1>
     <nav>
-    </nav>
+<menu>
+<li><a href="2009-10-18-xhtml-whats-that-all-about.html">Previous</a></li>
+<li><a href="2009-10-27-browser-differences.html">Next</a></li>
+</menu>
+</nav>
 </header>
 
 <article>
@@ -28,13 +32,13 @@
 
 <p>How likely are you to win?  Well, in this type of probability problem everything is known in advance, so it's "simply" a matter of <a href="http://www.mathgoodies.com/lessons/vol6/intro_probability.html">counting up the possibilities</a>.</p>
 
-<p><img  alt="Probability=(Number of way thing can happen)/(Total number of possibilities)" title="Probability=(Number of way thing can happen)/(Total number of possibilities)"  src="images/probability-definition.png" /></p>
+<p><img alt="Probability=(Number of way thing can happen)/(Total number of possibilities)" title="Probability=(Number of way thing can happen)/(Total number of possibilities)" src="images/probability-definition.png"></p>
 
 <p>The top line of equation, "how many ways are there of drawing <em>my</em> 6 balls from the machine", is easy - there is only 1 way.  The bottom line of the equation, "how many ways are there of choosing <em>any</em> 6 balls from 49", requires some thought.</p>
 
 <p>Lets start with a simpler problem - "how many ways are there of lining up the 49 balls in a row?"  Well imagine picking the balls one by one from the machine and laying them out in a line.  For the first ball the are 49 choices, for the second there are 48, for the third there are 47, all the way down.  So the number of ways of doing this is 49x48x47......3x2x1.  In general:</p>
 
-<p><img alt="n!=n(n-1)(n-2)...3.2.1" title="factorial" src="images/factorial.png" /></p>
+<p><img alt="n!=n(n-1)(n-2)...3.2.1" title="factorial" src="images/factorial.png"></p>
 
 <p>The n! is called n factorial.  It's just a mathematical shorthand for the big pile of multiplications you have to do.  Factorials get big very quickly:</p>
 <table>
@@ -50,13 +54,13 @@
 
 <p>A similar problem, closer to what we want is "how many ways can you sequentially pick 6 balls from 49?"  Its quite like the ordering problem.  You have 49 choices for the first, 48 for the second, but you stop when you have made 6 picks.  So the answer is 49x48x47x46x45x44.  If you look at this answer you can see it equals 49!/43! = 49!/(49-6)!  The mathematical name for this is the number of <a href="http://en.wikipedia.org/wiki/Permutations">permutations</a>, and has the general formula:</p>
 
-<p><img alt="nPr=n!/(n-r)!" title="permutations" src="images/permutations.png" /></p>
+<p><img alt="nPr=n!/(n-r)!" title="permutations" src="images/permutations.png"></p>
 
 <p>So now we can answer the question "how many ways are there of choosing 6 balls from 49".  The thing about the permutation formula is that the order you pick the objects matters.  In the lottery that's not the case, you don't care what order the balls are chosen in, only that they're picked.  So the answer is to take the number of permutations and divide it by the number of ways of ordering the 6 balls that were chosen, that is divide by 6!.  So the answer is 49!/43!6! = 13983816.</p>
 
 <p>In general choosing r elements from n where order doesn't matter, is called the number of <a href="http://en.wikipedia.org/wiki/Combinations">combinations</a> and has the general formula:</p>
 
-<p><img alt="nCr=n!/(n-r)!r!" title="combinations" src="images/combinations.png" /></p>
+<p><img alt="nCr=n!/(n-r)!r!" title="combinations" src="images/combinations.png"></p>
 
 <p>So to return to the original question, "what the probability of winning the national lottery".  The answer is number ways of choosing your numbers, which is 1, divided by the total number of ways of choosing 6 balls from 49, which is 13,983,816.  Or roughly one in 14 million.  Not very likely really.</p>
 

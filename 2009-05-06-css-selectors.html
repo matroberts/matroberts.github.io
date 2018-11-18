@@ -17,14 +17,18 @@
 <header>
     <h1><a href="index.html">Struggling for Competence</a></h1>
     <nav>
-    </nav>
+<menu>
+<li><a href="2009-04-27-first-steps-javascript-jquery.html">Previous</a></li>
+<li><a href="2009-05-11-css-enlightenment.html">Next</a></li>
+</menu>
+</nav>
 </header>
 
 <article>
     <h2>CSS Selectors</h2>
     
 <p>Cascading Style Sheets (CSS) are used to style html documents.  A CSS statement has two parts: a <em>selector</em>, which specifies the part of the document, and declarations, which describes the formatting to apply.  A typical piece of CSS looks like this:</p>
-<p><img alt="typical piece of css, showing selector and declarations" title="typical piece of css, showing selector and declarations" src="images/typical-css.png"/></p>
+<p><img alt="typical piece of css, showing selector and declarations" title="typical piece of css, showing selector and declarations" src="images/typical-css.png"></p>
 <p>The key to CSS is understanding how selectors work.  The table summarises the main <a href="http://www.w3.org/TR/CSS2/selector.html">selectors in CSS 2.1</a>.</p>
 
 <div>
@@ -127,7 +131,7 @@ Not IE6:
 <p>An ID can only be used once within a document, whereas a class can be used multiple times.  In the style sheet the ID selector has greater weight than class selector.  ID's are generally used to identify the top level containers on the page, classes are then used to identify the lower level containers.  Asp.net has a problem with ID's, it tends to mangle the id attribute for elements with runat="server".  For these elements you have to stick with the class attribute, which asp.net leaves alone.  </p>
 
 <p>Selectors can be grouped as a comma-separated list, if they share the same declaration block. For example:</p>
-<p><img alt="a grouped css selector" title="a grouped css selector" src="images/grouped-selector-css.png" /></p>
+<p><img alt="a grouped css selector" title="a grouped css selector" src="images/grouped-selector-css.png"></p>
 
 <p>With grouped decent selectors, you need to be careful that you repeat the whole decent.  For example #sidebar h2, h3 will select the h2 elements in the sidebar, plus the h3 elements in the whole document.</p>
 

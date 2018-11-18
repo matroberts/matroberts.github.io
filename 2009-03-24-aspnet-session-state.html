@@ -17,7 +17,11 @@
 <header>
     <h1><a href="index.html">Struggling for Competence</a></h1>
     <nav>
-    </nav>
+<menu>
+<li><a href="2009-03-16-csharp-custom-attributes.html">Previous</a></li>
+<li><a href="2009-03-29-picks-theorem.html">Next</a></li>
+</menu>
+</nav>
 </header>
 
 <article>
@@ -49,14 +53,14 @@
 <p>To configure SQLServer mode:</p>
 
 <ul>
-<li>In web.config:<br/>
+<li>In web.config:<br>
 <pre>
 <code class="language-markup">
 &lt;sessionState mode="SQLServer" sqlConnectionString="Data Source=(local);Integrated Security=SSPI;"/&gt;
 </code>
 </pre>
 </li>
-<li>From a VS Cmd Line, create a database 'ASPState' for storing the data:<br/>
+<li>From a VS Cmd Line, create a database 'ASPState' for storing the data:<br>
 <pre>
 <code class="language-markup">
 aspnet_regsql.exe -S (local) -E -ssadd -sstype p

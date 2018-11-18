@@ -17,7 +17,11 @@
 <header>
     <h1><a href="index.html">Struggling for Competence</a></h1>
     <nav>
-    </nav>
+<menu>
+<li><a href="2009-07-06-unit-testing-with-repository-pattern.html">Previous</a></li>
+<li><a href="2009-07-20-unit-testing-with-email.html">Next</a></li>
+</menu>
+</nav>
 </header>
 
 <article>
@@ -29,7 +33,7 @@
 <blockquote>
 An object that wraps a row in a database table or view, encapsulates the data access, and adds domain logic on that data.
 </blockquote>
-<img  alt="active-record" title="active-record" src="images/active-record.png" />
+<img alt="active-record" title="active-record" src="images/active-record.png">
 
 <p>The picture shows a fairly typical active record style class.  Its got some business logic methods which aren't shown.  It's got instance methods for insert, update and delete.  And its got some static "get" methods for creating objects from database records.  The Get(id) method returns a single object with primary key id.  GetAll() returns a list of all the objects.  And GetByFK() makes a list of objects based on a foreign key id.</p>
 
@@ -52,7 +56,7 @@ You just seem to get a general mixing of the business and database logic.  Got s
 
 <p>The previous couple of posts have looked at a <a href="2009-06-29-simple-repository-pattern.html">simple implemetation of the repository pattern</a>, and how do genuine <a href="2009-07-06-unit-testing-with-repository-pattern.html">unit testing with the repository pattern</a>.  The repository pattern looks something like this:</p>
 
- <img  alt="repository" title="repository" src="images/repository.png"  />
+ <img alt="repository" title="repository" src="images/repository.png">
 
 <p>In the Repository pattern all of the data access is put in a separate class and is accessed via instance methods.  To me, just doing this is beneficial, since data access is now encapsulated in a separate class, leaving the business object to get on with business.  This should stop the unfortunate mixing of data access and business logic you tend to get with Active Record.  </p>
 

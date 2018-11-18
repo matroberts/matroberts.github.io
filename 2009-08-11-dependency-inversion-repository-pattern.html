@@ -17,7 +17,11 @@
 <header>
     <h1><a href="index.html">Struggling for Competence</a></h1>
     <nav>
-    </nav>
+<menu>
+<li><a href="2009-08-04-castell-de-montgri.html">Previous</a></li>
+<li><a href="2009-08-19-how-safe-is-flying.html">Next</a></li>
+</menu>
+</nav>
 </header>
 
 <article>
@@ -26,7 +30,7 @@
     
 <p>The picture shows the architecture of a web application which uses the Active Record pattern to access the database:</p>
 
-<img alt="direct dependency with the active record pattern" title="direct dependency with the active record pattern" src="images/dependency-version.png" />
+<img alt="direct dependency with the active record pattern" title="direct dependency with the active record pattern" src="images/dependency-version.png">
 
 <p>The boxes show the "layers" of the application - web, business and data.  The web layer contains the UI components - web forms etc.  The business layer contains the business or model objects - the logic and policy of the application.  The data layer contains the machinery for talking to the database.  The dashed lines show the <em>dependencies</em> between the layers.  A dependency occurs when an object creates another object, i.e. when "new" is called, or simply when an object references another object.  The web layer creates business objects, so the web layer has a dependency on the business layer.  In the active record pattern, the business layer creates data layer objects, so the business layer has a dependency of the data layer.    The layers are often put in separate projects within a Visual Studio solution.  When you have separate projects, then a dependency also implies a reference between the projects.</p>
 
@@ -37,7 +41,7 @@ Dependency Inversion Principal
 "Abstractions should not depend upon details.  Details should depend upon abstractions."
 </blockquote>
 
-<img  alt="dependency inversion with the repository pattern" title="dependency inversion with the repository pattern" src="images/dependency-inversion.png" />
+<img alt="dependency inversion with the repository pattern" title="dependency inversion with the repository pattern" src="images/dependency-inversion.png">
 
 <p>If you want to reverse the direction of a dependency you need an interface.  In this case the <a href="2009-07-13-active-record-verses-repository.html">Repository interface</a> will reverse the direction of the data layer dependency.  The repository interface is put in the business layer.  The business objects interact with the database solely via this high level interface.  The data layer implements the repository interface - it contains concrete repositories which actually talk to the database.  The web layer still knows about everything.  It instantiates the concrete repositories, and passes them to the business objects for use.  The inversion of the dependency makes unit testing possible.  Since the business objects now depend only on the repository interface, when you unit test you can <a href="2009-07-06-unit-testing-with-repository-pattern.html">replace the data layer with in-memory fake repositories</a>.  The architecture now follows the dependency inversion principal.  The high level objects in the business layer do not depend on the concrete details of the data-layer, rather they depend only on the high level repository interface.</p>
 

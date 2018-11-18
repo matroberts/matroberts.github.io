@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -32,7 +32,7 @@
     {
         void Delete(Author author);
         Author Get(int id);
-        IQueryable<Author> GetAll();
+        IQueryable&lt;Author&gt; GetAll();
         void Insert(Author author);
         void Save();
     }
@@ -66,7 +66,7 @@
 
         public ActionResult Index()
         {
-            List<Author> authors = db.GetAll().ToList();
+            List&lt;Author&gt; authors = db.GetAll().ToList();
 
             return View(authors);
         }
@@ -103,12 +103,12 @@
 <code class="language-csharp">
     public class AuthorRepositoryFake : IAuthorRepository
     {
-        public List<Author> GetList { get; set; }
-        public List<Author> SaveList { get; set; }
+        public List&lt;Author&gt; GetList { get; set; }
+        public List&lt;Author&gt; SaveList { get; set; }
 
         public AuthorRepositoryFake()
         {
-            this.SaveList = new List<Author>();
+            this.SaveList = new List&lt;Author&gt;();
         }
         public void Delete(Author author)
         {
@@ -118,7 +118,7 @@
         {
             throw new NotImplementedException();
         }
-        public IQueryable<Author> GetAll()
+        public IQueryable&lt;Author&gt; GetAll()
         {
             return GetList.AsQueryable();
         }
@@ -146,7 +146,7 @@
         public void Index()
         {
             AuthorRepositoryFake db = new AuthorRepositoryFake();
-            db.GetList = new List<Author>(){new Author("Mat", 250)};
+            db.GetList = new List&lt;Author&gt;(){new Author("Mat", 250)};
             HomeController controller = new HomeController(db);
 
             ViewResult result = controller.Index() as ViewResult;

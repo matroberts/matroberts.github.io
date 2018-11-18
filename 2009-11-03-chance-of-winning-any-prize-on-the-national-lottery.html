@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -17,7 +17,11 @@
 <header>
     <h1><a href="index.html">Struggling for Competence</a></h1>
     <nav>
-    </nav>
+<menu>
+<li><a href="2009-10-27-browser-differences.html">Previous</a></li>
+<li><a href="2009-11-13-guesstimation.html">Next</a></li>
+</menu>
+</nav>
 </header>
 
 <article>
@@ -28,13 +32,13 @@
 
 <p>To recap.  In the UK national lottery you pick 6 numbers.  A <em>special machine</em> chooses 6 numbers, from a pot containing numbers 1 to 49.  If your 6 numbers get chosen you win.  Now in this type of probability problem all of the possibilities are known in advance so:</p>
 
-<p><img alt="Probability=(Number of way thing can happen)/(Total number of possibilities)" title="Probability=(Number of way thing can happen)/(Total number of possibilities)" src="images/probability-definition.png" alt="Probability=(Number of way thing can happen)/(Total number of possibilities)" title="Probability=(Number of way thing can happen)/(Total number of possibilities)" /></p>
+<p><img alt="Probability=(Number of way thing can happen)/(Total number of possibilities)" title="Probability=(Number of way thing can happen)/(Total number of possibilities)" src="images/probability-definition.png" ></p>
 
 <p>For winning the lottery, the top line on the right hand side of the equation is "number of ways that <em>your</em> 6 numbers can be drawn", which equals 1, and the bottom line is "number of ways that <em>any</em> 6 numbers can be drawn from 49".  To work this out the the formula you need is the number of combinations of choosing r things from n, C(n,r) = n!/r!(n-r)!.  In this case we have C(49, 6) = 13,983,816 and therefore the chance of winning the lottery is roughly 1 in 14 million.</p>
 
 <p>You also get a smaller prize if say, 5 out of your 6 numbers are chosen.  In the probability equation, the bottom line of the equation will be the same as before, C(49,6).  For the top line of the equation we need "number of ways of getting 5 of your numbers, when 6 numbers are chosen from 49".  If you think about it a bit:</p>
 
-<p><img alt="ways of getting 5 numbers when 6 numbers are chosen from 49" title="lottery second prize" src="images/lottery_second_prize.png" /></p>
+<p><img alt="ways of getting 5 numbers when 6 numbers are chosen from 49" title="lottery second prize" src="images/lottery_second_prize.png"></p>
 
 <p>Now, C(6,5)xC(43,1)=258, so the probability of getting 5 numbers right is 258/13983816, which is roughly 1 in 55,000.  It's easy to extend the formula to work out the chance of getting 6, 5, 4, 3, 2, 1 or 0 of your numbers:</p>
 

@@ -17,7 +17,11 @@
 <header>
     <h1><a href="index.html">Struggling for Competence</a></h1>
     <nav>
-    </nav>
+<menu>
+<li><a href="2009-11-23-optional-filtering-in-stored-procedures.html">Previous</a></li>
+<li><a href="2009-12-11-test-data-setup-with-fluent-builder-pattern.html">Next</a></li>
+</menu>
+</nav>
 </header>
 
 <article>
@@ -34,7 +38,7 @@ Maintains a list of objects affected by a business transaction and coordinates t
 
 <p>So Fowler's unit of work has three responsibilities.  In my application the repositories are going to maintain lists of objects affected by the transaction.  Concurrency problems, I'm not sure about, but I think will be handled in the application logic.  That leaves the Unit Of Work with the single responsibility for handling transactions, so my Unit Of Work is:</p>
 
-<p><img alt="unit of work" title="unit of work" src="images/unit-of-work.png" /></p>
+<p><img alt="unit of work" title="unit of work" src="images/unit-of-work.png"></p>
 
 <blockquote>
 Unit of Work (ITransaction)
