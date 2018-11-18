@@ -1,28 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8">
     <title>Asp.net Session State</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Example of setting up Asp.net session state in SQLServer mode.  Asp.net, Session State, web.config, Sql Server." />
+    <meta name="description" content="Example of setting up Asp.net session state in SQLServer mode.  Asp.net, Session State, web.config, Sql Server.">
     <meta name="author" content="Mat Roberts">
-    <link rel="canonical" href="https://moleseyhill.com/2009-03-24-aspnet-session-state.html" />
-    <link href="styles/sanitize.css" rel="stylesheet" />
-    <link href="styles/prism.css" rel="stylesheet" />
-    <link href="styles/struggle.css" rel="stylesheet" />
-    <link rel="shortcut icon" type="image/x-icon" href='favicon.ico' />
+    <link rel="canonical" href="https://moleseyhill.com/2009-03-24-aspnet-session-state.html">
+    <link href="styles/sanitize.css" rel="stylesheet">
+    <link href="styles/prism.css" rel="stylesheet">
+    <link href="styles/struggle.css" rel="stylesheet">
+    <link rel="shortcut icon" type="image/x-icon" href='favicon.ico'>
 </head>
 
 <body>
 <header>
-<h1><a href="index.html">Struggling for Competence</a></h1>
+    <h1><a href="index.html">Struggling for Competence</a></h1>
+    <nav>
+    </nav>
 </header>
-<nav>
-</nav>
 
 <article>
-<h2>Asp.net Session State</h2>
-
+    <h2>Asp.net Session State</h2>
+    
 <p>Session state is used to maintain data for an individual user for the duration of their interaction with a web site.  Our application used an "InProc" session, which maintained state in memory.  This made development painful because a recompile forced a new login to the web site.  We changed to an "SQLServer" session which solved the login problem; you can just carry on where you are after a recompile.  Asp.net, Session State, web.config, Sql Server.</p>
 
 <p>Session State is defined in the web.config file:</p>

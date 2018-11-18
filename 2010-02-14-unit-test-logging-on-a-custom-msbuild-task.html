@@ -1,28 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8">
     <title>Unit Test Logging on a Custom MsBuild Task</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="How to unit test a custom MsBuild task when you have logging." />
+    <meta name="description" content="How to unit test a custom MsBuild task when you have logging.">
     <meta name="author" content="Mat Roberts">
-    <link rel="canonical" href="https://moleseyhill.com/2010-02-14-unit-test-logging-on-a-custom-msbuild-task.html" />
-    <link href="styles/sanitize.css" rel="stylesheet" />
-    <link href="styles/prism.css" rel="stylesheet" />
-    <link href="styles/struggle.css" rel="stylesheet" />
-    <link rel="shortcut icon" type="image/x-icon" href='favicon.ico' />
+    <link rel="canonical" href="https://moleseyhill.com/2010-02-14-unit-test-logging-on-a-custom-msbuild-task.html">
+    <link href="styles/sanitize.css" rel="stylesheet">
+    <link href="styles/prism.css" rel="stylesheet">
+    <link href="styles/struggle.css" rel="stylesheet">
+    <link rel="shortcut icon" type="image/x-icon" href='favicon.ico'>
 </head>
 
 <body>
 <header>
-<h1><a href="index.html">Struggling for Competence</a></h1>
+    <h1><a href="index.html">Struggling for Competence</a></h1>
+    <nav>
+    </nav>
 </header>
-<nav>
-</nav>
 
 <article>
-<h2>Unit Test Logging on a Custom MsBuild Task</h2>
-
+    <h2>Unit Test Logging on a Custom MsBuild Task</h2>
+    
     
 <p>One of the problems areas for testing a custom MsBuild tasks is logging.  In a custom task you create a log message with code like "Log.LogMessage("hullo")" or "Log.LogError("It's gone wrong")".   The "Log" in this code is in fact the <a href="http://msdn.microsoft.com/en-us/library/microsoft.build.utilities.tasklogginghelper.aspx">TaskLoggingHelper</a>, which gets created behind the scenes by <a href="http://msdn.microsoft.com/en-us/library/microsoft.build.buildengine.engine.aspx">task engine</a>.  The TaskLoggingHelper has no interface, which on the face of it means you can't test code which does logging without creating a task engine and testing the whole custom task end-to-end.</p>
 

@@ -1,28 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8">
     <title>Unit Testing with the Repository Pattern</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Example showing how the repository pattern lets you to unit test without hitting the database.  Example implemented in C# and Linq to SQL." />
+    <meta name="description" content="Example showing how the repository pattern lets you to unit test without hitting the database.  Example implemented in C# and Linq to SQL.">
     <meta name="author" content="Mat Roberts">
-    <link rel="canonical" href="https://moleseyhill.com/2009-07-06-unit-testing-with-repository-pattern.html" />
-    <link href="styles/sanitize.css" rel="stylesheet" />
-    <link href="styles/prism.css" rel="stylesheet" />
-    <link href="styles/struggle.css" rel="stylesheet" />
-    <link rel="shortcut icon" type="image/x-icon" href='favicon.ico' />
+    <link rel="canonical" href="https://moleseyhill.com/2009-07-06-unit-testing-with-repository-pattern.html">
+    <link href="styles/sanitize.css" rel="stylesheet">
+    <link href="styles/prism.css" rel="stylesheet">
+    <link href="styles/struggle.css" rel="stylesheet">
+    <link rel="shortcut icon" type="image/x-icon" href='favicon.ico'>
 </head>
 
 <body>
 <header>
-<h1><a href="index.html">Struggling for Competence</a></h1>
+    <h1><a href="index.html">Struggling for Competence</a></h1>
+    <nav>
+    </nav>
 </header>
-<nav>
-</nav>
 
 <article>
-<h2>Unit Testing with the Repository Pattern</h2>
-
+    <h2>Unit Testing with the Repository Pattern</h2>
+    
 <p>One of the features of the repository pattern is it allows unit testing, without hitting the database.  The fabled ability to substitute the data layer during testing.  This posts follows on from last weeks <a href="2009-06-29-simple-repository-pattern.html">simple repository pattern</a>, and shows how to modify it to make unit testing possible.  The code here is again shamelessly inspired by the <a href="http://weblogs.asp.net/scottgu/archive/2009/03/10/free-asp-net-mvc-ebook-tutorial.aspx">nerd dinner tutorial</a> by Scott Gu.</p>
 
 <p>The first thing is to define an interface to the repository:</p>
