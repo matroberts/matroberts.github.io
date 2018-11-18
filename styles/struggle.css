@@ -1,7 +1,36 @@
+/* header */
 
-h1 > a {
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+header > h1 {
+    margin-bottom: 0; /* because margin collapse doesn't work now the h1 is in a flex box */
+}
+
+header > h1 > a {
     text-decoration: none;
 }
+
+header > nav {
+    margin: 0;
+    padding: 0;
+}
+
+header > nav > menu {
+    list-style-type: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+header > nav > menu > li {
+    margin-left: 20px;
+}
+
+/* tables */
 
 table, th, td {
     border: 1px solid grey;
