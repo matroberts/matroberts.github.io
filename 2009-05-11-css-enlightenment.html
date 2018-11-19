@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -29,37 +29,26 @@
     
 <p>Descent selectors are the key to good CSS design.  Descendent selectors let you select the element you want, without having to explicitly add a class to it.  Using descent selectors avoids polluting the html with style specific class attributes.  The Galloway body class technique is used to make page specific tweaks to the style, in a controlled manor.</p>
 
-<p>To appreciate the full power of CSS check out <a href="http://www.csszengarden.com/">CSS Zen Garden</a>.  The site contains a single page of html, which is rendered in radically different ways by selecting the style sheet.  A  few cool designs are:</p>
-<table>
-<tr>
-  <td>
-<img alt="retro theater" title="retro theater" src="images/retro-theater.jpg">
-  </td>
-  <td>
-<img alt="css zen army" title="css zen army" src="images/css-zen-army.jpg">
-  </td>
-  <td>
-<img alt="the hall" title="the hall" src="images/the-hall.jpg">
-  </td>
-  <td>
-<img alt="zen pool" title="zen pool" src="images/zen-pool.jpg">
-  </td>
-</tr>
-<tr>
-  <td>
-<a href="http://www.csszengarden.com/202">Retro Theater</a>
-  </td>
-  <td>
-<a href="http://www.csszengarden.com/199">CSS Zen Army</a>
-  </td>
-  <td>
-<a href="http://www.csszengarden.com/140">The Hall</a>
-  </td>
-  <td>
-<a href="http://www.csszengarden.com/080">Zen Pool</a>
-  </td>
-</tr>
-</table>
+    <p>To appreciate the full power of CSS check out <a href="http://www.csszengarden.com/">CSS Zen Garden</a>.  The site contains a single page of html, which is rendered in radically different ways by selecting the style sheet.  A  few cool designs are:</p>
+    
+    <figure>
+        <figure>
+            <img alt="retro theater" title="retro theater" src="images/retro-theater.jpg">
+            <figcaption><a href="http://www.csszengarden.com/202">Retro Theater</a></figcaption>
+        </figure>
+        <figure>
+            <img alt="css zen army" title="css zen army" src="images/css-zen-army.jpg">
+            <figcaption><a href="http://www.csszengarden.com/199">CSS Zen Army</a></figcaption>
+        </figure>
+        <figure>
+            <img alt="the hall" title="the hall" src="images/the-hall.jpg">
+            <figcaption><a href="http://www.csszengarden.com/140">The Hall</a></figcaption>
+        </figure>
+        <figure>
+            <img alt="zen pool" title="zen pool" src="images/zen-pool.jpg">
+            <figcaption><a href="http://www.csszengarden.com/080">Zen Pool</a></figcaption>
+        </figure>
+    </figure>
 
 <p>Looking at the html for Zen Garden is a Zen experience in itself.  The html is clean, simple, and focussed on content.  Where are all those crazy style elements that I have in my html?  The <a href="http://weblogs.asp.net/jgalloway/archive/2007/09/12/taking-css-beyond-a-simple-style-library.aspx">mistake I'm making is to treat css as a style library</a>:</p>
 <blockquote>
@@ -80,7 +69,7 @@ No... that's not big enough. Time for BiggerBlueText!
 
 <p>As an example, consider the following web page structure:</p>
 
-<img alt="typical web page layout" title="typical web page layout" src="images/css-id.png">
+<figure><img alt="typical web page layout" title="typical web page layout" src="images/css-id.png"></figure>
 
 <p>Div's are used to define the four regions, and are given an id's so that they can be identified:</p>
 <pre>

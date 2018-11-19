@@ -43,7 +43,7 @@ th, td {
 }
 
 /* figures */
-figure {
+article > figure {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
