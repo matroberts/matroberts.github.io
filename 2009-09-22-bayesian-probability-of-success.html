@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -25,8 +25,8 @@
 </header>
 
 <article>
-    <h2>Bayesian Probability of Success</h2>
-    
+
+<h2>Bayesian Probability of Success</h2>
     
 <p>One of the tricky things with probability is what you do when your sample size isn't very big.  For example, say a new rocket has had one successful launch and no launch failures.  How safe is it to ride on the next flight?  A naive frequency based approach would say, "1 launch, 1 success, therefore probability of success is 1", completely discounting the possibility of failure all together.</p>
 
@@ -34,7 +34,7 @@
 
 <p>Simple statistics don't work properly with small sample sizes.  What we need is a formula which takes account of the fact we don't know anything at the beginning.  <a href="http://en.wikipedia.org/wiki/Baysian">Bayesian statistics</a> to the rescue!  On <a href="http://www.spacelaunchreport.com/reliability2009.txt">space launch report</a> I found this ace formula for estimating the probability properly:</p>
 
-<p><img alt="probability of success=(k+1)/(n+2)" title="probability of success=(k+1)/(n+2)" src="images/probability-of-success.png"></p>
+<figure><img alt="probability of success=(k+1)/(n+2)" title="probability of success=(k+1)/(n+2)" src="images/probability-of-success.png"></figure>
 
 <p>
 Here P is the probability of success next time, k is the number of successful events so far, and n is the total number of trials so far.  It's called "the first level Bayesian estimate of mean predicted probability of success".  Therefore:

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -32,12 +32,12 @@
 <p>If you want to see the full gore of what's going install <a href="http://www.fiddler2.com/fiddler2/">Fiddler</a>.  It lets you inspect all the traffic going between your browser and the server, measure performance, and lots of other stuff.  Using fiddler I've captured a typical http request and response hitting the front page of this website.</p>
 
 <p>First the request:</p>
-<img title="a typical http request" alt="a typical http request" src="images/http-request.png">
+<figure><img title="a typical http request" alt="a typical http request" src="images/http-request.png"></figure>
 
 <p>The first line of the request is the really important one.  It consists of the Method, URI and HTTP version.  The two main request methods are GET and POST.  GET requests a document from the server, POST submits information to the server.  Other request methods are:  HEAD, PUT, LINK, UNLINK, DELETE, OPTIONS and TRACE.  In practice these aren't used much by web developers.  The URI is the location you want to send the request too, in this case "/" means the root of the web site.  <a href="http://www.w3.org/Protocols/rfc2616/rfc2616.html">HTTP/1.1</a> is the norm,  and you are extremely unlikely to see anything else.  <a href="http://en.wikipedia.org/wiki/Http">HTTP 1.0</a> is archaic, and <a href="http://www.w3.org/TR/WD-http-pep-960820">HTTP 1.2</a> never got out of committee.</p>
 
 <p>Next the response:</p>
-<img title="a typical http response" alt="a typical http response" src="images/http-response.png">
+<figure><img title="a typical http response" alt="a typical http response" src="images/http-response.png"></figure>
 
 <p>The response has three sections: header, blank line and content.  The type of the content is indicated by the "Content-type" line in the header, in this case it is HTML.  Another common content-type is gzip, which the browser would decompress before rendering.  The first line of the header has three parts: http-version, status-code and reason phrase.  In this case the status code is 200 which means OK.  The status codes are split into ranges which define their general meaning:</p>
 <table>

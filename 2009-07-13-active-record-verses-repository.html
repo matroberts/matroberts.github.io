@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -25,15 +25,16 @@
 </header>
 
 <article>
-    <h2>Active Record verses Repository</h2>
+<h2>Active Record verses Repository</h2>
     
 <p>This post compares the Active Record and Repository patterns; probably the two most popular data access patterns in use today.  Let me put my cards on the table.  Every project I've worked on has used the Active Record pattern.  Some of these projects have been designed by me, and some by other folks.  But either way, we've really struggled to unit test the object which were mapped to the database.  We just could not substitute the data access layer during unit test.  This is because the Active Record pattern is fundamentally untestable.</p>
 
 <p>Fowler defines the Active Record pattern in <a href="http://www.amazon.co.uk/gp/product/0321127420?ie=UTF8&tag=struggforcomp-21&linkCode=as2&camp=1634&creative=6738&creativeASIN=0321127420">Patterns of Enterprise Application Architecture</a>:</p>
 <blockquote>
-An object that wraps a row in a database table or view, encapsulates the data access, and adds domain logic on that data.
+    An object that wraps a row in a database table or view, encapsulates the data access, and adds domain logic on that data.
 </blockquote>
-<img alt="active-record" title="active-record" src="images/active-record.png">
+
+<figure><img alt="active-record" title="active-record" src="images/active-record.png"></figure>
 
 <p>The picture shows a fairly typical active record style class.  Its got some business logic methods which aren't shown.  It's got instance methods for insert, update and delete.  And its got some static "get" methods for creating objects from database records.  The Get(id) method returns a single object with primary key id.  GetAll() returns a list of all the objects.  And GetByFK() makes a list of objects based on a foreign key id.</p>
 
@@ -56,7 +57,7 @@ You just seem to get a general mixing of the business and database logic.  Got s
 
 <p>The previous couple of posts have looked at a <a href="2009-06-29-simple-repository-pattern.html">simple implemetation of the repository pattern</a>, and how do genuine <a href="2009-07-06-unit-testing-with-repository-pattern.html">unit testing with the repository pattern</a>.  The repository pattern looks something like this:</p>
 
- <img alt="repository" title="repository" src="images/repository.png">
+<figure><img alt="repository" title="repository" src="images/repository.png"></figure>
 
 <p>In the Repository pattern all of the data access is put in a separate class and is accessed via instance methods.  To me, just doing this is beneficial, since data access is now encapsulated in a separate class, leaving the business object to get on with business.  This should stop the unfortunate mixing of data access and business logic you tend to get with Active Record.  </p>
 

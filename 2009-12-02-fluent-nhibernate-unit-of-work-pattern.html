@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -25,8 +25,8 @@
 </header>
 
 <article>
-    <h2>Fluent NHibernate Unit Of Work Pattern</h2>
-    
+
+<h2>Fluent NHibernate Unit Of Work Pattern</h2>
     
 <p>I've been trying to understand how to fit NHibernate into a MVC web application.   I want a clean separation of model and data layer, so I can unit test the model.  I'm planning on using the repository pattern for saving and retrieving objects.  The other pattern I need to make a clean separation from the data layer is the Unit Of Work pattern.</p>
 
@@ -38,7 +38,7 @@ Maintains a list of objects affected by a business transaction and coordinates t
 
 <p>So Fowler's unit of work has three responsibilities.  In my application the repositories are going to maintain lists of objects affected by the transaction.  Concurrency problems, I'm not sure about, but I think will be handled in the application logic.  That leaves the Unit Of Work with the single responsibility for handling transactions, so my Unit Of Work is:</p>
 
-<p><img alt="unit of work" title="unit of work" src="images/unit-of-work.png"></p>
+<figure><img alt="unit of work" title="unit of work" src="images/unit-of-work.png"></figure>
 
 <blockquote>
 Unit of Work (ITransaction)
