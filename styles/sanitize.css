@@ -37,9 +37,8 @@
  */
 
 html {
-  cursor: default; /* 1 */
-  font-family:
-    system-ui,
+    cursor: default; /* 1 */
+    font-family: system-ui,
     /* macOS 10.11-10.12 */ -apple-system,
     /* Windows 6+ */ Segoe UI,
     /* Android 4+ */ Roboto,
@@ -51,13 +50,13 @@ html {
     /* Windows emoji */ "Segoe UI Emoji",
     /* Windows emoji */ "Segoe UI Symbol",
     /* Linux emoji */ "Noto Color Emoji"; /* 2 */
-
-  line-height: 1.15; /* 3 */
-  -moz-tab-size: 4; /* 4 */
-  tab-size: 4; /* 4 */
-  -ms-text-size-adjust: 100%; /* 5 */
-  -webkit-text-size-adjust: 100%; /* 5 */
-  word-break: normal; /* 6 */
+    line-height: 1.15; /* 3 */
+    -moz-tab-size: 4; /* 4 */
+    tab-size: 4; /* 4 */
+    -ms-text-size-adjust: 100%; /* 5 */
+    -webkit-text-size-adjust: 100%; /* 5 */
+    word-break: normal; /* 6 */
+    overflow-y: scroll; /* my choice to make vertical scrollbar always visible to stop page jumping */
 }
 
 /* Sections
