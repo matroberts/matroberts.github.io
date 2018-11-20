@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -25,8 +25,8 @@
 </header>
 
 <article>
-    <h2>Prefix, Infix and Postfix</h2>
-    
+
+<h2>Prefix, Infix and Postfix</h2>
     
 <p>One of the odd things about Scheme compared with the C-style languages is it's use of <strong>prefix notation</strong> for operators.  In prefix notation you put the operator first followed by the things it acts on and enclose the whole lot in brackets.  So for example if you want to write 3+4, in Scheme you say:</p>
 
@@ -58,7 +58,10 @@
 <p>The reason Scheme makes this choice is it simplifies the job of the language interpreter.  It doesn't have to understand operator precedence, only how brackets work.  I think though it goes a bit further than just saving the interpreter writer a bit of work though.  One of Schemes key features is a common notation for both data and program representation, which means a program can be represented as data and data can be interpreted as a program.  That's quite a powerful feature, and I think the simple syntax of Scheme is part of what makes it possible.</p>
 
 <h3>Postfix notation</h3>
-<p><img src="images/hp11c.jpg" alt="The hp11c2 Calculator" title="The hp11c2 Calculator"><p>
+    <figure>
+        <img src="images/hp11c.jpg" alt="The HP-11C Calculator" title="The HP-11C Calculator">
+        <figcaption><a href="http://www.hpmuseum.org/hp11c.htm">The HP-11C Calculator</a></figcaption>
+    </figure>
 
 <p>There is another possible way of writing operators, with the postfix, or "reverse Polish" notation.  In postfix notation, the operator comes after it's operands.  It has the advantage that you don't need operator precedence and you don't need brackets either.
 

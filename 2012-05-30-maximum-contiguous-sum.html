@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -25,8 +25,8 @@
 </header>
 
 <article>
-    <h2>Maximum Contiguous Sum</h2>
-    
+
+<h2>Maximum Contiguous Sum</h2>
     
 <p>I have been reading <a href="http://www.amazon.co.uk/gp/product/0201657880/ref=as_li_tf_tl?ie=UTF8&tag=struggforcomp-21&linkCode=as2&camp=1634&creative=6738&creativeASIN=0201657880">Programming Pearls</a> by Jon Bentley.  It's an old school book about programming.  One of the problem posed by is from image processing, to find the maximum contiguous sum:</p>
 
@@ -36,7 +36,9 @@
 </blockquote>
 
 <p>Its straight forward to find an inefficient solution, but harder to find a solution which copes well with large n.</p>
-<p><img alt="Maximum Contiguous Sum" title="Maximum Contiguous Sum" src="images/MaximumContiguousSum.png"></p>
+
+<figure><img alt="Maximum Contiguous Sum" title="Maximum Contiguous Sum" src="images/MaximumContiguousSum.png"></figure>
+
 <p>The idea for my solution is shown in the picture.  Loop through the vector adding up the values as you go, making the sum.  Keep track of the minimum sum so far.  If the difference between rolling sum and the minimum sum is a new best value, update the best value.</p>
 
 <pre>
