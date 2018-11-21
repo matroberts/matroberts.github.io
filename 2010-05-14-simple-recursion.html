@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -33,17 +33,20 @@
 
 <p>In Scheme you can learn a lot about recursion, using a tiny subset of the language; an approach  exemplified by the <a href="http://www.amazon.co.uk/gp/product/0262560992?ie=UTF8&tag=struggforcomp-21&linkCode=as2&camp=1634&creative=6738&creativeASIN=0262560992">Little Schemer</a>.  The basic bits you need are:</p>
 
+<figure>
 <table>
+<tr><th>Command</th><th>What it does</th></tr>
 <tr><td>(quote x)</td><td>returns x, normally (quote x) is abbreviated to 'x.</td></tr>
 <tr><td>(car l)</td><td>returns the first element of a list, l.</td></tr>
 <tr><td>(cdr l)</td><td>returns the list l, except for it's first element.</td></tr>
 <tr><td>(cons e l)</td><td>pushes e onto the front of the list, l.</td></tr>
-<tr><td>(cond (p1 e1)....(pn en))</td><td>Conditional expression.  
-The p expressions are evaluated in order until one of them returns true.  
+<tr><td>(cond (p1 e1)....(pn en))</td><td>Conditional expression.  <br>
+The p expressions are evaluated in order until one of them returns true. <br> 
 When one is found the corresponding e expression is returned.</td></tr>
 <tr><td>(null? l)</td><td>returns true (#t) if the list l is empty, false (#f) otherwise.</td></tr>
 <tr><td>(eq? a b)</td><td>returns true (#t) if a and b are equal, false (#f) otherwise.</td></tr>
 </table>
+</figure>
 
 <p>Most recursive procedures should have at least two basic elements, a base case and a recursion step.  Consider these examples:</p>
 

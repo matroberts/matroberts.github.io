@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -41,17 +41,19 @@
 <figure><img title="a typical http response" alt="a typical http response" src="images/http-response.png"></figure>
 
 <p>The response has three sections: header, blank line and content.  The type of the content is indicated by the "Content-type" line in the header, in this case it is HTML.  Another common content-type is gzip, which the browser would decompress before rendering.  The first line of the header has three parts: http-version, status-code and reason phrase.  In this case the status code is 200 which means OK.  The status codes are split into ranges which define their general meaning:</p>
+
+<figure>
 <table>
 <tbody>
 <tr>
-<td>Code Range</td>
-<td>Meaning</td>
-<td>Example</td>
+<th>Code Range</th>
+<th>Meaning</th>
+<th>Example</th>
 </tr>
 <tr>
 <td>100-199</td>
 <td>Informational</td>
-<td>100 Continue
+<td>100 Continue<br>
 101 Switching Protocols</td>
 </tr>
 <tr>
@@ -62,13 +64,13 @@
 <tr>
 <td>300-399</td>
 <td>Redirect</td>
-<td>301 Permanent Redirect
+<td>301 Permanent Redirect<br>
 304 Not Modified</td>
 </tr>
 <tr>
 <td>400-499</td>
 <td>Request Incomplete</td>
-<td>403 Forbidden
+<td>403 Forbidden<br>
 404 Not Found</td>
 </tr>
 <tr>
@@ -76,7 +78,10 @@
 <td>Server Error</td>
 <td>500 Internal Server Error</td>
 </tr>
-</tbody></table>
+</tbody>
+<caption>Http Status Codes</caption>
+</table>
+</figure>
 
 <p>So that's the basics of http.  The plain text of the protocol makes it easy to see what's going on.  You can imagine parsing the response and implementing a primitive web browser.  More than that though, the bit which really bowls me over, is the blank line in the response message.  A stroke of genius.</p>
 

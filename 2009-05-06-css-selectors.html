@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -32,102 +32,115 @@
 <figure><img alt="typical piece of css, showing selector and declarations" title="typical piece of css, showing selector and declarations" src="images/typical-css.png"></figure>
 <p>The key to CSS is understanding how selectors work.  The table summarises the main <a href="http://www.w3.org/TR/CSS2/selector.html">selectors in CSS 2.1</a>.</p>
 
-<div>
-<table>
-<caption>CSS 2.1 Selectors</caption>
-<tr>
-  <th>Selector</th>
-  <th>Example</th>
-  <th>Explanation</th>
-</tr>
-
-<tr>
-  <td>Type</td>
-  <td>li
-{ color:blue; }</td>
-  <td>Matches all the "li" elements.</td>
-</tr>
-
-<tr>
-  <td>Class</td>
-  <td>.intro
-{ color:red; }</td>
-  <td>Matches all elements with the "intro" class attribute.</td>
-</tr>
-
-<tr>
-  <td>ID</td>
-  <td>#nav
-{ color:blue; }</td>
-  <td>Matches the single element with the id "nav".</td>
-</tr>
-
-<tr>
-  <td>Decendent</td>
-  <td>div p
-{ colour:green; }</td>
-  <td>Matches all elements "p" which are contained within a "div".  The "p" does not have a direct descendent.</td>
-</tr>
-
-<tr>
-  <td>Universal</td>
-  <td>*
-{
-margin: 0;
-padding: 0;
-}</td>
-  <td>Matches all elements.</td>
-</tr>
-
-<tr>
-  <td>Child</td>
-  <td>div &gt; em 
-{ color: blue; }</td>
-  <td>Matches all "em" which are a direct descendent of a "div". (Not IE6)</td>
-</tr>
-
-<tr>
-  <td>Adjacent</td>
-  <td>h1 + h3
-{ margin: -20px; }</td>
-  <td>Matches "h3" which immediately follow an "h1". (Not IE6)</td>
-</tr>
-
-<tr>
-  <td>Attribute</td>
-  <td>img[src]
-{ margin: 0; }</td>
-  <td>Matches all "img" elements whose "src" attribute is set. (Not IE6)</td>
-</tr>
-
-<tr>
-  <td>Attribute</td>
-  <td>img[src="small.gif"]
-{ margin: 0; }</td>
-  <td>Matches all "img" elements which contain an attribute src="small.gif". (Not IE6)</td>
-</tr>
-
-<tr>
-  <td>Pseudo</td>
-  <td>p:first-letter
-{
-font-weight: bold;
-}</td>
-  <td>Style information not available in the document tree.
-:first-letter
-:first-line
-:first-child
-:link
-:visited
-:hover
-:active
-:focus
-Not IE6:
-:before
-:after</td>
-</tr>
-</table>
-</div>
+<figure>
+    <table>
+        <tr>
+            <th>Selector</th>
+            <th>Example</th>
+            <th>Explanation</th>
+        </tr>
+        <tr>
+            <td>Type</td>
+            <td>
+                li
+                { color:blue; }
+            </td>
+            <td>Matches all the "li" elements.</td>
+        </tr>
+        <tr>
+            <td>Class</td>
+            <td>
+                .intro
+                { color:red; }
+            </td>
+            <td>Matches all elements with the "intro" class attribute.</td>
+        </tr>
+        <tr>
+            <td>ID</td>
+            <td>
+                #nav
+                { color:blue; }
+            </td>
+            <td>Matches the single element with the id "nav".</td>
+        </tr>
+        <tr>
+            <td>Decendent</td>
+            <td>
+                div p
+                { colour:green; }
+            </td>
+            <td>Matches all elements "p" which are contained within a "div".  The "p" does not have to be a direct descendent.</td>
+        </tr>
+        <tr>
+            <td>Universal</td>
+            <td>
+                *
+                {
+                margin: 0;
+                padding: 0;
+                }
+            </td>
+            <td>Matches all elements.</td>
+        </tr>
+        <tr>
+            <td>Child</td>
+            <td>
+                div &gt; em
+                { color: blue; }
+            </td>
+            <td>Matches all "em" which are a direct descendent of a "div". (Not IE6)</td>
+        </tr>
+        <tr>
+            <td>Adjacent</td>
+            <td>
+                h1 + h3
+                { margin: -20px; }
+            </td>
+            <td>Matches "h3" which immediately follow an "h1". (Not IE6)</td>
+        </tr>
+        <tr>
+            <td>Attribute</td>
+            <td>
+                img[src]
+                { margin: 0; }
+            </td>
+            <td>Matches all "img" elements whose "src" attribute is set. (Not IE6)</td>
+        </tr>
+        <tr>
+            <td>Attribute</td>
+            <td>
+                img[src="small.gif"]
+                { margin: 0; }
+            </td>
+            <td>Matches all "img" elements which contain an attribute src="small.gif". (Not IE6)</td>
+        </tr>
+        <tr>
+            <td>Pseudo</td>
+            <td>
+                p:first-letter
+                {
+                font-weight: bold;
+                }
+            </td>
+            <td>
+                Style information not available in the document tree.
+                :first-letter
+                :first-line
+                :first-child
+                :link
+                :visited
+                :hover
+                :active
+                :focus
+                <br>
+                Not IE6:
+                :before
+                :after
+            </td>
+        </tr>
+        <caption>CSS 2.1 Selectors</caption>
+    </table>
+</figure>
 
 <p>An ID can only be used once within a document, whereas a class can be used multiple times.  In the style sheet the ID selector has greater weight than class selector.  ID's are generally used to identify the top level containers on the page, classes are then used to identify the lower level containers.  Asp.net has a problem with ID's, it tends to mangle the id attribute for elements with runat="server".  For these elements you have to stick with the class attribute, which asp.net leaves alone.  </p>
 

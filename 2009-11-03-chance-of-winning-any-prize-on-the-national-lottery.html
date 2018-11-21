@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -43,6 +43,7 @@
 
 <p>Now, C(6,5)xC(43,1)=258, so the probability of getting 5 numbers right is 258/13983816, which is roughly 1 in 55,000.  It's easy to extend the formula to work out the chance of getting 6, 5, 4, 3, 2, 1 or 0 of your numbers:</p>
 
+<figure>
 <table>
 <tr><th>Number Correct</th><th>Number of Ways</th><th>Probability</th></tr>
 <tr><td>6</td><td>C(6,6)xC(43,0)=1</td><td>0.000000071</td></tr>
@@ -53,6 +54,7 @@
 <tr><td>1</td><td>C(6,1)xC(43,5)=5775588</td><td>0.41</td></tr>
 <tr><td>0</td><td>C(6,0)xC(43,6)=6096454</td><td>0.43</td></tr>
 </table>
+</figure>
 
 <p>Now all the "number of ways" have been worked out you can do a consistency check.  The number of ways of getting 0,1,2,3,4,5 or 6 numbers correct, should be equal to the number of ways of choosing any 6 balls from 49.  And it is: 6096454 + 5775588 + 1851150 + 246820 + 13545 + 258 + 1 = 13983816.  This gives you some confidence that I've got the formula correct, but the other way is to check with some other <a href="http://www.murderousmaths.co.uk/books/BKMM6xlo.htm">folks on the internet</a>.</p>
 
