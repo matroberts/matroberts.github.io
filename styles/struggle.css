@@ -55,6 +55,10 @@ li > figure {
     margin: 1em 0; /* inside a list make a figure have same margin as a p tag */
 }
 
+figure > figcaption {
+    text-align: center;
+}
+
 /* footer */
 
 footer {
