@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -26,10 +26,11 @@
 </header>
 
 <article>
-    <h2>XHTML - What's that all about?</h2>
+
+<h2>XHTML - What's that all about?</h2>
     
-    
-<p>XHTML is a reformulation of HTML as XML.  It aims to make a clean separation between document structure and presentation.  To make XHTML you have to follow <a href="http://msdn.microsoft.com/en-us/library/aa479043.aspx">these</a> <a href="http://www.w3.org/TR/xhtml1/#diffs">rules</a>:
+<p>XHTML is a reformulation of HTML as XML.  It aims to make a clean separation between document structure and presentation.  To make XHTML you have to follow <a href="http://msdn.microsoft.com/en-us/library/aa479043.aspx">these</a> <a href="http://www.w3.org/TR/xhtml1/#diffs">rules</a>:</p>
+
 <ul>
   <li>The document must start with a doctype.  There are 4 common <a href="http://www.w3.org/QA/2002/04/valid-dtd-list.html">doctypes</a>:
     <ul>
@@ -93,7 +94,7 @@ The default install of Asp.net MVC uses XHTML 1.0 Strict, so the following line 
   <li>Elements must nest correctly.</li>
   <li>The id attribute should be used, instead of the name attribute, to identify elements: &lt;a&gt;, &lt;form&gt;, &lt;img&gt;, and &lt;map&gt;.</li>
 </ul>
-</p>
+
 
 <p>Most of these rules are basically saying that the document must be valid xml, but with the added twist of making it work with older browsers.  You can check the validity of your XHTML using the <a href="http://validator.w3.org/">W3C validator</a>.</p>
 
@@ -120,8 +121,7 @@ The default install of Asp.net MVC uses XHTML 1.0 Strict, so the following line 
 
 <h3>Special Rules</h3>
 
-<p>
-The <a href="http://www.w3.org/TR/html401/struct/global.html#h-7.5.3">general rule</a> is that:
+<p>The <a href="http://www.w3.org/TR/html401/struct/global.html#h-7.5.3">general rule</a> is that:</p>
 <ul>
 <li>Block-level elements may contain inline elements and block elements.</li>
 <li>Inline elements may contain only data and other inline elements.</li>
@@ -133,7 +133,7 @@ There are however an number of special rules:
 <li>&lt;form&gt; <a href="http://www.w3.org/TR/xhtml1/#prohibitions">must not contain other &lt;form&gt; elements</a> at any level.</li>
 <li>Other more <a href="http://www.w3.org/TR/xhtml1/#prohibitions">esoteric rules</a>.</li>
 </ul>
-</p>
+
 
 </article>
 

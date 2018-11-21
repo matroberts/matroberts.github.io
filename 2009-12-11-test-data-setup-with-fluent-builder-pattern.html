@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -30,6 +30,7 @@
     
     
 <p>When writing tests I like to follow the <a href="http://c2.com/cgi-bin/wiki?ArrangeActAssert">arrange, act, assert</a> pattern:</p>
+
 <blockquote>
 <a href="http://c2.com/cgi-bin/wiki?ArrangeActAssert">Arrange-Act-Assert</a>: a pattern for arranging and formatting code in UnitTest methods.
 Each method should group these functional sections, separated by blank lines:
@@ -61,14 +62,14 @@ Each method should group these functional sections, separated by blank lines:
 </code>
 </pre>
 
-<p>
-It's OK, but there are some problems.  I want 3 things in my test data set-up:
+<p>It's OK, but there are some problems.  I want 3 things in my test data set-up:</p>
+
 <ul>
     <li>Terse - I want to be able to understand at a glance what's being set up.</li>
     <li>Refactorable - explicit use of the "new" operator, means that a change to the class's constructor causes a refactor of many test methods.  On a recent project, where we started using dependency injection in anger, this point became a major ball breaker.  Each addition of a new dependency caused a fantastically tedious rework of all the test methods.</li>
     <li>Hide irrelevance - I want to show a connection between input and output, so showing lots of parameters which don't matter makes the test hard to understand. Use of "new" exposes all of the parameters of the class, so the test gets cluttered up with irrelevance.</li>        
 </ul>
-</p>
+
 
 <p>You want to hide the new operator for refactorability and to hide constructor irrelevance.  The easiest way to do this is with a static factory method, which creates a fully valid default object.  You want to the syntax to be terse, and emphasise the data which matters.  A nice way to do this is with a <a href="http://www.martinfowler.com/bliki/FluentInterface.html">fluent interface</a>.  A fluent interface  allows method chaining, in the simplest case by returning the original object.</p>
 
@@ -105,6 +106,7 @@ public static class RequestBuilder
 
 <h3>Fluent Builder</h3>
 <p>If you check out the builder pattern in the Gang of Four book, you may be hard pressed to see the connection with the code shown here.  However if you check out the consequences of the builder pattern you see:</p>
+
 <blockquote>
 <a href="http://www.amazon.co.uk/gp/product/0201633612?ie=UTF8&tag=struggforcomp-21&linkCode=as2&camp=1634&creative=6738&creativeASIN=0201633612">Builder Pattern</a>
 <ul>

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -39,8 +39,8 @@
 
 <p>The picture shows a fairly typical active record style class.  Its got some business logic methods which aren't shown.  It's got instance methods for insert, update and delete.  And its got some static "get" methods for creating objects from database records.  The Get(id) method returns a single object with primary key id.  GetAll() returns a list of all the objects.  And GetByFK() makes a list of objects based on a foreign key id.</p>
 
-<p>
-So what's the problem when it comes to testing?
+<p>So what's the problem when it comes to testing?</p>
+
 <ul>
 <li>
 The database Insert, Update and Delete methods are on the business object.  The only way to test,   without hitting the database, is to sub-class and override these methods in a test class.  It works, but its ugly.  You can easily be screwed if the methods start picking up extra responsibilities.
@@ -52,7 +52,7 @@ The Get methods, which create object based on database records, are all <em>stat
 You just seem to get a general mixing of the business and database logic.  Got something which needs to happen when the object gets saved?  Stick it in the update method.  Maybe this doesn't stop testing in itself, it's just that pernicious complexification of the code.  
 </li>
 </ul>
-</p>
+
 
 <p>So, Active Record, by its nature it does not support testing.  With a herculean effort, you might get some tests in - but you won't have much fun doing it.</p>
 

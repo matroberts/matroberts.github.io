@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -131,20 +131,20 @@
 </code>
 </pre>
 
-<p>
-There are some important features of the repository pattern to point out:
+<p>There are some important features of the repository pattern to point out:</p>
+
 <ul>
 	<li>All database interaction is happening via the Repository object.</li>
 	<li>You have to <em>new</em> a repository before using it.
-<ul>
-	<li>It does <em>not</em> have a static constructor.</li>
-	<li>It is <em>not</em> a singleton.</li>
-  	<li>The methods on the repository are <em>not</em> static.</li>
-</ul>
-</li>
+    <ul>
+	    <li>It does <em>not</em> have a static constructor.</li>
+	    <li>It is <em>not</em> a singleton.</li>
+  	    <li>The methods on the repository are <em>not</em> static.</li>
+    </ul>
+    </li>
 	<li>The model object has no database methods on it.  It's a pure business object.</li>
 </ul>
-</p>
+
 
 
 

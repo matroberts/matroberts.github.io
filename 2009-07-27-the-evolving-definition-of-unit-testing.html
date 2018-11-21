@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -26,7 +26,8 @@
 </header>
 
 <article>
-    <h2>The Evolving Definition of Unit Testing</h2>
+
+<h2>The Evolving Definition of Unit Testing</h2>
     
 <p>Back in the day a unit test was <a href="http://beust.com/weblog/archives/000319.html">defined as something like</a>:</p>
 <blockquote> 
@@ -42,8 +43,8 @@
 
 <p>Now lots of people have attempted unit testing, and some have succeeded.  But many, or I suspect most, have failed.  It's just a hard skill to acquire.  It's rock hard for a novice unit tester to apply unit testing to an existing code base - the code's just not testable.  Even on a virgin code base it's difficult.  You can easily have large chunks of the system which you don't know how to test.</p>
 
-<p>
-The thing which makes unit testing difficult is <em>external dependencies</em>.  The points where your code starts to talk to something else - the <a href="http://www.williamcaputo.com/archives/000019.html">boundaries of the system</a>.  Examples of external dependencies are: 
+<p>The thing which makes unit testing difficult is <em>external dependencies</em>.  The points where your code starts to talk to something else - the <a href="http://www.williamcaputo.com/archives/000019.html">boundaries of the system</a>.  Examples of external dependencies are: </p>
+
 <ul> 
  <li>Database</li>
  <li>Smtp client</li>
@@ -58,9 +59,10 @@ The thing which makes unit testing difficult is <em>external dependencies</em>. 
  <li>Calling outside the CLR</li>
  <li>Calling outside the current AppDomain</li>
 </ul>
-</p>
+
 
 <p>The problem with external dependencies is, you have to configure them prior to the test, and verify them after the test.  This set-up and verification is difficult - it makes the tests hard to write and harder still to understand.  It also makes the tests slow.  This lead <a href="http://www.artima.com/weblogs/viewpost.jsp?thread=126923">Michael Feathers adopted the hard line position</a>: </p>
+
 <blockquote>
 A test is not a unit test if:
 <ul>

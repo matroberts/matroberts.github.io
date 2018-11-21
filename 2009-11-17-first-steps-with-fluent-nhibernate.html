@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -163,14 +163,14 @@ namespace minimal_with_unit_test
 
 <p>The PerstenceSpecification creates a StickyNote object, inserts it in the database, retrieves the record into a new object and checks that the objects match.  This looks like a real boon for testing; it considerably reduces the repetition and tedium of testing the mapping code.  It does have a couple of limitations though.  It <a href="http://www.mail-archive.com/fluent-nhibernate@googlegroups.com/msg02785.html">doesn't work</a> when you have foreign keys with the <a href="http://wiki.fluentnhibernate.org/Getting_started">Inverse()</a> relationship.  Also as you can see it doesn't work for the Id column, since I'm using Identity Insert on the database for that.  This identity thing is interesting.  Though NHibernate <a href="http://ayende.com/Blog/archive/2009/03/20/nhibernate-avoid-identity-generator-when-possible.aspx">works OK with identity insert</a>, the <a href="http://nhforge.org/blogs/nhibernate/archive/2009/03/20/nhibernate-poid-generators-revealed.aspx">preferred NHibernate way</a> seems to be to let NHibernate handle Id creation.  This is certainly a change in approach from previous work I've done.</p>
 
-<p>
-So that's it, using Fluent NHibernate isn't too hard so far.  But NHibernate is pushing for a few changes in how I do things:
+<p>So that's it, using Fluent NHibernate isn't too hard so far.  But NHibernate is pushing for a few changes in how I do things:</p>
+
 <ul>
 	<li>Making properties virtual.</li>
 	<li>Putting select queries in a transaction.</li>
 	<li>Not using identity insert on the database.</li>
 </ul>
-</p>
+
 
 <p>I guess the identity insert issue is the one that makes me uncomfortable, but maybe it would work out OK.</p>
 

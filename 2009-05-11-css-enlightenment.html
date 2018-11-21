@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -26,7 +26,8 @@
 </header>
 
 <article>
-    <h2>CSS Enlightenment</h2>
+
+<h2>CSS Enlightenment</h2>
     
 <p>Descent selectors are the key to good CSS design.  Descendent selectors let you select the element you want, without having to explicitly add a class to it.  Using descent selectors avoids polluting the html with style specific class attributes.  The Galloway body class technique is used to make page specific tweaks to the style, in a controlled manor.</p>
 
@@ -53,15 +54,14 @@
 
 <p>Looking at the html for Zen Garden is a Zen experience in itself.  The html is clean, simple, and focussed on content.  Where are all those crazy style elements that I have in my html?  The <a href="http://weblogs.asp.net/jgalloway/archive/2007/09/12/taking-css-beyond-a-simple-style-library.aspx">mistake I'm making is to treat css as a style library</a>:</p>
 <blockquote>
-Need a bold blue heading? Yep, I think I've got one of them...there it is:
-
-.BigBlueText
-{ color: #99f; font-size: 16px; }
-
-No... that's not big enough. Time for BiggerBlueText!
-
-.BiggerBlueText
-{ color: #99f; font-size: 22px; }
+<p>
+ Need a bold blue heading? Yep, I think I've got one of them...there it is:<br>
+.BigBlueText { color: #99f; font-size: 16px; }
+</p>
+<p>
+No... that's not big enough. Time for BiggerBlueText!<br>
+.BiggerBlueText{ color: #99f; font-size: 22px; }
+</p>
 </blockquote>
 
 <p>When you take the style library approach, each element which needs a style gets a class attribute which describes the style.  Over time the style sheet becomes a huge blob of styles.  Refactoring is scary...it's hard to tell what the impact of any clean up will be, and you potentially have to check the whole site.</p>
@@ -128,25 +128,22 @@ div {
 </code>
 </pre>
 
-<p>
-Page specific tweaks are the other difficulty with css.  In the past the approach I have taken is to define a new class, and apply it directly to the element which needs to be changed.   A better approach is the <a href="http://weblogs.asp.net/jgalloway/archive/2008/06/18/using-lt-body-gt-classes-to-fight-css-class-explosion.aspx">Galloway body class technique</a>:
+<p>Page specific tweaks are the other difficulty with css.  In the past the approach I have taken is to define a new class, and apply it directly to the element which needs to be changed.   A better approach is the <a href="http://weblogs.asp.net/jgalloway/archive/2008/06/18/using-lt-body-gt-classes-to-fight-css-class-explosion.aspx">Galloway body class technique</a>:</p>
+
 <ul>
 <li>Give the body element a class which is unique to the page.</li>
 <li>Use descendent selectors to match the element which needs tweaking.</li>
 </ul>
-</p>
 
 <p>The nice thing with this approach is the CSS is very clear about what is the "main" style, and what is page specific.  In his article Jon provides some master page code to automatically add a unique body class to the page.  (It would be more natural to use an id to identify the body element, however in Asp.net this is not possible because the engine will mangle the id for an element with runat="server"). </p>
 
-<p>
-Descendent selectors are the path to enlightenment in Cascading Style Sheets.  To keep your CSS clean:
+<p>Descendent selectors are the path to enlightenment in Cascading Style Sheets.  To keep your CSS clean:</p>
 <ul>
 <li>Make sure container elements (div, table etc.) are marked with an id or a class attribute.</li>
 <li>Use decent selectors to match the element you want in the style sheet.</li>
 <li>Make sure class attributes indicate content rather than a style.</li>
 <li>Use the Galloway body class technique to make page specific tweaks.</li>
 </ul>
-</p>
 
 </article>
 

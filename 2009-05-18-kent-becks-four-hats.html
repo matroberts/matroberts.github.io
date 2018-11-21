@@ -26,7 +26,8 @@
 </header>
 
 <article>
-    <h2>Kent Beck's Four Hats</h2>
+
+<h2>Kent Beck's Four Hats</h2>
     
 <p>Have you ever been coding and had a checkout which has gone out of control?  The change involved a modification to a method, and adjusting the callers of the method too.  It really got bad when some of the callers needed reworking, to cope with the new argument you added to the method.  A colleague wanted a small part of the change, but you couldn't check-in because you would break the build.  After a week you were done.  Your reward was a difficult merge - the code base had moved on in the mean time.</p>
 
@@ -45,8 +46,8 @@
 
 <p>Each time you switch hats, you run the tests.  Each time you switch hats, you are in a position to check-in.  In practice you may well switch hats quite rapidly, spending only a few minutes wearing each one.  You don't have to check-in after each hat switch, it's just that you can if you want.</p>
 
-<p>
-The worst out of control checkouts happen when you want to change the interface to an existing heavily used method, and you just steam in and do it.  Along the way you are trying to do some refactoring as well.  The out of control-ness happens because your trying to change the interface and implementation at the same time.  There is however a safe and incremental  way to proceed:
+<p>The worst out of control checkouts happen when you want to change the interface to an existing heavily used method, and you just steam in and do it.  Along the way you are trying to do some refactoring as well.  The out of control-ness happens because your trying to change the interface and implementation at the same time.  There is however a safe and incremental  way to proceed:</p>
+
 <ul>
 <li>Copy the method you want to change.</li>
 <li>Change the interface to the new method.</li>
@@ -54,7 +55,6 @@ The worst out of control checkouts happen when you want to change the interface 
 <li>Work though the code base adjusting the callers to use your new method.</li>
 <li>Delete the old method.</li>
 </ul>
-</p>
 
 <p>With this approach you can check-in at any stage in the re-work, without breaking the build.</p>
 
