@@ -163,13 +163,14 @@ strong {
 /**
  * 1. Use the default monospace user interface font
  *    in all browsers (opinionated).
- * 2. Correct the odd `em` font sizing in all browsers.
+ * 2. Correct the odd `em` font sizing in all browsers.  
+*     Make font a bit smaller (my choice)
  */
 
 code,
 kbd,
 samp {
-  font-family:
+    font-family:
     /* macOS 10.10+ */ Menlo,
     /* Windows 6+ */ Consolas,
     /* Android 4+ */ Roboto Mono,
@@ -178,8 +179,7 @@ samp {
     /* KDE Plasma 4+ */ Oxygen Mono,
     /* Linux/OpenOffice fallback */ Liberation Mono,
     /* fallback */ monospace; /* 1 */
-
-  font-size: 1em; /* 2 */
+    font-size: 0.9375em; /* 2 */
 }
 
 /**
