@@ -35,10 +35,11 @@
  *    IE on Windows Phone and in iOS.
  * 6. Changed word-break to normal (my opinion).
  */
-
 html {
     cursor: default; /* 1 */
-    font-family: system-ui,
+    font-family:
+    /* my google font choice */ 'Nunito Sans',
+    /* sanitize choice */ system-ui,
     /* macOS 10.11-10.12 */ -apple-system,
     /* Windows 6+ */ Segoe UI,
     /* Android 4+ */ Roboto,
