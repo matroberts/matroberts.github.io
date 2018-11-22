@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -54,19 +54,19 @@ namespace MsBuildLogDemo
 <pre>
 <code class="language-csharp">
 public class ApplyChanges
+{
+    public ILog Log { get; set; }
+
+    public ApplyChanges(ILog log)
     {
-        public ILog Log { get; set; }
-
-        public ApplyChanges(ILog log)
-        {
-            Log = log;
-        }
-
-        public void Apply()
-        {
-            Log.LogMessage(&quot;Apply Called&quot;);
-        }
+        Log = log;
     }
+
+    public void Apply()
+    {
+        Log.LogMessage(&quot;Apply Called&quot;);
+    }
+}
 </code>
 </pre>
 
@@ -108,7 +108,6 @@ public class ApplyChanges
             Log.LogMessage(message);
         }
     }
-}
 </code>
 </pre>
 
