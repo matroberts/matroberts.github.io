@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
-    <head>
-        <title>Pomodoro Timer</title>
-        <link rel="stylesheet" type="text/css" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/themes/base/jquery-ui.css" />
-        <link rel="stylesheet" type="text/css" href="timer.css" />
-        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
-        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>
-        <script language="javascript" type="text/javascript" src="timer.js" ></script>
-        <script type="text/javascript">
+<head>
+    <title>Pomodoro Timer</title>
+    <meta name="description" content="Online timer for the Pomodoro technique." />
+    <link rel="stylesheet" type="text/css" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/themes/base/jquery-ui.css" />
+    <link rel="stylesheet" type="text/css" href="timer.css" />
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>
+    <script language="javascript" type="text/javascript" src="timer.js"></script>
+    <script type="text/javascript">
             $(document).ready(function () {
                 $('#start').click(function () {
                     Timer.start();
@@ -16,8 +17,8 @@
                     Timer.stop();
                 }).button();
             });
-        </script>
-    </head>
+    </script>
+</head>
     <body>
         <div id="tbl">
             <div id="tcell">

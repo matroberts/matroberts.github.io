@@ -1,36 +1,37 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
-    <head>
-        <title>Typing for Programmers</title>
-        <link rel="stylesheet" type="text/css" href="jquery-ui-1.8.13.custom.css" />
-        <link rel="stylesheet" type="text/css" href="typing.css" />
-        <script type="text/javascript" src="jquery-1.6.1.js" ></script>
-        <script type="text/javascript" src="jquery-ui-1.8.13.custom.js" ></script>
-        <script language="javascript" type="text/javascript" src="lesson.js" ></script>
-        <script type="text/javascript">
-            $(document).ready(function () {
-                $('#student_text').keydown(function (event) {
-                    Lesson.key_down(event);
-                });
-                $('#student_text').keypress(function (event) {
-                    Lesson.key_press(event);
-                });
-                $('#repeat').click(function () {
-                    $('#results').dialog('close');
-                    $('#lesson_dropdown').trigger('change');
-                });
-                $('#next').click(function () {
-                    $('#results').dialog('close');
-                    $('#lesson_dropdown option:selected').removeAttr('selected').next().attr('selected', 'selected');
-                    $('#lesson_dropdown').trigger('change');
-                });
-                Lesson.init();
-                $('#lesson_dropdown').change(function () {
-                    Lesson.newLesson(LessonText[$('#lesson_dropdown option:selected').text()]);
-                }).trigger('change');
+<head>
+    <title>Typing for Programmers</title>
+    <meta name="description" content="Online tool for learning to touch type." />
+    <link rel="stylesheet" type="text/css" href="jquery-ui-1.8.13.custom.css" />
+    <link rel="stylesheet" type="text/css" href="typing.css" />
+    <script type="text/javascript" src="jquery-1.6.1.js"></script>
+    <script type="text/javascript" src="jquery-ui-1.8.13.custom.js"></script>
+    <script language="javascript" type="text/javascript" src="lesson.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#student_text').keydown(function (event) {
+                Lesson.key_down(event);
             });
-        </script>
-    </head>
+            $('#student_text').keypress(function (event) {
+                Lesson.key_press(event);
+            });
+            $('#repeat').click(function () {
+                $('#results').dialog('close');
+                $('#lesson_dropdown').trigger('change');
+            });
+            $('#next').click(function () {
+                $('#results').dialog('close');
+                $('#lesson_dropdown option:selected').removeAttr('selected').next().attr('selected', 'selected');
+                $('#lesson_dropdown').trigger('change');
+            });
+            Lesson.init();
+            $('#lesson_dropdown').change(function () {
+                Lesson.newLesson(LessonText[$('#lesson_dropdown option:selected').text()]);
+            }).trigger('change');
+        });
+    </script>
+</head>
     <body>
         <div id="content">
             <h1>Typing for Programmers</h1>

@@ -63,6 +63,15 @@ figure > figcaption {
     text-align: center;
 }
 
+/* descrioption lists (used on index page) */
+dt {
+    margin-top: 0.67em;
+}
+
+dd {
+    margin-left:0;
+}
+
 /* footer */
 
 footer {
