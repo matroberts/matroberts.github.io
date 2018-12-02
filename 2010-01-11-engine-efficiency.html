@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -11,6 +11,10 @@
     <link href="styles/prism.css" rel="stylesheet">
     <link href="styles/struggle.css" rel="stylesheet">
     <link rel="shortcut icon" type="image/x-icon" href='favicon.ico'>
+    
+    <link rel="stylesheet" href="styles/katex.min.css">
+    <script defer src="scripts/katex.min.js"></script>
+    <script defer src="scripts/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
     
     <link href="https://fonts.googleapis.com/css?family=Nunito+Sans" rel="stylesheet">
 </head>
@@ -31,8 +35,13 @@
 <h2>Engine Efficiency</h2>
     
 <p>An <a href="http://en.wikipedia.org/wiki/Heat_engines">engine</a> turns heat into work.  There are lots of types of engine, for example: <a href="http://en.wikipedia.org/wiki/Steam_engine">steam</a>, <a href="http://en.wikipedia.org/wiki/Petrol_engine">petrol</a>, <a href="http://en.wikipedia.org/wiki/Diesel_engine">diesel</a>, <a href="http://en.wikipedia.org/wiki/Jet_engine">jet</a>, <a href="http://en.wikipedia.org/wiki/Rocket">rocket</a> and <a href="http://en.wikipedia.org/wiki/Gas_turbine">gas turbine</a>.  No matter what type of engine you consider the efficiency is always limited by the following <a href="http://en.wikipedia.org/wiki/Heat_engines#Efficiency">equation</a> [<a href="http://www.amazon.co.uk/gp/product/0070666474?ie=UTF8&tag=struggforcomp-21&linkCode=as2&camp=1634&creative=6738&creativeASIN=0070666474">1</a>, <a href="http://www.amazon.co.uk/gp/product/0521274567?ie=UTF8&tag=struggforcomp-21&linkCode=as2&camp=1634&creative=6738&creativeASIN=0521274567">2</a>]:</p>
-
-<figure><img alt="efficiency <= 1-(Tc/Th)" title="efficiency of an engine" src="images/efficiency.png"></figure>
+    
+    
+<figure>
+    <div class="maths">
+        $$E\!f\!\!ficiency \leq 1 - \frac{T_c}{T_h}$$
+    </div>
+</figure>
 
 <p>Where T<sub>h</sub> is the temperature of the hot side of the engine, T<sub>c</sub> is the temperature of the cold side of the engine, and the temperatures are  measured in Kelvin.  (The temperature in Kelvin, K = C + 273.15, where C is the temperature is Celsius.  Ice point of water = 0 C, steam point of water ~ 100 C, and  room temperature ~ 20 C.)</p>
 

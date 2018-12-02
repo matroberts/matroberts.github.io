@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -11,6 +11,10 @@
     <link href="styles/prism.css" rel="stylesheet">
     <link href="styles/struggle.css" rel="stylesheet">
     <link rel="shortcut icon" type="image/x-icon" href='favicon.ico'>
+    
+    <link rel="stylesheet" href="styles/katex.min.css">
+    <script defer src="scripts/katex.min.js"></script>
+    <script defer src="scripts/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
     
     <link href="https://fonts.googleapis.com/css?family=Nunito+Sans" rel="stylesheet">
 </head>
@@ -29,18 +33,33 @@
 <article>
 
 <h2>What's the chance of winning the national lottery?</h2>
-    
+  
+
+
 <p>In the UK there is a national lottery (everything's nationalised here).  You choose 6 numbers from the numbers 1 to 49, and pay £1.  A machine picks 6 ping pong ball from a rotating drum containing 49 numbered balls.  I think the drum spins round to inject a bit of drama into the proceedings.  If your numbers are drawn you win 5 million quid.</p>
 
 <p>How likely are you to win?  Well, in this type of probability problem everything is known in advance, so it's "simply" a matter of <a href="http://www.mathgoodies.com/lessons/vol6/intro_probability.html">counting up the possibilities</a>.</p>
 
-<figure><img alt="Probability=(Number of way thing can happen)/(Total number of possibilities)" title="Probability=(Number of way thing can happen)/(Total number of possibilities)" src="images/probability-definition.png"></figure>
+<figure>
+    <div class="maths">
+        $$ Probability =\frac{Number\;of\;ways\;thing\;can\;happen}{Total\;number\;of\;possibilities}$$
+    </div>
+</figure>
 
 <p>The top line of equation, "how many ways are there of drawing <em>my</em> 6 balls from the machine", is easy - there is only 1 way.  The bottom line of the equation, "how many ways are there of choosing <em>any</em> 6 balls from 49", requires some thought.</p>
 
 <p>Lets start with a simpler problem - "how many ways are there of lining up the 49 balls in a row?"  Well imagine picking the balls one by one from the machine and laying them out in a line.  For the first ball the are 49 choices, for the second there are 48, for the third there are 47, all the way down.  So the number of ways of doing this is 49x48x47......3x2x1.  In general:</p>
-
-<figure><img alt="n!=n(n-1)(n-2)...3.2.1" title="factorial" src="images/factorial.png"></figure>
+    
+<figure>        
+    <div class="maths">
+        $$
+        \begin{aligned}
+        Number\;of\;ordered \atop sequences\;of\;n\;elements &= n(n-1)(n-2)...3.2.1 \\
+                                                             &= n!
+        \end{aligned}
+        $$
+    </div>
+</figure>
 
 <p>The n! is called n factorial.  It's just a mathematical shorthand for the big pile of multiplications you have to do.  Factorials get big very quickly:</p>
 
@@ -59,13 +78,31 @@
 
 <p>A similar problem, closer to what we want is "how many ways can you sequentially pick 6 balls from 49?"  Its quite like the ordering problem.  You have 49 choices for the first, 48 for the second, but you stop when you have made 6 picks.  So the answer is 49x48x47x46x45x44.  If you look at this answer you can see it equals 49!/43! = 49!/(49-6)!  The mathematical name for this is the number of <a href="http://en.wikipedia.org/wiki/Permutations">permutations</a>, and has the general formula:</p>
 
-<figure><img alt="nPr=n!/(n-r)!" title="permutations" src="images/permutations.png"></figure>
+<figure>
+    <div class="maths">
+        $$
+        \begin{aligned}
+        Number\;of\;ordered\;sequences\;of \atop r\;elements\;chosen\;from\;n &=\, ^n\!P_r \\
+                                                                              &= \frac{n!}{(n-r)!}
+        \end{aligned}
+        $$
+    </div>
+</figure>
 
 <p>So now we can answer the question "how many ways are there of choosing 6 balls from 49".  The thing about the permutation formula is that the order you pick the objects matters.  In the lottery that's not the case, you don't care what order the balls are chosen in, only that they're picked.  So the answer is to take the number of permutations and divide it by the number of ways of ordering the 6 balls that were chosen, that is divide by 6!.  So the answer is 49!/43!6! = 13983816.</p>
 
 <p>In general choosing r elements from n where order doesn't matter, is called the number of <a href="http://en.wikipedia.org/wiki/Combinations">combinations</a> and has the general formula:</p>
 
-<figure><img alt="nCr=n!/(n-r)!r!" title="combinations" src="images/combinations.png"></figure>
+<figure>
+    <div class="maths">
+        $$
+        \begin{aligned}
+        Number\;of\;unordered\;sequences\;of \atop r\;elements\;chosen\;from\;n &=\, ^n\!C_r \\
+                                                                                &= \frac{n!}{r!(n-r)!}
+        \end{aligned}
+        $$
+    </div>
+</figure>    
 
 <p>So to return to the original question, "what the probability of winning the national lottery".  The answer is number ways of choosing your numbers, which is 1, divided by the total number of ways of choosing 6 balls from 49, which is 13,983,816.  Or roughly one in 14 million.  Not very likely really.</p>
 

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -11,6 +11,10 @@
     <link href="styles/prism.css" rel="stylesheet">
     <link href="styles/struggle.css" rel="stylesheet">
     <link rel="shortcut icon" type="image/x-icon" href='favicon.ico'>
+    
+    <link rel="stylesheet" href="styles/katex.min.css">
+    <script defer src="scripts/katex.min.js"></script>
+    <script defer src="scripts/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
     
     <link href="https://fonts.googleapis.com/css?family=Nunito+Sans" rel="stylesheet">
 </head>
@@ -33,14 +37,49 @@
 <p>A couple of week ago I worked out the <a href="2009-10-24-whats-the-chance-of-winning-the-national-lottery.html">chance of winning the UK national lottery</a>.  But what's the chance of winning the other prizes?</p>
 
 <p>To recap.  In the UK national lottery you pick 6 numbers.  A <em>special machine</em> chooses 6 numbers, from a pot containing numbers 1 to 49.  If your 6 numbers get chosen you win.  Now in this type of probability problem all of the possibilities are known in advance so:</p>
-
-<figure><img alt="Probability=(Number of way thing can happen)/(Total number of possibilities)" title="Probability=(Number of way thing can happen)/(Total number of possibilities)" src="images/probability-definition.png"></figure>
+    
+<figure>
+    <div class="maths">
+        $$ Probability =\frac{Number\;of\;ways\;thing\;can\;happen}{Total\;number\;of\;possibilities}$$
+    </div>
+</figure>
 
 <p>For winning the lottery, the top line on the right hand side of the equation is "number of ways that <em>your</em> 6 numbers can be drawn", which equals 1, and the bottom line is "number of ways that <em>any</em> 6 numbers can be drawn from 49".  To work this out the the formula you need is the number of combinations of choosing r things from n, C(n,r) = n!/r!(n-r)!.  In this case we have C(49, 6) = 13,983,816 and therefore the chance of winning the lottery is roughly 1 in 14 million.</p>
 
 <p>You also get a smaller prize if say, 5 out of your 6 numbers are chosen.  In the probability equation, the bottom line of the equation will be the same as before, C(49,6).  For the top line of the equation we need "number of ways of getting 5 of your numbers, when 6 numbers are chosen from 49".  If you think about it a bit:</p>
 
-<figure><img alt="ways of getting 5 numbers when 6 numbers are chosen from 49" title="lottery second prize" src="images/lottery_second_prize.png"></figure>
+<figure>
+    <div class="maths">
+        $$
+        \begin{aligned}
+
+        & 
+        \begin{pmatrix}
+        Ways\;of\;getting\;5\;of\;your\;numbers \\
+        when\;6\;numbers\;are\;chosen\;from\;49
+        \end{pmatrix}
+        \\
+
+
+        &=
+
+        \begin{pmatrix}
+        Ways\;of\;choosing \\
+        5\;of\;your\;6\;numbers
+        \end{pmatrix}
+        \times
+        \begin{pmatrix}
+        Ways\;of\;choosing\;1\;of \\
+        the\;remaining\;43\;numbers
+        \end{pmatrix}
+        \\
+
+        &= \, ^6C_5 \times ^{43}\!C_1
+
+        \end{aligned}
+        $$
+    </div>
+</figure>    
 
 <p>Now, C(6,5)xC(43,1)=258, so the probability of getting 5 numbers right is 258/13983816, which is roughly 1 in 55,000.  It's easy to extend the formula to work out the chance of getting 6, 5, 4, 3, 2, 1 or 0 of your numbers:</p>
 
