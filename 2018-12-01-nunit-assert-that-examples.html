@@ -74,13 +74,14 @@ What follows are examples of the more tricky and obscure assertion cases:
     <code class="language-csharp">
         var sentence = "The good, the bad and the ugly";
 
-        Assert.That(sentence, Is.Not.Null.Or.Empty);
+        Assert.That(sentence, Is.Not.Null.And.Not.Empty);
         Assert.That(sentence, Is.EqualTo("The good, the bad and the ugly"));
 
         Assert.That(sentence, Does.StartWith("The good"));
         Assert.That(sentence, Does.Contain("the bad"));
         Assert.That(sentence, Does.EndWith("The ugly").IgnoreCase);
 
+        // A second method of testing substring
         Assert.That(sentence, Contains.Substring("the bad"));
     </code>
 </pre>   
