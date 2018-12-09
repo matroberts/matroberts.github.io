@@ -46,6 +46,10 @@ caption {
     caption-side: bottom;
 }
 
+.right {
+    text-align: right;
+}
+
 /* figures */
 figure {
     margin-left: 0;
