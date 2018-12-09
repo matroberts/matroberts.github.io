@@ -52,16 +52,16 @@
 <p>Here "( )",  "." and "&lt;symbol&gt;" are terminals and &lt;list-of-symbols&gt; is the non-terminal.  To explain the Scheme syntax a little () is an empty list, (x . y) is a "dotted pair", and and a proper list is made by dotting pairs together terminating in an empty list, so (x . (y . (z . ()))) equals the proper list (x y z).</p>
 
 <figure>
-<table>
-<tr><th>Symbol</th><th>Meaning</th></tr>
-<tr><td>::=</td><td>definition</td></tr>
-<tr><td>|</td><td>or</td></tr>
-<tr><td>{....}*</td><td>0 or more</td></tr>
-<tr><td>{....}+</td><td>1 or more</td></tr>
-<tr><td>[....]</td><td>optional</td></tr>
-<tr><td>&lt;....&gt;</td><td>terminal or non-terminal</td></tr>
-<caption>Backus Naur Form</caption>
-</table>
+    <table>
+        <caption>Backus Naur Form</caption>
+        <tr><th>Symbol</th><th>Meaning</th></tr>
+        <tr><td>::=</td><td>definition</td></tr>
+        <tr><td>|</td><td>or</td></tr>
+        <tr><td>{....}*</td><td>0 or more</td></tr>
+        <tr><td>{....}+</td><td>1 or more</td></tr>
+        <tr><td>[....]</td><td>optional</td></tr>
+        <tr><td>&lt;....&gt;</td><td>terminal or non-terminal</td></tr>
+    </table>
 </figure>
 
 <p>Backus Normal Form is an inductive definition.  In an inductive definition you list one or more specific examples, and describe how to construct more complex examples from simpler ones.  You can see that the list of symbols example is inductive, since list-of-symbols appears on both sides of the equation.</p>

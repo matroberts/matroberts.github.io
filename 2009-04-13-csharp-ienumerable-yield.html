@@ -31,13 +31,13 @@
     
 <p>I have a class which contains two lists of strings.  I want to iterate over both lists at the same time getting pairs of values.  The neat way to do this is to make the class enumerable, which means it can be used in a foreach loop.</p>
 
-<p>There are three things to do:
+<p>There are three things to do:</p>
 <ol>
 <li>The class needs to inherit from the <a href="http://msdn.microsoft.com/en-us/library/9eekhta0.aspx">IEnumerable&lt;T&gt;</a> interface.</li>
 <li>The class needs to implement the method IEnumerator&lt;T&gt; GetEnumerator().  This method  returns an <a href="http://msdn.microsoft.com/en-us/library/t0cwf691.aspx">IEnumerator&lt;T&gt;</a>, so we need one of those.  C# has the <a href="http://msdn.microsoft.com/en-us/library/9k7k7cf0.aspx">yield</a> keyword which lets you do this easily.</li>
 <li>Because I want to return two values from my class, I can't return a simple type like string.  Instead I need a class or <a href="http://msdn.microsoft.com/en-us/library/saxz13w4.aspx">struct</a> to put the pairs of values in.</li>
 </ol>
-</p>
+
 
 <p>The collection class implements IEnumerable, which indicates it can be foreach'd over.  The IEnumerator is the thing which does the iteration.  You, the programmer, never actually see the IEnumerator; it's hidden behind the the foreach construct.</p>
 
