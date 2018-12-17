@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Asp.net Session State</title>
+    <title>ASP.NET Session State</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Example of setting up Asp.net session state in SQLServer mode, using web.config.">
+    <meta name="description" content="Example of setting up ASP.NET session state in SQLServer mode, using web.config.">
     <meta name="author" content="Mat Roberts">
     <link rel="canonical" href="https://moleseyhill.com/2009-03-24-aspnet-session-state.html">
     <link href="styles/sanitize.css" rel="stylesheet">
@@ -27,9 +27,9 @@
 </header>
 
 <article>
-    <h2>Asp.net Session State</h2>
+    <h2>ASP.NET Session State</h2>
     
-<p>Session state is used to maintain data for an individual user for the duration of their interaction with a web site.  Our application used an "InProc" session, which maintained state in memory.  This made development painful because a recompile forced a new login to the web site.  We changed to an "SQLServer" session which solved the login problem; you can just carry on where you are after a recompile.  Asp.net, Session State, web.config, Sql Server.</p>
+<p>Session state is used to maintain data for an individual user for the duration of their interaction with a web site.  Our application used an "InProc" session, which maintained state in memory.  This made development painful because a recompile forced a new login to the web site.  We changed to an "SQLServer" session which solved the login problem; you can just carry on where you are after a recompile.</p>
 
 <p>Session State is defined in the web.config file:</p>
 
@@ -46,7 +46,7 @@
 <ul>
 <li>InProc: stores session state in memory on the Web server.  (Default).</li>
 <li>StateServer: stores session state in a separate process called the ASP.NET state service. This preserves state  if the Web application is restarted and also works in a server farm model.</li>
-<li>SQLServer:  State is preserved in Sql Server.</li>
+<li>SQLServer:  State is preserved in SQL Server.</li>
 <li>Custom</li>
 <li>Off</li>
 </ul>
@@ -61,14 +61,14 @@
 </code>
 </pre>
 </li>
-<li>From a VS Cmd Line, create a database 'ASPState' for storing the data:<br>
+<li>From a Visual Studio Command Line, create a database 'ASPState' for storing the data:<br>
 <pre>
 <code class="language-markup">
 aspnet_regsql.exe -S (local) -E -ssadd -sstype p
 </code>
 </pre>
 </li>
-<li>In Sql Server:
+<li>In SQL Server:
   <ul>
     <li>Add login NT AUTHORITY\NETWORK SERVICE</li>
     <li>Give this user mapping to the ASPState database</li>
@@ -77,7 +77,7 @@ aspnet_regsql.exe -S (local) -E -ssadd -sstype p
 </li>
 </ul>
 
-<p>I'm using the IIS 6 web server.  The asp.net process, w3wp.exe, by default runs as NETWORK SERVICE.  On IIS 5, the ASP.NET worker process, Aspnet_wp.exe, runs as the ASPNET account by default.  So in the steps above, if you're using IIS 5, you will have to tweak the database login.</p>
+<p>These instructions work for the IIS 6 web server.  In IIS 6 the ASP.NET process, w3wp.exe, runs as NETWORK SERVICE by default.  You will have to consult google if you are using a different version of IIS, since I think the permissions will be different.</p>
 
 </article>
 

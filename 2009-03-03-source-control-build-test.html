@@ -37,7 +37,7 @@
 <p>To be more specific these practices mean:</p>
 
 <ul>
-	<li>Source Control.  All artifacts required to build and deploy the software are in source control and developers are committing to the repository frequently (&gt; 1 per day).  This is straight forward, provided that an adequate tool is chosen and a simple branching strategy is adopted.  The branching strategy maintains a "trunk" where main development occurs, and branches when a release is made.  Maintainence of the release occurs in the branch.</li>
+	<li>Source Control.  All artifacts required to build and deploy the software are in source control and developers are committing to the repository frequently (&gt; 1 per day).  This is straight forward, provided that an adequate tool is chosen and a simple branching strategy is adopted.  The branching strategy maintains a "trunk" where main development occurs, and branches when a release is made.  Maintenance of the release occurs in the branch.</li>
 	<li>Build.  The build requires single action to execute, is run after each source control check-in and takes less than 10 minutes to execute.  This is straight forward to achieve but requires discipline and constant minor maintenance.  A continuous integration tool should be used to run the build.</li>
 	<li>Test.  A comprehensive set of automated unit and automated acceptance tests are in place, which are run automatically as part of the build.  In practice this means adopting Test Driven Development [<a href="http://www.amazon.co.uk/gp/product/0321146530?ie=UTF8&tag=struggforcomp-21&linkCode=as2&camp=1634&creative=6738&creativeASIN=0321146530">Beck</a>] to develop unit tests.   For automated acceptance testing no general method has yet been developed. </li>
 </ul>
