@@ -43,112 +43,65 @@
         </tr>
         <tr>
             <td>Type</td>
-            <td>
-                li
-                { color:blue; }
-            </td>
-            <td>Matches all the "li" elements.</td>
+            <td><code class="language-css">li { color: blue; }</code></td>
+            <td>Matches all the <code class="language-markup">li</code> elements.</td>
         </tr>
         <tr>
             <td>Class</td>
-            <td>
-                .intro
-                { color:red; }
-            </td>
-            <td>Matches all elements with the "intro" class attribute.</td>
+            <td><code class="language-css">.intro { color: red; }</code></td>
+            <td>Matches all elements with the <code class="language-markup">intro</code> class attribute.</td>
         </tr>
         <tr>
             <td>ID</td>
-            <td>
-                #nav
-                { color:blue; }
-            </td>
-            <td>Matches the single element with the id "nav".</td>
+            <td><code class="language-css">#nav { color: blue; }</code></td>
+            <td>Matches the single element with the id <code class="language-markup">nav</code>.</td>
         </tr>
         <tr>
-            <td>Decendent</td>
-            <td>
-                div p
-                { colour:green; }
-            </td>
-            <td>Matches all elements "p" which are contained within a "div". The "p" does not have to be a direct descendent.</td>
+            <td>Descendent</td>
+            <td><code class="language-css">div p { colour: green; }</code></td>
+            <td>Matches all elements <code class="language-markup">p</code> which are contained within a <code class="language-markup">div</code>. The <code class="language-markup">p</code> does not have to be a direct descendent.</td>
         </tr>
         <tr>
             <td>Universal</td>
-            <td>
-                *
-                {
-                margin: 0;
-                padding: 0;
-                }
-            </td>
+            <td><code class="language-css">* { margin: 0; padding: 0; }</code></td>
             <td>Matches all elements.</td>
         </tr>
         <tr>
             <td>Child</td>
-            <td>
-                div &gt; em
-                { color: blue; }
-            </td>
-            <td>Matches all "em" which are a direct descendent of a "div". (Not IE6)</td>
+            <td><code class="language-css">div &gt; em { color: blue; }</code></td>
+            <td>Matches all <code class="language-markup">em</code> which are a direct descendent of a <code class="language-markup">div</code>. (Not IE6)</td>
         </tr>
         <tr>
             <td>Adjacent</td>
-            <td>
-                h1 + h3
-                { margin: -20px; }
-            </td>
-            <td>Matches "h3" which immediately follow an "h1". (Not IE6)</td>
+            <td><code class="language-css">h1 + h3 { margin: -20px; }</code></td>
+            <td>Matches <code class="language-markup">h3</code> which immediately follow an <code class="language-markup">h1</code>. (Not IE6)</td>
         </tr>
         <tr>
             <td>Attribute</td>
-            <td>
-                img[src]
-                { margin: 0; }
-            </td>
-            <td>Matches all "img" elements whose "src" attribute is set. (Not IE6)</td>
+            <td><code class="language-css">img[src] { margin: 0; }</code></td>
+            <td>Matches all <code class="language-markup">img</code> elements whose <code class="language-markup">src</code> attribute is set. (Not IE6)</td>
         </tr>
         <tr>
             <td>Attribute</td>
-            <td>
-                img[src="small.gif"]
-                { margin: 0; }
-            </td>
-            <td>Matches all "img" elements which contain an attribute src="small.gif". (Not IE6)</td>
+            <td><code class="language-css">img[src="small.gif"] { margin: 0; }</code></td>
+            <td>Matches all <code class="language-markup">img</code> elements which contain an attribute <code class="language-markup">src="small.gif"</code>. (Not IE6)</td>
         </tr>
         <tr>
             <td>Pseudo</td>
-            <td>
-                p:first-letter
-                {
-                font-weight: bold;
-                }
-            </td>
-            <td>
-                Style information not available in the document tree.
-                :first-letter
-                :first-line
-                :first-child
-                :link
-                :visited
-                :hover
-                :active
-                :focus
-                <br>
-                Not IE6:
-                :before
-                :after
+            <td><code class="language-css">p:first-letter { font-weight: bold; }</code></td>
+            <td>Style information not available in the document tree.<code class="language-markup">:first-letter :first-line :first-child :link :visited :hover :active :focus</code><br>
+                Not IE6:<code class="language-markup">:before :after</code>
             </td>
         </tr>
     </table>
 </figure>
 
-<p>An ID can only be used once within a document, whereas a class can be used multiple times.  In the style sheet the ID selector has greater weight than class selector.  ID's are generally used to identify the top level containers on the page, classes are then used to identify the lower level containers.  Asp.net has a problem with ID's, it tends to mangle the id attribute for elements with runat="server".  For these elements you have to stick with the class attribute, which asp.net leaves alone.  </p>
+<p>An ID can only be used once within a document, whereas a class can be used multiple times.  In the style sheet the ID selector has greater weight than class selector.  ID's are generally used to identify the top level containers on the page, classes are then used to identify the lower level containers.  ASP.NET has a problem with ID's, it tends to mangle the id attribute for elements with <code class="language-markup">runat="server"</code>.  For these elements you have to stick with the class attribute, which ASP.NET leaves alone.  </p>
 
 <p>Selectors can be grouped as a comma-separated list, if they share the same declaration block. For example:</p>
 <figure><img alt="a grouped css selector" title="a grouped css selector" src="images/grouped-selector-css.png"></figure>
 
-<p>With grouped decent selectors, you need to be careful that you repeat the whole decent.  For example #sidebar h2, h3 will select the h2 elements in the sidebar, plus the h3 elements in the whole document.</p>
+<p>With grouped decent selectors, you need to be careful that you repeat the whole decent.  For example <code class="language-markup">#sidebar h2, h3</code> will select the <code class="language-markup">h2</code> elements in the sidebar, plus the <code class="language-markup">h3</code> elements in the whole document.</p>
 
 <p>I'm embarrassed to admit that I learnt my basic CSS from <a href="http://www.amazon.co.uk/gp/product/0672327457?ie=UTF8&tag=struggforcomp-21&linkCode=as2&camp=1634&creative=6738&creativeASIN=0672327457">Sams Teach Yourself CSS in 10 Minutes</a> by Russ Weakly.  But hey, honesty is the best course, and its actually an OK book.</p>
 

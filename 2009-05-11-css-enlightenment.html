@@ -53,15 +53,15 @@
         </figure>
     </figure>
 
-<p>Looking at the html for Zen Garden is a Zen experience in itself.  The html is clean, simple, and focussed on content.  Where are all those crazy style elements that I have in my html?  The <a href="http://weblogs.asp.net/jgalloway/archive/2007/09/12/taking-css-beyond-a-simple-style-library.aspx">mistake I'm making is to treat css as a style library</a>:</p>
+<p>Looking at the html for Zen Garden is a Zen experience in itself.  The html is clean, simple, and focussed on content.  Where are all those crazy style elements that I have in my html?  The <a href="http://weblogs.asp.net/jgalloway/archive/2007/09/12/taking-css-beyond-a-simple-style-library.aspx">mistake I'm making is to treat CSS as a style library</a>:</p>
 <blockquote>
 <p>
  Need a bold blue heading? Yep, I think I've got one of them...there it is:<br>
-.BigBlueText { color: #99f; font-size: 16px; }
+<code class="language-css">.BigBlueText { color: #99f; font-size: 16px; }</code>
 </p>
 <p>
-No... that's not big enough. Time for BiggerBlueText!<br>
-.BiggerBlueText{ color: #99f; font-size: 22px; }
+No... that's not big enough. Time for <code class="language-markup">BiggerBlueText</code>.<br>
+<code class="language-css">.BiggerBlueText{ color: #99f; font-size: 22px; }</code>
 </p>
 </blockquote>
 
@@ -73,7 +73,7 @@ No... that's not big enough. Time for BiggerBlueText!<br>
 
 <figure><img alt="typical web page layout" title="typical web page layout" src="images/css-id.png"></figure>
 
-<p>Div's are used to define the four regions, and are given an id's so that they can be identified:</p>
+<p><code class="language-markup">Div's</code> are used to define the four regions, and are given an id's so that they can be identified:</p>
 <pre>
 <code class="language-markup">
 &lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"&gt;
@@ -129,18 +129,18 @@ div {
 </code>
 </pre>
 
-<p>Page specific tweaks are the other difficulty with css.  In the past the approach I have taken is to define a new class, and apply it directly to the element which needs to be changed.   A better approach is the <a href="http://weblogs.asp.net/jgalloway/archive/2008/06/18/using-lt-body-gt-classes-to-fight-css-class-explosion.aspx">Galloway body class technique</a>:</p>
+<p>Page specific tweaks are the other difficulty with CSS.  In the past the approach I have taken is to define a new class, and apply it directly to the element which needs to be changed.   A better approach is the <a href="http://weblogs.asp.net/jgalloway/archive/2008/06/18/using-lt-body-gt-classes-to-fight-css-class-explosion.aspx">Galloway body class technique</a>:</p>
 
 <ul>
 <li>Give the body element a class which is unique to the page.</li>
 <li>Use descendent selectors to match the element which needs tweaking.</li>
 </ul>
 
-<p>The nice thing with this approach is the CSS is very clear about what is the "main" style, and what is page specific.  In his article Jon provides some master page code to automatically add a unique body class to the page.  (It would be more natural to use an id to identify the body element, however in Asp.net this is not possible because the engine will mangle the id for an element with runat="server"). </p>
+<p>The nice thing with this approach is the CSS is very clear about what is the "main" style, and what is page specific.  In his article Jon provides some master page code to automatically add a unique body class to the page.  (It would be more natural to use an id to identify the body element, however in ASP.NET this is not possible because the engine will mangle the id for an element with <code class="language-markup">runat="server"</code>). </p>
 
 <p>Descendent selectors are the path to enlightenment in Cascading Style Sheets.  To keep your CSS clean:</p>
 <ul>
-<li>Make sure container elements (div, table etc.) are marked with an id or a class attribute.</li>
+<li>Make sure container elements, for example <code class="language-markup">div and table</code>, are marked with an id or a class attribute.</li>
 <li>Use decent selectors to match the element you want in the style sheet.</li>
 <li>Make sure class attributes indicate content rather than a style.</li>
 <li>Use the Galloway body class technique to make page specific tweaks.</li>
