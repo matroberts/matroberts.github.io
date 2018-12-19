@@ -1,4 +1,4 @@
-﻿https://moleseyhill.com/index.html
+﻿https://moleseyhill.com
 https://moleseyhill.com/2018-12-01-nunit-assert-that-examples.html
 https://moleseyhill.com/2012-05-30-maximum-contiguous-sum.html
 https://moleseyhill.com/2012-05-29-mstest-original-file-location.html
