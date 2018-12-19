@@ -36,7 +36,7 @@
 
 <p>Here's how it worked out:
 <ul>
-	<li> I need to use <a href="http://msdn.microsoft.com/en-us/library/system.diagnostics.process.aspx">Process</a> to call the msbuild exe.  I want the error code and the command line output back so I can check them in my asserts...fiddle around...<a href="http://stackoverflow.com/questions/285760/how-to-spawn-a-process-and-capture-its-stdout-in-net">google</a>....there:
+	<li> I need to use <a href="http://msdn.microsoft.com/en-us/library/system.diagnostics.process.aspx">Process</a> to call the msbuild.exe.  I want the error code and the command line output back so I can check them in my asserts...fiddle around...<a href="http://stackoverflow.com/questions/285760/how-to-spawn-a-process-and-capture-its-stdout-in-net">google</a>....there:
 <pre>
 <code class="language-csharp">
 public static int CreateProcess(string filename, string arguments, out string output)
@@ -61,7 +61,7 @@ public static int CreateProcess(string filename, string arguments, out string ou
 </code>
 </pre>
 </li>
-	<li> Call my task...my tasks not there...I've got the relative path wrong...no it's right....scratch head...what's the location of the executing assembly?  <a href="http://msdn.microsoft.com/en-us/library/system.environment.currentdirectory.aspx">Google</a>, <a href="http://stackoverflow.com/questions/52797/c-how-do-i-get-the-path-of-the-assembly-the-code-is-in">google</a>.  There's three methods....try them out...ok...got it...still not working....where actually is the dll?  Cripes what it doing there?
+	<li> Call my task...my tasks not there...I've got the relative path wrong...no it's right....scratch head...what's the location of the executing assembly?  <a href="http://msdn.microsoft.com/en-us/library/system.environment.currentdirectory.aspx">Google</a>, <a href="http://stackoverflow.com/questions/52797/c-how-do-i-get-the-path-of-the-assembly-the-code-is-in">google</a>.  There's three methods....try them out...OK...got it...still not working....where actually is the dll?  Cripes what it doing there?
 <pre>
 <code class="language-csharp">
 static public string AssemblyDirectory()
@@ -74,7 +74,7 @@ static public string AssemblyDirectory()
 </code>
 </pre>
 </li>
-	<li>MsTest is copying the test dll and putting it in another directory....hmm....I need to get my task put there.  Make the task an embedded resource and write it out in the test....ok....embedded resource....it's not finding it...got the namespace wrong...why does it need the namespace?...arse....change  my code to scan all the embedded resources for my file with a bit of Linq.
+	<li>MsTest is copying the test dll and putting it in another directory....hmm....I need to get my task put there.  Make the task an embedded resource and write it out in the test....OK....embedded resource....it's not finding it...got the namespace wrong...why does it need the namespace?...arse....change  my code to scan all the embedded resources for my file with a bit of LINQ.
 <pre>
 <code class="language-csharp">
 public static void WriteResourceToFile(string filename)
@@ -99,7 +99,7 @@ public static void WriteResourceToFile(Assembly assembly, string filename)
 	<li>Got the embedded resource.....as a stream....I hate streams....how do I change it to a file?....can't find a neat way of doing this....google....this guy makes an XmlDocument from the stream then saves the XmlDocument.  OK, its rubbish but it'll do.</li>
 	<li>Still not working...need to get the task definition file there too....another embedded resource...refactor...done.  It works I can call an MsBuild task from MsTest.</li>
 	<li>Add a simple test.  Phew.  Check-in.</li>
-	<li>Make a database from the test....that looks a bit hard.  How about add the database manually, but set it up right before the test?  OK.  Right.  Need to create a table in the database for the test, got a script for the table somewhere, got it.  Need to call the script....hmm.  Well I've got a method which will execute an sql string, so I'll just write the sql in-code and use that.  OK tweak the method to accept a connection string, rather than a list of database parameters...hey this is almost like real work....I needed to make that modification later.  OK call the method....its internal.....make it public.  Right, that's the test set up done.
+	<li>Make a database from the test....that looks a bit hard.  How about add the database manually, but set it up right before the test?  OK.  Right.  Need to create a table in the database for the test, got a script for the table somewhere, got it.  Need to call the script....hmm.  Well I've got a method which will execute an SQL string, so I'll just write the SQL in-code and use that.  OK tweak the method to accept a connection string, rather than a list of database parameters...hey this is almost like real work....I needed to make that modification later.  OK call the method....its internal.....make it public.  Right, that's the test set up done.
 <pre>
 <code class="language-csharp">
 public static void ExecuteNonQuery(string connectionString, string sqlScript, int commandTimeout)
@@ -118,7 +118,8 @@ public static void ExecuteNonQuery(string connectionString, string sqlScript, in
 </code>
 </pre>
 </li>
-	<li>The test itself....the MsBuild task scans a directory for sql scripts, then executes them, the filename of the  executed scripts gets written into the table.  OK so I need to put my test sql script in a known location.  Embedded resource again...bollocks its not an xml file so my method won't work....back to google...someone must have written a stream to file once,  surely...ah. <a href="http://www.devnewsgroups.net/group/microsoft.public.dotnet.framework/topic29039.aspx">Jon Skeet</a> in a newsgroup with the answer...there.   Refactor the code to get rid of that scanky xml document thing...that's better.  Tested.  Woop.
+    <li>
+        The test itself....the MsBuild task scans a directory for SQL scripts, then executes them, the filename of the  executed scripts gets written into the table.  OK so I need to put my test SQL script in a known location.  Embedded resource again...bollocks its not an XML file so my method won't work....back to google...someone must have written a stream to file once,  surely...ah. <a href="http://www.devnewsgroups.net/group/microsoft.public.dotnet.framework/topic29039.aspx">Jon Skeet</a> in a newsgroup with the answer...there.   Refactor the code to get rid of that skanky XML document thing...that's better.  Tested.  Woop.
 <pre>
 <code class="language-csharp">
 public static void StreamToFile(string filename, Stream stream)
@@ -136,9 +137,9 @@ public static void StreamToFile(string filename, Stream stream)
 }
 </code>
 </pre>
-</li>
-	<li>Well almost, the test can only run once.  I need to reset the database before the test is run again.....I saw in another of our projects a script for cleaning a database...lets look at that.  Hmm...looks quite good...that should work.  It's an sql script, right wop the whole lot into code and call it with our execute sql string method.</li>
-	<li>OK.  The next test.  I need to make sure that any existing sql scripts are deleted so they don't interfere with the next test.  Delete the sql files in a directory....I've done this before....<a href="http://msdn.microsoft.com/en-us/library/system.io.file.delete.aspx">google</a>, <a href="http://www.csharp-examples.net/delete-all-files/">google</a>.  A bit of Linq might make this neater, there:
+    </li>
+	<li>Well almost, the test can only run once.  I need to reset the database before the test is run again.....I saw in another of our projects a script for cleaning a database...lets look at that.  Hmm...looks quite good...that should work.  It's an SQL script, right wop the whole lot into code and call it with our execute SQL string method.</li>
+	<li>OK.  The next test.  I need to make sure that any existing SQL scripts are deleted so they don't interfere with the next test.  Delete the SQL files in a directory....I've done this before....<a href="http://msdn.microsoft.com/en-us/library/system.io.file.delete.aspx">google</a>, <a href="http://www.csharp-examples.net/delete-all-files/">google</a>.  A bit of LINQ might make this neater, there:
 <pre>
 <code class="language-csharp">
 Directory.GetFiles(".", "*.sql").ToList().ForEach(f => File.Delete(f));
@@ -168,9 +169,9 @@ ALTER DATABASE DatabaseName
 </code>
 </pre>
 </li>
-	<li>OK, the tests which use integrated security are OK.  But the database compare test use an sql user.  I'll have to make a login and a user and associate them.  Hmmm no scripts for that, <a href="http://msdn.microsoft.com/en-us/library/ms189751.aspx">google</a>, <a href="http://msdn.microsoft.com/en-us/library/ms173463.aspx">google</a>, <a href="http://msdn.microsoft.com/en-us/library/ms189743.aspx">google</a>.  There we go.  I rock.</li>
+	<li>OK, the tests which use integrated security are OK.  But the database compare test use an SQL user.  I'll have to make a login and a user and associate them.  Hmmm no scripts for that, <a href="http://msdn.microsoft.com/en-us/library/ms189751.aspx">google</a>, <a href="http://msdn.microsoft.com/en-us/library/ms173463.aspx">google</a>, <a href="http://msdn.microsoft.com/en-us/library/ms189743.aspx">google</a>.  There we go.  I rock.</li>
 	<li>Ooo.  A bit of investigation has shown up a bug in the compare databases MsBuild task.  You don't get an error if the databases just don't exist.   Fix that.</li>
-	<li>Run all of the test and check in.  Fuck, when I run them all together some of them fail.  The tests don't depend on each other....but....but... I'm getting  some error about connection closed.....they do use a single database and MsTest runs the tests in parallel.   Make MsTest run test in serial...google....OrderedTest.... a UI's opened up and it doesn't make any sense....anything else...google, google, goole.....fuck.  fuck.  fuck.  I'm stuck.  There's that bug fix I really want too.  Shelve it.  Go home.</li>
+	<li>Run all of the test and check in.  Fuck, when I run them all together some of them fail.  The tests don't depend on each other....but....but... I'm getting  some error about connection closed.....they do use a single database and MsTest runs the tests in parallel.   Make MsTest run test in serial...google....OrderedTest.... a UI's opened up and it doesn't make any sense....anything else...google, google, google.....fuck.  fuck.  fuck.  I'm stuck.  There's that bug fix I really want too.  Shelve it.  Go home.</li>
 	<li>Couple of week passed.  Yesterday I promised I'd get this cock problem with the tests sorted.  Right bite the bullet and do this ordered test thing, get it over with, and change it to NUnit next time we work on it.  OK this weird UI...try harder...it still doesn't make any sense.  Google.  Ahhh. <a href="http://stackoverflow.com/questions/700043/mstest-executing-all-my-tests-simultaneously-breaks-tests-what-to-do"> Make MsTests run one at a time</a> using cunning locking thing. There we go.  Nice.
 <pre>
 <code class="language-csharp">
@@ -202,7 +203,7 @@ string connectionString = "Server=(local);Database=MsBuildTest;Trusted_Connectio
 </li>
 	<li>Code review....great....Check in....oh dear the build taking a long time....timed out.  I bet something's wrong with the create database thing....the lock thing and create method are both in test setup so the locks hanging around and stopping a proper failure.  Fix.  That's "better" only 1 min to a build error now, and I get a message.</li>
 	<li>Hmm, drop login doesn't work.  The build server runs SQL Server 2000 (we have to support some old stuff).  Right skype someone who knows about this  antediluvian stuff.  OK change it to <a href="http://msdn.microsoft.com/en-us/library/ms189767.aspx">sp_droplogin</a>.  Check in again...this time its create login...no surprise I s'pose....change it to <a href="http://msdn.microsoft.com/en-us/library/ms173768.aspx">sp_addlogin</a>.  Run locally... fails....the password policy in SQL 2005+ requires a strong password....but that's not what I want....how do I set CHECK_POLICY off in 2000? google, google, google.  I can't.</li>
-	<li>OK, what about this.  In order to drop and create the login in both SQL Server 2000 and 2005, make two versions of the script and choose which one to run based on the version?  Google get sql version.  Fiddle, got it.   Nearly there, I need to make sure the script will still compile in SQL 2000 even though it doesn't have DROP LOGIN, so I need to EXEC these commands as a string...run local, OK...check in.
+	<li>OK, what about this.  In order to drop and create the login in both SQL Server 2000 and 2005, make two versions of the script and choose which one to run based on the version?  Google get SQL version.  Fiddle, got it.   Nearly there, I need to make sure the script will still compile in SQL 2000 even though it doesn't have DROP LOGIN, so I need to EXEC these commands as a string...run local, OK...check in.
 <pre>
 <code class="language-csharp">
 public static void DropAndCreateLogin(string login, string masterConnectionString)

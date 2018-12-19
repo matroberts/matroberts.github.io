@@ -44,9 +44,6 @@ pre[class*="language-"] {
 
 /* Inline code */
 :not(pre) > code[class*="language-"] {
-    padding: .2em;
-    padding-top: 1px;
-    padding-bottom: 1px;
     background: transparent;
     border: none;
     white-space: normal;
