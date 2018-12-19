@@ -7,16 +7,16 @@ header {
     flex-wrap: wrap;
 }
 
-header > h1 {
-    margin-bottom: 0; /* because margin collapse doesn't work now the h1 is in a flex box */
+header > h2 {
+    margin-bottom: 0; /* because margin collapse doesn't work now the h2 is in a flex box */
 }
 
-header > h1 > a {
+header > h2 > a {
     text-decoration: none;
 }
 
 header > nav {
-    margin: 0.67em 0 0 0;  /* match top margin to margin of h1 tag, so that when nav element wrap spacing looks good*/
+    margin: 0.83em 0 0 0;  /* match top margin to margin of h2 tag, so that when nav element wrap spacing looks good*/
     padding: 0;
 }
 
